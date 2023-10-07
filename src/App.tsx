@@ -1,36 +1,22 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import SimpleChart from './components/SimpleChart/SimpleChart'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-      <div style={{width: "300px", height: "100px"}}>
-        <SimpleChart title='test chart' data={[1,2,1,3,4,2,5,6,3]} lineColor='#ffffff' />
+      <div style={{width: "100%", height: "200px"}}>
+        <SimpleChart title='test chart' data={[
+          59, 
+          65, 
+          555, 
+          674, 
+          43,
+          554, 
+          426, 
+          4984, 
+          513, 
+          584]} dataOffset={400} lineColor='#ffffff' />
       </div>
     </>
   )
