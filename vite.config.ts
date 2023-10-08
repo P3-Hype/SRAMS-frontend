@@ -6,6 +6,7 @@ export default defineConfig({
   test: {
     setupFiles: './src/test/test-setup.ts',
     coverage: {
+      reporter: ['text', 'json-summary', 'json'],
       provider: 'v8' // or istanbul
     },
     environment: 'jsdom',
