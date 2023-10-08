@@ -1,4 +1,4 @@
 import { cleanup } from '@testing-library/react'
-import { beforeEach } from 'vitest/dist/index.js'
+import { afterEach } from 'vitest/dist/index.js'
 
-beforeEach(cleanup);
+afterEach(cleanup);

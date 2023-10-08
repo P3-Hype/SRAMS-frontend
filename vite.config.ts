@@ -10,6 +10,7 @@ export default defineConfig({
       provider: 'v8' // or istanbul
     },
     environment: 'jsdom',
+    globals: true,
   },
   plugins: [react()],
 })
