@@ -45,7 +45,7 @@ export function SimpleChart(props: SimpleChartProps) {
         ctx.strokeText(props.title, 0, canvasHeight);
         ctx.fillText(props.title, 0, canvasHeight);
         
-    }, [canvasHeight, canvasWidth, lineColor, props.data, props.title]);
+    }, [canvasHeight, canvasWidth, lineColor, props.data, props.dataOffset, props.title]);
 
     useEffect(() => {
         if (wrapperRef.current == null) return
@@ -57,8 +57,8 @@ export function SimpleChart(props: SimpleChartProps) {
     
     return (
         <div className="simple-chart" ref={wrapperRef} style={{
-            width: props.width + "px" ?? "100%",
-            height: props.height + "px" ?? "100%"
+            width: (props.width) ? props.width + "px" : "100%",
+            height: (props.height) ? props.height + "px" : "100%"
         }}>
             <canvas className="simple-chart-canvas" ref={canvasRef} width={canvasWidth} height={canvasHeight} />
         </div>
