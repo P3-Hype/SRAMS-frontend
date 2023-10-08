@@ -1,4 +1,4 @@
-import SimpleChart from '../components/SimpleChart/SimpleChart'
+import SimpleChart from '../src/components/SimpleChart/SimpleChart'
 import { expect, it, describe, beforeEach } from 'vitest'
 import { act, isCompositeComponent} from 'react-dom/test-utils';
 import ReactDOM from 'react-dom/client';
