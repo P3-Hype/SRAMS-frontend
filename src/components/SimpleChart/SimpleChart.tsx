@@ -2,12 +2,12 @@ import "./SimpleChart.css";
 import { useEffect, useRef, useState } from "react";
 
 interface SimpleChartProps {
-    title: string
-    data: number[]
-    lineColor?:string
-    dataOffset?: number
-    width?: number
-    height?: number
+    readonly title: string
+    readonly data: number[]
+    readonly lineColor?:string
+    readonly dataOffset?: number
+    readonly width?: number
+    readonly height?: number
 }
 
 export function SimpleChart(props: SimpleChartProps) {
