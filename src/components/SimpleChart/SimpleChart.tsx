@@ -20,7 +20,7 @@ export function SimpleChart(props: SimpleChartProps) {
     useEffect(() => {
         if (!canvasRef.current) return;
         const data = props.data;
-        const dataMax = Math.max(...data);
+        const dataMax = Math.max(...data) - (props.dataOffset ?? 0);
         //const dataMin = Math.min(...data)
         const ctx = canvasRef.current.getContext("2d");
         if (!ctx) return;
@@ -32,7 +32,7 @@ export function SimpleChart(props: SimpleChartProps) {
         ctx.beginPath();
         ctx.moveTo(0, (1-(data[0] / dataMax)) * canvasHeight);
         for (let i = 0; i < data.length; i++) {
-            const y = data[i];
+            const y = data[i] - (props.dataOffset ?? 0);
             const mappedY =  (1-(y / dataMax)) * canvasHeight;
             const mappedX = (i / (data.length-1)) * canvasWidth;
             ctx.lineTo(mappedX, mappedY);
