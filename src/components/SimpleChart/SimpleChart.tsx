@@ -18,12 +18,14 @@ export function SimpleChart(props: SimpleChartProps) {
     const lineColor = props.lineColor ?? '#000000';
 
     useEffect(() => {
-        if (canvasRef.current == null) return;
+        if (!canvasRef.current) return;
         const data = props.data;
         const dataMax = Math.max(...data);
         //const dataMin = Math.min(...data)
-        const ctx:CanvasRenderingContext2D = canvasRef.current.getContext("2d")!;
-        ctx.imageSmoothingEnabled = true;
+        const ctx = canvasRef.current.getContext("2d");
+        if (!ctx) return;
+        console.log(ctx);
+        
         ctx.clearRect(0,0,canvasRef.current.width, canvasRef.current.height);
         ctx.strokeStyle = lineColor;
         ctx.lineWidth = 2;

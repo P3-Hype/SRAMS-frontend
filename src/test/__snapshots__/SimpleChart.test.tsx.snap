@@ -1,0 +1,55 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`SimpleChart > renders correctly 1`] = `
+<div
+  className="simple-chart"
+  style={
+    {
+      "height": "100px",
+      "width": "300px",
+    }
+  }
+>
+  <canvas
+    className="simple-chart-canvas"
+    height={0}
+    width={0}
+  />
+</div>
+`;
+
+exports[`SimpleChart > renders with only one entry in dataset 1`] = `
+<div
+  className="simple-chart"
+  style={
+    {
+      "height": "100px",
+      "width": "300px",
+    }
+  }
+>
+  <canvas
+    className="simple-chart-canvas"
+    height={0}
+    width={0}
+  />
+</div>
+`;
+
+exports[`SimpleChart tests > renders correctly 1`] = `
+<div
+  className="simple-chart"
+  style={
+    {
+      "height": "100px",
+      "width": "300px",
+    }
+  }
+>
+  <canvas
+    className="simple-chart-canvas"
+    height={0}
+    width={0}
+  />
+</div>
+`;
