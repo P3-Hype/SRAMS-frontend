@@ -17,30 +17,4 @@ describe("SimpleChart tests", () => {
         );
         expect(component.toJSON()).toMatchSnapshot();
     })
-
-    // it("renders with empty dataset", () => {
-    //     render(
-    //         <SimpleChart 
-    //         title='test chart' 
-    //         data={[]}
-    //         width={300}
-    //         height={100}
-    //         lineColor='#ff0000'/>
-    //     );
-    //     const simpleChartElement = screen.getByTestId("simple-chart");
-    //     expect(simpleChartElement).toBeInTheDocument();
-    // })
-
-    // it("renders with only one entry in dataset", () => {
-    //     render(
-    //         <SimpleChart 
-    //         title='test chart' 
-    //         data={[1]}
-    //         width={300}
-    //         height={100}
-    //         lineColor='#ff0000'/>
-    //     );
-    //     const simpleChartElement = screen.getByTestId("simple-chart");
-    //     expect(simpleChartElement).toBeInTheDocument();
-    // })
 })
