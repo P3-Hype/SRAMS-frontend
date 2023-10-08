@@ -8,6 +8,7 @@ export default defineConfig({
     coverage: {
       reporter: ['text', 'json-summary', 'json', 'lcov'],
       provider: 'istanbul', // or v8
+      exclude: ['./src/test/**', '**/node_modules/**', '**/dist/**', '**/cypress/**', '**/.{idea,git,cache,output,temp}/**', '**/{karma,rollup,webpack,vite,vitest,jest,ava,babel,nyc,cypress,tsup,build}.config.*']
     },
     environment: 'jsdom',
     globals: true,
