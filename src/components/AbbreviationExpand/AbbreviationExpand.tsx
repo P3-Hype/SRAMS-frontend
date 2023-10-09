@@ -1,26 +1,23 @@
 import "./AbbreviationExpand.css"
 import { Box, Grow } from "@mui/material";
-import { useState } from "react";
 
 interface AbbreviationExpandProps {
-    phrase: string
+    phrase: string,
+    expanded: boolean
 }
 
 /**
- * Set **phrase** prop to the whole sentence.
+ * Create abbriviation of **phrase** prop.
  * 
  * Words in *uppercase* are used in the abbreviation.
  */
 export function AbbreviationExpand(props: AbbreviationExpandProps) {
     const words = props.phrase.split(' ');
-    const [expand, setExpand] = useState(false);
-    const handleMouserEnter = () => setExpand(true)
-    const handleMouserLeave = () => setExpand(false)
 
     return (
-    <div onMouseEnter={handleMouserEnter} onMouseLeave={handleMouserLeave} style={{cursor: "pointer"}}>
+    <div style={{cursor: "pointer"}}>
         <Box display={"flex"} flexDirection={"row"}>
-            { words.map(word => {return <Word word={word} expand={expand}></Word>})}
+            { words.map(word => {return <Word word={word} expanded={props.expanded}></Word>})}
         </Box>
     </div>
     )
@@ -28,7 +25,7 @@ export function AbbreviationExpand(props: AbbreviationExpandProps) {
 
 interface WordProps {
     word:string,
-    expand:boolean
+    expanded:boolean
 }
 
 function Word(props: WordProps ) {
@@ -38,12 +35,14 @@ function Word(props: WordProps ) {
     return (
         <Box display={"flex"} flexDirection={"row"} alignItems={"center"}>
             {!isConjunction && <span className="first-letter">{firstLetter}</span>}
-            {!isConjunction && <span style={{transition: ".5s", opacity: props.expand ? "0%" : "100%"}}>.</span>}
-            <div style={{maxWidth: props.expand ? "100px" : "0px", transition: ".5s ease", marginRight: (isConjunction && !props.expand) ? "0px" : "1rem"}}>
-                <Grow in={props.expand} timeout={500}>
+            {!isConjunction && <span style={{transition: ".5s", opacity: props.expanded ? "0%" : "100%"}}>.</span>}
+            <div style={{maxWidth: props.expanded ? "100px" : "0px", transition: ".5s ease", marginRight: (isConjunction && !props.expanded) ? "0px" : "1rem"}}>
+                <Grow in={props.expanded} timeout={500}>
                     <span>{hiddenPart}</span>
                 </Grow>
             </div>
         </Box>
     )
 }
+
+export default AbbreviationExpand
