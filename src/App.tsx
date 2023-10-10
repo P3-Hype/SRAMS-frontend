@@ -1,11 +1,12 @@
 import './App.css';
+import './components/Header/Header';
+import Header from './components/Header/Header';
 
 function App() {
 
   return (
     <>
-      <h1>SRAMS Dashboard</h1>
-      <p>...</p>
+      <Header/>
     </>
   )
 }
