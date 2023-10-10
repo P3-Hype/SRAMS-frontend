@@ -1,15 +1,22 @@
-import { Box } from "@mui/material";
-import { ReactNode } from "react";
+import { Alert, Box, Snackbar } from "@mui/material";
+import { ReactNode, useState } from "react";
 
 interface BasePageProps {
     children: ReactNode
 }
 
 export function BasePage(props: BasePageProps) {
+    const [snackBarOpen, setSnackBarOpen] = useState(false);
+    
     return (
-    <Box>
-        {props.children}
-    </Box>
+        <>
+            <Box flex={'row'}>
+                {props.children}
+            </Box>
+            <Snackbar open={snackBarOpen} autoHideDuration={6000} onClose={handleClose}>
+                <Alert severity="warning"></Alert>
+            </Snackbar>
+        </>
     );
 }
 
