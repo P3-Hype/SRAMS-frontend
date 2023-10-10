@@ -2,8 +2,8 @@ import "./AbbreviationExpand.css"
 import { Box, Grow } from "@mui/material";
 
 interface AbbreviationExpandProps {
-    phrase: string,
-    expanded: boolean
+    readonly phrase: string,
+    readonly expanded: boolean
 }
 
 /**
@@ -17,20 +17,20 @@ export function AbbreviationExpand(props: AbbreviationExpandProps) {
     return (
     <div style={{cursor: "pointer"}}>
         <Box display={"flex"} flexDirection={"row"}>
-            { words.map(word => {return <Word word={word} expanded={props.expanded}></Word>})}
+            { words.map((word, i) => {return <Word key={'word'+i} word={word} expanded={props.expanded}></Word>})}
         </Box>
     </div>
     )
 }
 
 interface WordProps {
-    word:string,
-    expanded:boolean
+    readonly word:string,
+    readonly expanded:boolean
 }
 
 function Word(props: WordProps ) {
     const firstLetter = props.word[0];
-    const isConjunction = !(firstLetter == firstLetter.toLocaleUpperCase())
+    const isConjunction = firstLetter != firstLetter.toLocaleUpperCase()
     const hiddenPart = isConjunction ? props.word : props.word.substring(1, props.word.length);
     return (
         <Box display={"flex"} flexDirection={"row"} alignItems={"center"}>
