@@ -17,7 +17,7 @@ export function AbbreviationExpand(props: AbbreviationExpandProps) {
     return (
     <div style={{cursor: "pointer"}}>
         <Box display={"flex"} flexDirection={"row"}>
-            { words.map((word, i) => {return <Word key={'word'+i} word={word} expanded={props.expanded}></Word>})}
+            { words.map((word) => {return <Word key={word} word={word} expanded={props.expanded}></Word>})}
         </Box>
     </div>
     )
