@@ -1,20 +1,18 @@
 import { AppBar, Box, Button, Stack, Toolbar } from '@mui/material';
 import Logo from '../Logo/Logo';
 
-function Header(){
+interface HeaderRoutingProps {
+
+};
+
+function Header(props: HeaderRoutingProps){
     return(
         <AppBar sx={{
-            backgroundColor: "blue",
-            height: "4rem",
-            color: "white",
-            fontWeight: "800",
-            display: "flex",
-            justifyContent: "center"
+            color: "primary"
         }}>
             <Toolbar>
                 <Box sx={{
                     flexGrow: "1",
-                    alignItems: "center",
                     marginLeft: "2rem"
                 }}>
                     <Logo expandOnHover />
