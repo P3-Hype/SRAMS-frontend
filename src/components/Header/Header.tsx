@@ -15,10 +15,8 @@ function Header(){
                 }}>
                     <Logo expandOnHover />
                 </Box>
-                <Box>
-                    <ToggleView></ToggleView>
-                </Box>
                 <Stack direction={'row'} spacing={2}>
+                    <ToggleView></ToggleView>
                     <IconButton>
                         <HelpOutlineIcon />
                     </IconButton>

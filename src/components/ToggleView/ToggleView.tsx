@@ -21,12 +21,12 @@ export default function ToggleButtons() {
       value={alignment}
       exclusive
       onChange={handleAlignment}
-      aria-label="text alignment"
+      aria-label="view mode"
     >
-      <ToggleButton value="left" aria-label="left aligned">
+      <ToggleButton value="left" aria-label="grid view">
         <ViewComfyOutlinedIcon />
       </ToggleButton>
-      <ToggleButton value="right" aria-label="right aligned">
+      <ToggleButton value="right" aria-label="map view">
         <MapOutlinedIcon />
       </ToggleButton>
     </ToggleButtonGroup>
