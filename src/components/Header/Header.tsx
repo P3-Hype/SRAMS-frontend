@@ -1,11 +1,7 @@
 import { AppBar, Box, Button, Stack, Toolbar } from '@mui/material';
 import Logo from '../Logo/Logo';
 
-interface HeaderRoutingProps {
-
-};
-
-function Header(props: HeaderRoutingProps){
+function Header(){
     return(
         <AppBar sx={{
             color: "primary"
@@ -13,7 +9,7 @@ function Header(props: HeaderRoutingProps){
             <Toolbar>
                 <Box sx={{
                     flexGrow: "1",
-                    marginLeft: "2rem"
+                    ml: 2
                 }}>
                     <Logo expandOnHover />
                 </Box>
