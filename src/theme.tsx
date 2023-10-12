@@ -22,7 +22,7 @@ export const theme = createTheme({
     },
     divider: '#24242b',
     success: {
-      main: '#4caf50',
+      main: '#4fd655',
     },
     error: {
       main: '#ff5252',
