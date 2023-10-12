@@ -3,8 +3,8 @@ import { ReactNode } from "react";
 import useAlert from "../../hooks/useAlert";
 
 interface BasePageProps {
-    alert: ReturnType<typeof useAlert>,
-    children: ReactNode,
+    readonly alert: ReturnType<typeof useAlert>,
+    readonly children: ReactNode,
 }
 
 export function BasePage(props: BasePageProps) {
