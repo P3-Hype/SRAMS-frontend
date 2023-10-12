@@ -17,7 +17,7 @@ export function BasePage(props: BasePageProps) {
 
     return (
         <>
-            <Box flex={'row'}>
+            <Box flex={'row'} marginTop={2}>
                 {props.children}
             </Box>
             <Snackbar open={props.alert.isOpen} autoHideDuration={10000} onClose={handleClose}>

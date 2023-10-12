@@ -4,9 +4,7 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 
 function Header(){
     return(
-        <AppBar position="relative" sx={{
-            color: "primary"
-        }}>
+        <AppBar position="relative" sx={{bgcolor:"primary.main"}}>
             <Toolbar>
                 <Box sx={{
                     flexGrow: "1",
@@ -16,7 +14,7 @@ function Header(){
                 </Box>
                 <Stack direction={'row'} spacing={2}>
                     <IconButton>
-                        <HelpOutlineIcon />
+                        <HelpOutlineIcon/>
                     </IconButton>
                 </Stack>
             </Toolbar>
