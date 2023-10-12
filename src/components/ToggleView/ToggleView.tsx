@@ -3,6 +3,7 @@ import MapOutlinedIcon from '@mui/icons-material/MapOutlined';
 import ViewComfyOutlinedIcon from '@mui/icons-material/ViewComfyOutlined';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import Tooltip from '@mui/material/Tooltip';
 
 export default function ToggleButtons() {
   const [alignment, setAlignment] = React.useState<string | null>('left');
@@ -24,11 +25,17 @@ export default function ToggleButtons() {
       aria-label="view mode"
     >
       <ToggleButton value="left" aria-label="grid view">
-        <ViewComfyOutlinedIcon />
+        <Tooltip title='Grid'>
+            <ViewComfyOutlinedIcon />
+        </Tooltip>
       </ToggleButton>
+
       <ToggleButton value="right" aria-label="map view">
-        <MapOutlinedIcon />
+        <Tooltip title='Map'>
+            <MapOutlinedIcon />
+        </Tooltip>
       </ToggleButton>
+
     </ToggleButtonGroup>
   );
 }
