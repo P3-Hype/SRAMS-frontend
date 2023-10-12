@@ -4,7 +4,7 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 
 function Header(){
     return(
-        <AppBar sx={{
+        <AppBar position="relative" sx={{
             color: "primary"
         }}>
             <Toolbar>

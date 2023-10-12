@@ -9,14 +9,17 @@ import { useState } from "react"
 
 export function useAlert() {
     const [isOpen, setIsOpen] = useState(false);
-    const [alertMessage, setAlertMessage] = useState("");
-    const [alertSeverity, setAlertSeverity] = useState<AlertColor>("info");
+    const [message, setMessage] = useState("");
+    const [severity, setSeverity] = useState<AlertColor>("info");
 
-    return [
-        isOpen, setIsOpen,
-        alertMessage, setAlertMessage,
-        alertSeverity, setAlertSeverity
-    ];
+    return {
+        isOpen,
+        setIsOpen,
+        message,
+        setMessage,
+        severity,
+        setSeverity
+    };
 }
 
 export default useAlert
