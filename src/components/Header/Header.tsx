@@ -1,5 +1,6 @@
-import { AppBar, Box, Button, Stack, Toolbar } from '@mui/material';
+import { AppBar, Box, IconButton, Stack, Toolbar } from '@mui/material';
 import Logo from '../Logo/Logo';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 
 function Header(){
     return(
@@ -14,8 +15,9 @@ function Header(){
                     <Logo expandOnHover />
                 </Box>
                 <Stack direction={'row'} spacing={2}>
-                    <Button variant="contained">Knap</Button>
-                    <Button variant="contained">Knap</Button>
+                    <IconButton>
+                        <HelpOutlineIcon />
+                    </IconButton>
                 </Stack>
             </Toolbar>
             
