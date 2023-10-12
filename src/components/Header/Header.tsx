@@ -1,6 +1,7 @@
 import { AppBar, Box, IconButton, Stack, Toolbar } from '@mui/material';
 import Logo from '../Logo/Logo';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import ToggleView from '../ToggleView/ToggleView';
 
 function Header(){
     return(
@@ -13,6 +14,9 @@ function Header(){
                     ml: 2
                 }}>
                     <Logo expandOnHover />
+                </Box>
+                <Box>
+                    <ToggleView></ToggleView>
                 </Box>
                 <Stack direction={'row'} spacing={2}>
                     <IconButton>
