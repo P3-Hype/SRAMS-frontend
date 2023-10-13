@@ -1,6 +1,7 @@
 import AbbreviationExpand from "../AbbreviationExpand/AbbreviationExpand"
 import { useState } from "react"
 
+
 interface LogoProps {
     readonly expandOnHover?: boolean,
 }
@@ -15,7 +16,7 @@ export function Logo(props: LogoProps) {
         const handleMouseLeave = () => setExpanded(false);
     
         return (
-            <div className="logo" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} style={{width: "fit-content"}}>
+            <div className="logo" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} style={{width: "fit-content", color: "white"}}>
                 <AbbreviationExpand phrase={srams} expanded={expanded}/>
             </div>
         );
