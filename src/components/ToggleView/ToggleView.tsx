@@ -6,22 +6,22 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Tooltip from '@mui/material/Tooltip';
 
 export default function ToggleButtons() {
-  const [alignment, setAlignment] = React.useState<string | null>('left');
+  const [view, setView] = React.useState<string | null>('grid');
 
-  const handleAlignment = (
+  const handleView = (
     event: React.MouseEvent<HTMLElement>,
-    newAlignment: string | null,
+    newView: string | null,
   ) => {
-    if (newAlignment !== null) {
-      setAlignment(newAlignment);
+    if (newView !== null) {
+      setView(newView);
     }
   };
 
   return (
     <ToggleButtonGroup
-      value={alignment}
+      value={view}
       exclusive
-      onChange={handleAlignment}
+      onChange={handleView}
       aria-label="view mode"
     >
       <ToggleButton value="grid" aria-label="grid view">
