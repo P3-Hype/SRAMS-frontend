@@ -14,7 +14,7 @@ function Header(){
                     flexGrow: "1",
                     ml: 2
                 }}>
-                    <Link component={RouterLink} to="/">
+                    <Link component={RouterLink} to="/" style={{display: 'inline-block'}}>
                         <Logo expandOnHover />
                     </Link>
                 </Box>
