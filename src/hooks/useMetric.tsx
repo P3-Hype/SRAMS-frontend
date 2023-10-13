@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 const promAddress = "161.35.193.69:9090"
 
 export function useMetric(metricLabel:string, span:number) {
-    const [metric, setMetric] = useState<number>(0);
+    const [metric, setMetric] = useState(null);
+    const [current, setCurrent] = useState<number>(0)
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 
@@ -15,6 +16,7 @@ export function useMetric(metricLabel:string, span:number) {
             }
             const jsonData = await response.json();
             setMetric(jsonData.data);
+            setCurrent(jsonData.data.result[0].values.pop()[1]);
             setIsLoading(false);
             setError(null);
         } catch(err) {
@@ -29,7 +31,7 @@ export function useMetric(metricLabel:string, span:number) {
         }, 5000)
     }, [metricLabel])
 
-    return {metric, isLoading, error};
+    return {metric, isLoading, error, current};
 }
 
 export default useMetric;
