@@ -4,12 +4,13 @@ import HomePage from './pages/HomePage';
 import RoomAdministrationPage from './pages/RoomAdministrationPage';
 import RoomOverviewPage from './pages/RoomOverviewPage';
 
+
 function App() {
 
   return (
     <>
-      <Header/>
       <BrowserRouter>
+        <Header/>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="admin" element={<RoomAdministrationPage/>} />
