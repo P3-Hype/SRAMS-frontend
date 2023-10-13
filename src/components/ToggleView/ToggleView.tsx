@@ -24,13 +24,13 @@ export default function ToggleButtons() {
       onChange={handleAlignment}
       aria-label="view mode"
     >
-      <ToggleButton value="left" aria-label="grid view">
+      <ToggleButton value="grid" aria-label="grid view">
         <Tooltip title='Grid'>
             <ViewComfyOutlinedIcon />
         </Tooltip>
       </ToggleButton>
 
-      <ToggleButton value="right" aria-label="map view">
+      <ToggleButton value="map" aria-label="map view">
         <Tooltip title='Map'>
             <MapOutlinedIcon />
         </Tooltip>
