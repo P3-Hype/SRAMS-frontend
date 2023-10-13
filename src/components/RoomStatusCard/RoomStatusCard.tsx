@@ -27,12 +27,12 @@ export function RoomStatusCard() {
                 height={100} />
             <Stack alignItems={"center"} direction={"row"} gap={1} ml={2} mb={2}>
                 <Co2 fontSize="large"/>
-                <Typography mr={2} justifyItems={"center"} variant="body1">{co2Data.current}
+                <Typography mr={2} justifyItems={"center"} variant="body2">{co2Data.current}
                 </Typography>
                 <Thermostat />
-                <Typography mr={2} justifyItems={"center"} variant="body1">{Math.round(tempData.current)}º</Typography>
+                <Typography mr={2} justifyItems={"center"} variant="body2">{Math.round(tempData.current)}º</Typography>
                 <WaterDropTwoTone />
-                <Typography justifyItems={"center"} variant="body1">{Math.round(humidityData.current)}%</Typography>
+                <Typography justifyItems={"center"} variant="body2">{Math.round(humidityData.current)}%</Typography>
             </Stack>
         </Stack>
             }
