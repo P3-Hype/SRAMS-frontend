@@ -11,8 +11,7 @@ function Header() {
                 <Container>
                     <Stack direction={"row"} alignItems={'center'}>
                         <Box sx={{
-                            flexGrow: "1",
-                            ml: 2
+                            flexGrow: "1"
                         }}>
                             <Link component={RouterLink} to="/" style={{ display: 'inline-block' }}>
                                 <Logo expandOnHover />
