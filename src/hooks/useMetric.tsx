@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
-const promUrl = "http://161.35.193.69:9090/api/v1/query?query="
+const promAddress = "161.35.193.69:9090"
 
-export function useMetric(metricLabel:string) {
-    const [metric, setMetric] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(null);
+export function useMetric(metricLabel:string, span:number) {
+    const [metric, setMetric] = useState<number>(0);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
 
     async function fetchMetric(metricLabel:string) {
         try {
-            const response = await fetch(promUrl + metricLabel);
+            const url = `http://${promAddress}/api/v1/query?query=${metricLabel}{job="rooms"}[${span}m]`;
+            const response = await fetch(url);
             if (!response.ok) {
                 throw new Error(`Error, prometheus fetch failed: ${response.statusText}`)
             }
@@ -16,7 +17,6 @@ export function useMetric(metricLabel:string) {
             setMetric(jsonData.data);
             setIsLoading(false);
             setError(null);
-        
         } catch(err) {
             setIsLoading(false);
             setError(null);
@@ -26,7 +26,7 @@ export function useMetric(metricLabel:string) {
     useEffect(() => {
         setInterval(() => {
             fetchMetric(metricLabel);
-        },5000)
+        }, 5000)
     }, [metricLabel])
 
     return {metric, isLoading, error};
