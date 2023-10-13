@@ -8,9 +8,7 @@ import Link from '@mui/material/Link';
 
 function Header(){
     return(
-        <AppBar position="relative" sx={{
-            color: "primary"
-        }}>
+        <AppBar position="relative" sx={{bgcolor:"primary.main"}}>
             <Toolbar>
                 <Box sx={{
                     flexGrow: "1",
@@ -23,7 +21,7 @@ function Header(){
                 <Stack direction={'row'} spacing={2}>
                     <ToggleView></ToggleView>
                     <IconButton>
-                        <HelpOutlineIcon />
+                        <HelpOutlineIcon/>
                     </IconButton>
                 </Stack>
             </Toolbar>

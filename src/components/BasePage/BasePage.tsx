@@ -8,7 +8,7 @@ interface BasePageProps {
 }
 
 export function BasePage(props: BasePageProps) {
-    const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => { 
         if (reason === 'clickaway') {
             return;
         }
@@ -17,11 +17,11 @@ export function BasePage(props: BasePageProps) {
 
     return (
         <>
-            <Box flex={'row'}>
+            <Box flex={'row'} marginTop={2}>
                 {props.children}
             </Box>
             <Snackbar open={props.alert.isOpen} autoHideDuration={10000} onClose={handleClose}>
-                <Alert severity={props.alert.severity} onClose={handleClose}>{props.alert.message || "snackbar"}</Alert>
+                <Alert variant="outlined" severity={props.alert.severity} onClose={handleClose}>{props.alert.message || "snackbar"}</Alert>
             </Snackbar>
         </>
     );
