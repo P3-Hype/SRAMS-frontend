@@ -1,9 +1,3 @@
-// children: ReactNode,
-// alertOpen: boolean,
-// alertMessage: string,
-// alertSeverity: AlertColor,
-// alertCloseFunction: () => void
-
 import { AlertColor } from "@mui/material";
 import { useState } from "react"
 
