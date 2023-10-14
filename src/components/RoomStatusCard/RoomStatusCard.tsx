@@ -1,6 +1,5 @@
-import { Card, Skeleton, Stack, Tooltip, Typography } from "@mui/material";
+import { Card, Skeleton, Stack, Typography } from "@mui/material";
 import useMetric from "../../hooks/useMetric";
-import { useEffect, useState } from "react";
 import { SparkLineChart } from "@mui/x-charts";
 import {useTheme} from "@mui/material";
 import { Co2, Thermostat, WaterDropTwoTone } from "@mui/icons-material";
@@ -11,8 +10,6 @@ export function RoomStatusCard() {
     const co2Data = useMetric("alex_pico_room_co2_level", 5);
     const tempData = useMetric("alex_pico_room_temperature", 5);
     const humidityData = useMetric("alex_pico_room_humidity", 5);
-
-    useEffect
 
     return (
         <Card sx={{width: "fit-content", padding:0}}>

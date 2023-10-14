@@ -6,6 +6,7 @@ export function useMetric(metricLabel:string, span:number) {
     const [current, setCurrent] = useState<number>(0)
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
+    const [intervalId, setIntervalId] = useState<NodeJS.Timeout>();
 
     async function fetchMetric(metricLabel:string) {
         try {
@@ -19,17 +20,22 @@ export function useMetric(metricLabel:string, span:number) {
             setCurrent(jsonData.data.result[0].values.pop()[1]);
             setIsLoading(false);
             setError(null);
+
         } catch(err) {
             setIsLoading(false);
-            setError(null);
+            setError("error");
+            console.log(err);
+            
         }
     }
 
     useEffect(() => {
-        setInterval(() => {
+        clearInterval(intervalId)
+        const id = setInterval(() => {
             fetchMetric(metricLabel);
-        }, 5000)
-    }, [metricLabel])
+        }, 5000);
+        setIntervalId(id)
+    }, [metricLabel]);
 
     return {metric, isLoading, error, current};
 }
