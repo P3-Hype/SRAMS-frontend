@@ -19,7 +19,8 @@ export function RoomStatusCard() {
             <SparkLineChart 
                 sx={{transform:"scaleX(1.1)"}}
                 colors={[theme.palette.primary.main]} 
-                curve="natural" data={co2Data.metric?.result[0].values.map((v:(number | string)[]) => parseInt(v[1]))}
+                curve="natural"
+                data={co2Data.metric?.result[0].values.map((v:(number | string)[]) => parseInt(v[1]))}
                 width={300}
                 height={100} />
             <Stack alignItems={"center"} direction={"row"} gap={1} ml={2} mb={2}>
@@ -31,8 +32,7 @@ export function RoomStatusCard() {
                 <WaterDropTwoTone />
                 <Typography justifyItems={"center"} variant="body2">{Math.round(humidityData.current)}%</Typography>
             </Stack>
-        </Stack>
-            }
+        </Stack>}
         </Card>
     )
 }
