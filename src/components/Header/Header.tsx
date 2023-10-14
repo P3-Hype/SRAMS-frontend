@@ -20,7 +20,7 @@ function Header() {
                         <Stack direction={'row'} spacing={2}>
                             <ToggleView></ToggleView>
                             <IconButton>
-                                <HelpOutlineIcon />
+                                <HelpOutlineIcon sx={{color: "primary.contrastText"}}/>
                             </IconButton>
                         </Stack>
                     </Stack>
