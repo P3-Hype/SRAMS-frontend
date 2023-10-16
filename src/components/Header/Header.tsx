@@ -1,10 +1,10 @@
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { AppBar, Box, IconButton, Stack, Toolbar } from '@mui/material';
 import Logo from '../Logo/Logo';
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 
-import ToggleView from '../ToggleView/ToggleView';
-import { Link as RouterLink } from 'react-router-dom';
 import Link from '@mui/material/Link';
+import { Link as RouterLink } from 'react-router-dom';
+import ToggleView from '../ToggleView/ToggleView';
 
 function Header(){
     return(
@@ -18,12 +18,17 @@ function Header(){
                         <Logo expandOnHover />
                     </Link>
                 </Box>
-                <Stack direction={'row'} spacing={2}>
+                <Stack direction={'row'} spacing={2} sx={{mr: 2}}>
                     <ToggleView></ToggleView>
                     <IconButton>
                         <HelpOutlineIcon sx={{color: "primary.contrastText"}}/>
                     </IconButton>
                 </Stack>
+                <Stack>
+                    <IconButton>
+                            <HelpOutlineIcon/>
+                        </IconButton>
+                    </Stack>
             </Toolbar>
             
         </AppBar>
