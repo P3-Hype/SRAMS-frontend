@@ -1,4 +1,4 @@
-import { Button, Card, Skeleton, Stack, Typography, colors } from "@mui/material";
+import { Card, Skeleton, Stack, Typography } from "@mui/material";
 import useMetric from "../../hooks/useMetric";
 import { SparkLineChart } from "@mui/x-charts";
 import {useTheme} from "@mui/material";
