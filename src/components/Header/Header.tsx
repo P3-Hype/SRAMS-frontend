@@ -20,13 +20,10 @@ function Header(){
                 </Box>
                 <Stack direction={'row'} spacing={2} sx={{mr: 2}}>
                     <ToggleView></ToggleView>
-                    <IconButton>
-                        <HelpOutlineIcon sx={{color: "primary.contrastText"}}/>
-                    </IconButton>
                 </Stack>
                 <Stack>
                     <IconButton>
-                            <HelpOutlineIcon/>
+                            <HelpOutlineIcon sx={{color: "primary.contrastText"}}/>
                         </IconButton>
                     </Stack>
             </Toolbar>
