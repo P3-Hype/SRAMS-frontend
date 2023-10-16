@@ -9,7 +9,7 @@ export default function ToggleButtons() {
   const [view, setView] = React.useState<string | null>('grid');
 
   const handleView = (
-    event: React.MouseEvent<HTMLElement>,
+    _: React.MouseEvent<HTMLElement>,
     newView: string | null,
   ) => {
     if (newView !== null) {
