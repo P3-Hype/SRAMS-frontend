@@ -19,7 +19,7 @@ export default function NavButtons() {
   /**
    * BytStyle is used to style the buttons
    */
-  const ButStyle = {
+  const buttonStyle = {
     fontSize: '1.5rem',
     padding: '15px 30px',
     width: '200px',
@@ -47,7 +47,7 @@ export default function NavButtons() {
       <Grid item>
         <Link component={RouterLink} to="/admin">
           <Button
-            style={ButStyle}
+            sx={buttonStyle}
           >
             Admin
           </Button>
@@ -56,7 +56,7 @@ export default function NavButtons() {
       <Grid item>
         <Link component={RouterLink} to="/overview">
           <Button
-            style={ButStyle}
+            sx={buttonStyle}
           >
             Employee
           </Button>
