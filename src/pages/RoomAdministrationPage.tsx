@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Box, Button, CardActions, Container } from "@mui/material";
 import { useState } from "react";
+import { useAllRooms } from "../hooks/useAllRooms";
 
 type Room={
     name: string;
@@ -18,6 +19,7 @@ type Room={
 
 function RoomAdministrationPage() {
     const alert = useAlert();
+    const useRooms = useAllRooms();
     const [rooms, setRooms] = useState<Room[]>([
         {name: "Room1", id: "1"},
         {name: "Room2", id: "2"},
@@ -32,7 +34,7 @@ function RoomAdministrationPage() {
         <BasePage alert={alert}>
             <Container>
                 <Box>
-                    {rooms.map(r=> (
+                    {!useRooms.isLoading && useRooms.rooms.map(r=> (
                         <Accordion>
                             <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="panel1a-header">
                                 <Typography>{r.name}</Typography>
