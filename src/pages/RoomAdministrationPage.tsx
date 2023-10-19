@@ -2,12 +2,13 @@
 import BasePage from "../components/BasePage/BasePage";
 import useAlert from "../hooks/useAlert";
 
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import SettingsIcon from '@mui/icons-material/Settings';
+import { Box, Button, CardActions, Chip, Container, Stack } from "@mui/material";
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import Typography from '@mui/material/Typography';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Box, Button, CardActions, Container } from "@mui/material";
 import { useState } from "react";
 
 type Room={
@@ -35,13 +36,23 @@ function RoomAdministrationPage() {
                     {rooms.map(r=> (
                         <Accordion>
                             <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="panel1a-header">
-                                <Typography>{r.name}</Typography>
+                                <Box sx={{alignItems:"center"}}>
+                                    <Typography>{r.name}</Typography>
+                                </Box>
+                                <Stack direction={"row-reverse"} gap={2} sx={{width:"100%", alignItems:"center"}}>
+                                    <Button variant="contained">
+                                        <SettingsIcon />
+                                    </Button>
+                                    <Chip label="Temperature"/>
+                                    <Chip label="Humidity"/>
+                                    <Chip label="Co2"/>
+                                    
+                                </Stack>
                             </AccordionSummary>
                             <AccordionDetails>
                                 <Typography>
-                                    Her skal vi vel have nogle forskelige information omkring rummet. 
+                                    Her skal vi vel have nogle forskelige information omkring rummet.
                                 </Typography>
-                                <Button variant="contained">Edit {r.name}</Button>
                             </AccordionDetails>
                         </Accordion>
                     ))}
