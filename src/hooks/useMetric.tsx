@@ -34,7 +34,8 @@ export function useMetric(metricLabel: string, span?: number, updateFrequency?:n
     useEffect(() => {
         async function fetchMetric(metricLabel: string) {
             try {
-                const url = `http://${promAddress}/api/v1/query?query=${metricLabel}{job="rooms"}${(entries.length <= 1 && span) ? `[${span}m][1m]` : ""}`;
+                const url = `http://${promAddress}/api/v1/query?query=${metricLabel}{job="rooms"}` 
+                + (entries.length <= 1 && span) ? `[${span}m][1m]` : "";
                 
                 const response = await fetch(url);
                 if (!response.ok) throw new Error(`Error, prometheus fetch failed: ${response.statusText}`)
