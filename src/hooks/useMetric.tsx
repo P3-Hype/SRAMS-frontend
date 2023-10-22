@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from "react";
-const promAddress = "161.35.193.69:9090"
+import axios from "axios";
+import { useState } from "react";
+import { useQuery } from "react-query";
 
 type Metric = {
     __name__: string;
@@ -25,49 +26,27 @@ type PromResponse = {
 };
 
 export function useMetric(metricLabel: string, span?: number, updateFrequency?:number) {
-    const [currentEntry, setCurrentEntry] = useState<ValueEntry>()
-    const [entries, setEntries] = useState<ValueEntry[]>([]);
-    const [isLoading, setIsLoading] = useState<boolean>(true);
-    const [error, setError] = useState<string | null>(null);
-    const intervalId = useRef<NodeJS.Timeout>();
+    const [currentEntry, setCurrentEntry] = useState<number>(0);
+    const [entries, setEntries] = useState<number[]>([]);
 
-    useEffect(() => {
-        async function fetchMetric(metricLabel: string) {
-            try {
-                const url = `http://${promAddress}/api/v1/query?query=${metricLabel}{job="rooms"}` 
-                + (entries.length <= 1 && span) ? `[${span}m][1m]` : "";
-                
-                const response = await fetch(url);
-                if (!response.ok) throw new Error(`Error, prometheus fetch failed: ${response.statusText}`)
-                const jsonData: PromResponse = await response.json();
-                
-                const responseEntries = jsonData.data.result[0].values;
+    const {isLoading} = useQuery(['metric', metricLabel], {
+        queryFn: async () => {
+            const {data} = await axios.get(import.meta.env.VITE_PROMETHEUS_API_ADDRESS + 'query', {
+                params: {
+                    query: metricLabel + `[${span}m]`
+                }
+            });
+            return data as PromResponse;
+        },
+        onSuccess: (response) => {
+            setCurrentEntry(parseFloat(response.data.result[0].values[0][1]));
+            if (response.data.resultType != "matrix") return;
+            setEntries(response.data.result[0].values.map(v => parseFloat(v[1]) ?? 0));
+        },
+        refetchInterval: updateFrequency ?? 5000
+    })
 
-                setCurrentEntry(responseEntries[1]);
-                setEntries(responseEntries);
-                setIsLoading(false);
-                setError(null);
-            } catch (err) {
-                setIsLoading(false);
-                setError("error");
-                console.log(err);
-
-            }
-        }
-
-        clearInterval(intervalId.current)
-        const id = setInterval(() => {
-            fetchMetric(metricLabel);
-        }, updateFrequency ?? 5000);
-        intervalId.current = id;
-    }, [metricLabel, updateFrequency, span]);
-
-    return { 
-        currentEntry,
-        entries, 
-        isLoading, 
-        error, 
-    };
+    return {currentEntry, entries, isLoading}
 }
 
 export default useMetric;

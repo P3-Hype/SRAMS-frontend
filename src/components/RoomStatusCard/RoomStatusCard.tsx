@@ -19,17 +19,17 @@ export function RoomStatusCard() {
                     sx={{transform:"scaleX(1.05)"}}
                     colors={[theme.palette.primary.main]}
                     curve="natural"
-                    data={co2Data.entries.map(e => parseFloat(e[1]))}
+                    data={co2Data.entries ?? []}
                     width={300}
                     height={100} />
                 <Stack alignItems={"center"} direction={"row"} gap={1} ml={2} mb={2}>
-                    <Co2 fontSize="large"/>
-                    <Typography mr={2} justifyItems={"center"} variant="body2">{co2Data.currentEntry![1] ?? ""}
+                    <Co2 fontSize="large" />
+                    <Typography mr={2} justifyItems={"center"} variant="body2">{Math.round(co2Data.currentEntry)}
                     </Typography>
                     <Thermostat />
-                    <Typography mr={2} justifyItems={"center"} variant="body2">{Math.round(parseFloat(tempData.currentEntry![1]))}º</Typography>
+                    <Typography mr={2} justifyItems={"center"} variant="body2">{Math.round(tempData.currentEntry)}º</Typography>
                     <WaterDropTwoTone />
-                    <Typography justifyItems={"center"} variant="body2">{Math.round(parseFloat(humidityData.currentEntry![1]))}%</Typography>
+                    <Typography justifyItems={"center"} variant="body2">{Math.round(humidityData.currentEntry)}%</Typography>
                 </Stack>
             </Stack>}
         </Card>
