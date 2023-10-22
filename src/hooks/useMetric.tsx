@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useState } from "react";
 import { useQuery } from "react-query";
 
 type Metric = {
@@ -12,7 +11,7 @@ type ValueEntry = [number, string];
 
 type ResultEntry = {
     metric: Metric;
-    values: ValueEntry[];
+    values: ValueEntry[] | ValueEntry;
 };
 
 type Data = {
@@ -26,27 +25,20 @@ type PromResponse = {
 };
 
 export function useMetric(metricLabel: string, span?: number, updateFrequency?:number) {
-    const [currentEntry, setCurrentEntry] = useState<number>(0);
-    const [entries, setEntries] = useState<number[]>([]);
-
-    const {isLoading} = useQuery(['metric', metricLabel], {
+    const spanString = (span != undefined && span > 0) ? `[${span}m]` : "";
+    const {data, isLoading} = useQuery(['metric', metricLabel], {
         queryFn: async () => {
             const {data} = await axios.get(import.meta.env.VITE_PROMETHEUS_API_ADDRESS + 'query', {
                 params: {
-                    query: metricLabel + `[${span}m]`
+                    query: metricLabel + spanString
                 }
             });
             return data as PromResponse;
         },
-        onSuccess: (response) => {
-            setCurrentEntry(parseFloat(response.data.result[0].values[0][1]));
-            if (response.data.resultType != "matrix") return;
-            setEntries(response.data.result[0].values.map(v => parseFloat(v[1]) ?? 0));
-        },
         refetchInterval: updateFrequency ?? 5000
     })
 
-    return {currentEntry, entries, isLoading}
+    return {data, isLoading}
 }
 
 export default useMetric;
