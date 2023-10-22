@@ -25,7 +25,24 @@ export const theme = createTheme({
           },
         })
       }
-    }
+    },
+    MuiCard: {
+      styleOverrides: {
+        root: ({theme}) => ({
+          boxShadow: "0px 10px 50px -15px " + theme.palette.grey[300],
+        }),
+      }
+    },
+    MuiAccordionSummary: {
+      styleOverrides: {
+        content: ({theme}) => ({
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center'
+        })
+      }
+    },
   }
 });
 
