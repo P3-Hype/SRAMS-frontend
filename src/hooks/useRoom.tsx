@@ -6,8 +6,7 @@ export function useAllRooms() {
         queryFn: async () => {
             const { data } = await axios.get("http://localhost:8080/room/all");
             return data;
-        },
-        refetchInterval: 3000
+        }
     });
     return { rooms: data, isLoading }
 }
