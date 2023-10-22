@@ -25,14 +25,14 @@ export function RoomStatusCard() {
                 <Stack alignItems={"center"} direction={"row"} gap={1} ml={2} mb={2}>
                     <Co2 fontSize="large" />
                     <Typography mr={2} justifyItems={"center"} variant="body2">
-                        {Math.round(parseFloat(co2Data.data?.data.result[0].values[0][1] ?? ""))}
+                        {Math.round(parseFloat(co2Data.data?.data.result[0].values[1][1] ?? ""))}
                     </Typography>
                     <Thermostat />
                     <Typography mr={2} justifyItems={"center"} variant="body2">
-                        {Math.round(parseFloat(tempData.data?.data.result[0].values[1] ?? ""))}º</Typography>
+                        {Math.round(parseFloat(tempData.data?.data.result[0].value[1] ?? ""))}º</Typography>
                     <WaterDropTwoTone />
                     <Typography justifyItems={"center"} variant="body2">
-                        {Math.round(parseFloat(humidityData.data?.data.result[0].values[1] ?? ""))}%</Typography>
+                        {Math.round(parseFloat(humidityData.data?.data.result[0].value[1] ?? ""))}%</Typography>
                 </Stack>
             </Stack>}
         </Card>

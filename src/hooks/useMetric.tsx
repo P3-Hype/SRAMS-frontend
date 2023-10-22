@@ -11,7 +11,8 @@ type ValueEntry = [number, string];
 
 type ResultEntry = {
     metric: Metric;
-    values: ValueEntry[] | ValueEntry;
+    values: ValueEntry[];
+    value: ValueEntry
 };
 
 type Data = {
