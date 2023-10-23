@@ -57,8 +57,8 @@ function RoomAdministrationPage() {
                             </AccordionDetails>
                         </Accordion>
                     ))}
-                </Card>
-                <Button size="large" variant="contained" color="primary" fullWidth onClick={() => { }}>
+                </Card>    
+                <Button size="large" variant="contained" color="primary" fullWidth>
                     <Typography variant="h6">Add more Roms</Typography>
                 </Button>
             </Container>
