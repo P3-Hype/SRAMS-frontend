@@ -1,33 +1,33 @@
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
-import { AppBar, Box, IconButton, Stack, Toolbar } from '@mui/material';
+import { AppBar, Box, Container, IconButton, Stack, Toolbar } from '@mui/material';
+import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import Logo from '../Logo/Logo';
-
 import Link from '@mui/material/Link';
 import { Link as RouterLink } from 'react-router-dom';
 import ToggleView from '../ToggleView/ToggleView';
 
-function Header(){
-    return(
-        <AppBar position="relative" sx={{bgcolor:"primary.main"}}>
+function Header() {
+    return (
+        <AppBar position="relative" sx={{ bgcolor: "primary.main" }}>
             <Toolbar>
-                <Box sx={{
-                    flexGrow: "1",
-                    ml: 2
-                }}>
-                    <Link component={RouterLink} to="/" style={{display: 'inline-block'}}>
-                        <Logo expandOnHover />
-                    </Link>
-                </Box>
-                <Stack direction={'row'} spacing={2} sx={{mr: 2}}>
-                    <ToggleView></ToggleView>
-                </Stack>
-                <Stack>
-                    <IconButton>
-                            <HelpOutlineIcon sx={{color: "primary.contrastText"}}/>
-                        </IconButton>
+                <Container>
+                    <Stack direction={"row"} alignItems={'center'}>
+                        <Box sx={{
+                            flexGrow: "1"
+                        }}>
+                            <Link component={RouterLink} to="/" style={{ display: 'inline-block' }}>
+                                <Logo expandOnHover />
+                            </Link>
+                        </Box>
+                        <Stack direction={'row'} alignItems={'center'} spacing={2}>
+                            <ToggleView></ToggleView>
+                            <IconButton>
+                                <HelpOutlineOutlinedIcon sx={{color: "primary.contrastText"}}/>
+                            </IconButton>
+                        </Stack>
                     </Stack>
+                </Container>
             </Toolbar>
-            
+
         </AppBar>
     )
 }

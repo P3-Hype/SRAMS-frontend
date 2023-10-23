@@ -21,7 +21,7 @@ export const theme = createTheme({
         root: ({theme}) => ({
           "&.Mui-selected": {
             color: theme.palette.primary.contrastText,
-            backgroundColor: theme.palette.primary.dark
+            backgroundColor: theme.palette.primary.dark,
           },
         })
       }
