@@ -4,10 +4,7 @@ import useAlert from '../hooks/useAlert';
 import { useRoom } from '../hooks/useRoom';
 import { useParams } from 'react-router-dom';
 import { useState } from 'react';
-import WindowOutlinedIcon from '@mui/icons-material/WindowOutlined';
-import WindowTwoTone from '@mui/icons-material/WindowTwoTone';
-import TagOutlined from '@mui/icons-material/TagOutlined';
-import { DoorBack, SaveOutlined } from '@mui/icons-material';
+import { SaveOutlined, ViewListRounded } from '@mui/icons-material';
 import Room from '../room';
 import {Link as RouterLink} from 'react-router-dom';
 
@@ -22,15 +19,14 @@ function EditRoomContent(props: {room: Room, theme:Theme, labels:string[]}) {
                 <Stack direction={"row"} alignItems={'flex-start'} gap={8}>
                     <TextField sx={{ flexGrow: 1 }} label="Name" defaultValue={room.name} variant="standard" />
                     <IconButton component={RouterLink} to="/admin">
-                        <DoorBack />
+                        <ViewListRounded />
                     </IconButton>
                 </Stack>
                     <Typography variant="subtitle2" sx={{ opacity: 0.2 }}>
                         {room.id}
                     </Typography>
                 <Stack direction={"row"} alignItems={'flex-end'} gap={8}>
-                    <Checkbox icon={<WindowOutlinedIcon/>} />
-                    <Checkbox icon={<WindowTwoTone/>} />
+                    <Checkbox defaultChecked={room.hasWindow} />
                 </Stack>
                 <Autocomplete
                 PaperComponent={({ children }) => (
