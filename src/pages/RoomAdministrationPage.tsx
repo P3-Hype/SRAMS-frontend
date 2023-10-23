@@ -2,13 +2,14 @@ import BasePage from "../components/BasePage/BasePage";
 import useAlert from "../hooks/useAlert";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import SettingsIcon from '@mui/icons-material/Settings';
-import { Box, Button, Chip, Container, Stack } from "@mui/material";
+import { Box, Button, Chip, Container, Stack, Tooltip } from "@mui/material";
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import Typography from '@mui/material/Typography';
 import { useState } from "react";
 import { useAllRooms } from "../hooks/useRoom";
+import { Co2, Thermostat, WaterDropTwoTone, DirectionsWalk } from "@mui/icons-material";
 
 type Room={
     name: string;
@@ -19,15 +20,6 @@ type Room={
 function RoomAdministrationPage() {
     const alert = useAlert();
     const allRooms = useAllRooms();
-    const [rooms, setRooms] = useState<Room[]>([
-        {name: "Room1", id: "1"},
-        {name: "Room2", id: "2"},
-        {name: "Room3", id: "3"}
-    ]);
-
-    const addClickHandeler = ()=>{setRooms([...rooms,{name: "newRoom", id: "000"}])}
-
-
 
     return (
         <BasePage alert={alert}>
@@ -41,10 +33,18 @@ function RoomAdministrationPage() {
                                     <Button variant="contained">
                                         <SettingsIcon />
                                     </Button>
-                                    <Chip label="Temperature"/>
-                                    <Chip label="Humidity"/>
-                                    <Chip label="Co2"/>
-                                    
+                                    <Tooltip title="Co2">
+                                        <Co2 />
+                                    </Tooltip>
+                                    <Tooltip title="Temperature">
+                                        <Thermostat />
+                                    </Tooltip>
+                                    <Tooltip title="Humidity">
+                                        <WaterDropTwoTone />
+                                    </Tooltip>
+                                    <Tooltip title="Passive Infrared">
+                                        <DirectionsWalk />
+                                    </Tooltip>
                                 </Stack>
                             </AccordionSummary>
                             <AccordionDetails>

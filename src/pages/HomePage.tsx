@@ -2,6 +2,7 @@ import { Container } from "@mui/material";
 import BasePage from "../components/BasePage/BasePage";
 import useAlert from "../hooks/useAlert";
 import NavButtons from "../components/HomePage/NavButtons";
+import RoomStatusCard from "../components/RoomStatusCard/RoomStatusCard";
 
 
 
