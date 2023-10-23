@@ -4,3 +4,5 @@ type Room = {
     seatCount: number,
     hasWindow: boolean
 }
+
+export default Room;

@@ -28,16 +28,8 @@ export const theme = createTheme({
     },
     MuiCard: {
       styleOverrides: {
-        root: ({ theme }) => ({
-          boxShadow: "0px 10px 50px -15px " + theme.palette.grey[300],
-        }),
-      },
-    },
-    MuiPaper: {
-      styleOverrides: {
         root: ({theme}) => ({
-          boxShadow: "0px 10px 50px -15px " + theme.palette.grey[300],
-          padding: theme.spacing(2)
+          boxShadow: "0px 10px 50px -15px " + theme.palette.grey[200],
         }),
       }
     },
