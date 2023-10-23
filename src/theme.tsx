@@ -21,11 +21,18 @@ export const theme = createTheme({
         root: ({theme}) => ({
           "&.Mui-selected": {
             color: theme.palette.primary.contrastText,
-            backgroundColor: theme.palette.primary.dark
+            backgroundColor: theme.palette.primary.dark,
           },
         })
       }
-    }
+    },
+    MuiCard: {
+      styleOverrides: {
+        root: ({theme}) => ({
+          boxShadow: "0px 10px 50px -15px " + theme.palette.grey[300]
+        }),
+      }
+    },
   }
 });
 
