@@ -2,12 +2,13 @@ import BasePage from "../components/BasePage/BasePage";
 import useAlert from "../hooks/useAlert";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import SettingsIcon from '@mui/icons-material/Settings';
-import { Button, Card, Chip, Container, IconButton, Stack } from "@mui/material";
+import { Button, Card, Chip, Container, IconButton, Stack, Tooltip } from "@mui/material";
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import Typography from '@mui/material/Typography';
 import { useAllRooms } from "../hooks/useRoom";
+import { Co2, Thermostat, WaterDropTwoTone, DirectionsWalk } from "@mui/icons-material";
 
 type Room = {
     name: string;
@@ -35,9 +36,18 @@ function RoomAdministrationPage() {
                                     <IconButton>
                                         <SettingsIcon />
                                     </IconButton>
-                                    <Chip label="Temperature" />
-                                    <Chip label="Humidity" />
-                                    <Chip label="CO2" />
+                                    <Tooltip title="Co2">
+                                        <Co2 />
+                                    </Tooltip>
+                                    <Tooltip title="Temperature">
+                                        <Thermostat />
+                                    </Tooltip>
+                                    <Tooltip title="Humidity">
+                                        <WaterDropTwoTone />
+                                    </Tooltip>
+                                    <Tooltip title="Passive Infrared">
+                                        <DirectionsWalk />
+                                    </Tooltip>
                                 </Stack>
                             </AccordionSummary>
                             <AccordionDetails>
@@ -47,8 +57,8 @@ function RoomAdministrationPage() {
                             </AccordionDetails>
                         </Accordion>
                     ))}
-                </Card>
-                <Button size="large" variant="contained" color="primary" fullWidth onClick={() => { }}>
+                </Card>    
+                <Button size="large" variant="contained" color="primary" fullWidth>
                     <Typography variant="h6">Add more Roms</Typography>
                 </Button>
             </Container>
