@@ -1,4 +1,4 @@
-import { Container, Stack, Typography } from "@mui/material";
+import { Box, Container, Stack, Typography } from "@mui/material";
 import BasePage from "../components/BasePage/BasePage";
 import RoomStatusCard from "../components/RoomStatusCard/RoomStatusCard";
 import Timeline from "../components/TimeClock/Timeline";
@@ -17,9 +17,9 @@ function RoomOverviewPage() {
           <RoomStatusCard />
           <RoomStatusCard />
         </Stack>
-        <Container>
+        <Box>
           <Timeline rooms={rooms} />
-        </Container>
+        </Box>
       </Container>
     </BasePage>
   );

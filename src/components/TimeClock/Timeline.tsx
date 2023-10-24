@@ -1,21 +1,32 @@
 import { Box, Container, Divider, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 
+//Denne type-definition specificerer, at Timeline-komponenten forventer en props-objekt med en nøgle rooms, der er en streng-array.
 type TimelineProps = {
   rooms: string[];
 };
 
-const generateTimelineLabel = () => {
+/*
+  i.toString() bliver brugt til at konvertere et tal til en streng.
+  Derefter sammensættes denne streng med nullet ("0") indtil den når en længde af 2 karakterer.
+
+  Eksempler:
+
+  8.toString().padStart(2, "0") vil returnere "08"
+  10.toString().padStart(2, "0") vil returnere "10"
+*/
+function generateTimelineLabel() {
   const labels = [];
-  for (let i = 8; i <= 21; i++) {
+  for (let i = 8; i <= 22; i++) {
     labels.push(`${i.toString().padStart(2, "0")}:00`);
   }
   return `Timeline: ${labels.join(" - ")}`;
-};
+}
 
 const Timeline = ({ rooms }: TimelineProps) => {
   const [currentTime, setCurrentTime] = useState(new Date());
 
+  //Dette useEffect-hook opdaterer currentTime hvert sekund og rydder op efter sig, når komponenten fjernes.
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentTime(new Date());
@@ -24,6 +35,7 @@ const Timeline = ({ rooms }: TimelineProps) => {
     return () => clearInterval(interval);
   }, []);
 
+  //Beregner alle de nødvendige variable, som bruges til at bestemme positionen af den røde streg.
   const calculatePosition = () => {
     const startHour = 8;
     const endHour = 21;
@@ -45,20 +57,19 @@ const Timeline = ({ rooms }: TimelineProps) => {
       <Typography variant="h6">{timelineLabel}</Typography>
       <Divider />
       {rooms.map((room, index) => (
-        <Box key={index} display="flex" alignItems="center" marginBottom={2}>
+        <Box key={index} display="flex" alignItems="center" mb={2}>
           <Typography variant="body1">{room}</Typography>
-          <Box flexGrow={1}>
-            <div
-              style={{
+          <Box flexGrow={1} ml={2}>
+            <Box
+              sx={{
                 position: "relative",
                 height: "20px",
                 backgroundColor: "white",
-                marginLeft: "16px",
               }}
             >
               {position !== null && (
-                <div
-                  style={{
+                <Box
+                  sx={{
                     position: "absolute",
                     left: `${position}%`,
                     top: 0,
@@ -68,7 +79,7 @@ const Timeline = ({ rooms }: TimelineProps) => {
                   }}
                 />
               )}
-            </div>
+            </Box>
           </Box>
         </Box>
       ))}
