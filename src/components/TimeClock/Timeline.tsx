@@ -56,8 +56,8 @@ const Timeline = ({ rooms }: TimelineProps) => {
     <Container>
       <Typography variant="h6">{timelineLabel}</Typography>
       <Divider />
-      {rooms.map((room, index) => (
-        <Box key={index} display="flex" alignItems="center" mb={2}>
+      {rooms.map((room) => (
+        <Box key={room} display="flex" alignItems="center" mb={2}>
           <Typography variant="body1">{room}</Typography>
           <Box flexGrow={1} ml={2}>
             <Box
