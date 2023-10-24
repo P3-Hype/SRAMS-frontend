@@ -16,8 +16,11 @@ type TimelineProps = {
   10.toString().padStart(2, "0") vil returnere "10"
 */
 function generateTimelineLabel() {
+  const startHour = 8;
+  const endHour = 22;
+
   const labels = [];
-  for (let i = 8; i <= 22; i++) {
+  for (let i = startHour; i <= endHour; i++) {
     labels.push(`${i.toString().padStart(2, "0")}:00`);
   }
   return `Timeline: ${labels.join(" - ")}`;
