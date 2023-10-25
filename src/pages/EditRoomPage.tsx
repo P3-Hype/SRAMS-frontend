@@ -1,18 +1,28 @@
 import BasePage from '../components/BasePage/BasePage';
-import { Autocomplete, Checkbox, Card, Container, LinearProgress, Paper, Stack, TextField, Typography, useTheme, IconButton, Theme, Fade, Box, Slider } from '@mui/material';
+import { Autocomplete, Checkbox, Card, Container, LinearProgress, Paper, Stack, TextField, Typography, useTheme, IconButton, Fade, Box, Slider } from '@mui/material';
 import useAlert from '../hooks/useAlert';
 import { useRoom } from '../hooks/useRoom';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, Link as RouterLink } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { DeleteForeverRounded, ViewListRounded } from '@mui/icons-material';
 import Room from '../room';
-import { Link as RouterLink } from 'react-router-dom';
 import SaveButton from '../components/SaveButton/SaveButton';
 import axios from 'axios';
 import { useMutation, useQueryClient } from 'react-query';
 
-function EditRoomContent(props: { room: Room, theme: Theme, labels: string[] }) {
-    const theme = props.theme;
+function AutoCompleteDropdown(props: {children?: React.ReactNode}) {
+    const theme = useTheme();
+    return (
+        <Paper sx={{ border: "1px solid " + theme.palette.primary.main, marginTop: 1 }}>
+            {props.children}
+        </Paper>
+    )
+}
+
+function EditRoomContent(props: { 
+    readonly room: Room, 
+    readonly labels: string[] }) {
+
     const room = props.room;
     const labels = props.labels;
     const [roomMutation, setRoomMutation] = useState<Room>(room);
@@ -132,11 +142,7 @@ function EditRoomContent(props: { room: Room, theme: Theme, labels: string[] }) 
                     />
                 </Stack >
                 <Autocomplete
-                    PaperComponent={({ children }) => (
-                        <Paper sx={{ border: "1px solid " + theme.palette.primary.main, marginTop: 1 }}>
-                            {children}
-                        </Paper>
-                    )}
+                    PaperComponent={AutoCompleteDropdown}
                     options={labels}
                     renderInput={(params) => <TextField {...params} label="Prom label" />}
                 />
@@ -147,7 +153,6 @@ function EditRoomContent(props: { room: Room, theme: Theme, labels: string[] }) 
 
 export function EditRoomPage() {
     const alert = useAlert();
-    const theme = useTheme();
     const params = useParams<{ id: string }>();
     const { room, isLoading } = useRoom(params.id ?? "")
     const [labels, setLabels] = useState<string[]>([]);
@@ -159,17 +164,16 @@ export function EditRoomPage() {
                     ?
                     <LinearProgress />
                     : room
-                        ?
-                        <Fade in timeout={200}>
-                            <Box>
-                                <EditRoomContent
-                                    room={room}
-                                    theme={theme}
-                                    labels={labels} />
-                            </Box>
-                        </Fade>
-                        :
-                        <Typography> Room not found </Typography>
+                    ?
+                    <Fade in timeout={200}>
+                        <Box>
+                            <EditRoomContent
+                                room={room}
+                                labels={labels} />
+                        </Box>
+                    </Fade>
+                    :
+                    <Typography> Room not found </Typography>
                 }
             </Container>
         </BasePage>

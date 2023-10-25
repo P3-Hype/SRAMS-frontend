@@ -2,8 +2,8 @@ import { SaveOutlined } from "@mui/icons-material";
 import { Button, CircularProgress, Typography } from "@mui/material";
 
 interface SaveButtonProps {
-    isLoading: boolean;
-    saveHandler: () => void;
+    readonly isLoading: boolean;
+    readonly saveHandler: () => void;
 }
 
 function SaveButton(props: SaveButtonProps) {
