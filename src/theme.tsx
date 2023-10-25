@@ -35,7 +35,7 @@ export const theme = createTheme({
     },
     MuiAccordionSummary: {
       styleOverrides: {
-        content: ({}) => ({
+        content: ({ theme }) => ({
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-between",
