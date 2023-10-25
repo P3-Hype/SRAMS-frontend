@@ -152,27 +152,29 @@ function EditRoomContent(props: {
     )
 }
 
-export function EditRoomPage() {
-    const alert = useAlert();
+function Content() {
     const params = useParams<{ id: string }>();
     const { room, isLoading } = useRoom(params.id ?? "")
     const [labels, setLabels] = useState<string[]>([]);
 
-    const Content = () => {
-        if (isLoading) return <LinearProgress />
-        if (room == null || room == undefined) {
-            return <Typography> Room not found </Typography>
-        }
-        return (
-            <Fade in timeout={200}>
-                <Box>
-                    <EditRoomContent
-                        room={room}
-                        labels={labels} />
-                </Box>
-            </Fade>
-        )
+    if (isLoading) return <LinearProgress />
+    if (room == null || room == undefined) {
+        return <Typography> Room not found </Typography>
     }
+    
+    return (
+        <Fade in timeout={200}>
+            <Box>
+                <EditRoomContent
+                    room={room}
+                    labels={labels} />
+            </Box>
+        </Fade>
+    )
+}
+
+export function EditRoomPage() {
+    const alert = useAlert();
 
     return (
         <BasePage alert={alert}>
