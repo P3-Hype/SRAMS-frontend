@@ -2,14 +2,14 @@ import BasePage from '../components/BasePage/BasePage';
 import { Autocomplete, Checkbox, Card, Container, LinearProgress, Paper, Stack, TextField, Typography, useTheme, IconButton, Theme, Fade, Box, Slider } from '@mui/material';
 import useAlert from '../hooks/useAlert';
 import { useRoom } from '../hooks/useRoom';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { DeleteForeverRounded, ViewListRounded } from '@mui/icons-material';
 import Room from '../room';
 import { Link as RouterLink } from 'react-router-dom';
 import SaveButton from '../components/SaveButton/SaveButton';
 import axios from 'axios';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 
 function EditRoomContent(props: { room: Room, theme: Theme, labels: string[] }) {
     const theme = props.theme;
@@ -17,8 +17,10 @@ function EditRoomContent(props: { room: Room, theme: Theme, labels: string[] }) 
     const labels = props.labels;
     const [roomMutation, setRoomMutation] = useState<Room>(room);
     const [isLoading, setIsloading] = useState(false);
-    const mutation = useMutation({
-        mutationFn: (room:Room) => {
+    const queryClient = useQueryClient();
+    const navigate = useNavigate();
+    const updateRoomMutation = useMutation({
+        mutationFn: (room: Room) => {
             setIsloading(true);
             return axios.put(`${import.meta.env.VITE_SRAMS_API_ADDRESS}room/updateRoom`, room);
         },
@@ -27,7 +29,21 @@ function EditRoomContent(props: { room: Room, theme: Theme, labels: string[] }) 
         },
     });
     const mutate = () => {
-        mutation.mutate(roomMutation);
+        updateRoomMutation.mutate(roomMutation);
+    }
+
+    const deleteRoomMutation = useMutation((id: string) => axios.delete(
+        `${import.meta.env.VITE_SRAMS_API_ADDRESS}room/deleteRoom`,
+        { params: { roomId: id } }
+      ), {
+        onSuccess: () => {
+            console.log("Room deleted");
+            queryClient.invalidateQueries("allRooms");
+            navigate("/admin")
+        }
+      });
+    const handleDelete = () => {
+        deleteRoomMutation.mutate(room.id);
     }
 
     //set initatl room state
@@ -36,23 +52,23 @@ function EditRoomContent(props: { room: Room, theme: Theme, labels: string[] }) 
     }, [room])
 
     return (
-        <Card sx={{ padding: 4, overflow:"visible" }}>
+        <Card sx={{ padding: 4, overflow: "visible" }}>
             <Stack direction={"column"} gap={4}>
                 <Stack direction={"row"} alignItems={'flex-start'} gap={2}>
-                    <TextField 
-                    sx={{ flexGrow: 1 }} 
-                    onChange={(e) => {
-                        const r = roomMutation;
-                        r.name = e.target.value;
-                        setRoomMutation(r);
-                    }} 
-                    label="Name" 
-                    defaultValue={room.name} 
-                    variant="standard" />
-                    <SaveButton saveHandler={mutate} isLoading={isLoading} />
-                    <IconButton>
-                        <DeleteForeverRounded color='error'/>
+                    <TextField
+                        sx={{ flexGrow: 1 }}
+                        onChange={(e) => {
+                            const r = roomMutation;
+                            r.name = e.target.value;
+                            setRoomMutation(r);
+                        }}
+                        label="Name"
+                        defaultValue={room.name}
+                        variant="standard" />
+                    <IconButton onClick={handleDelete}>
+                        <DeleteForeverRounded color='error' />
                     </IconButton>
+                    <SaveButton saveHandler={mutate} isLoading={isLoading} />
                     <IconButton component={RouterLink} to="/admin">
                         <ViewListRounded />
                     </IconButton>
@@ -62,21 +78,21 @@ function EditRoomContent(props: { room: Room, theme: Theme, labels: string[] }) 
                 </Typography>
                 <Stack direction={"row"} alignItems={'center'} gap={2}>
                     <TextField
-                    type='number'
-                    defaultValue={room.seatCount}
-                    label="Number of seats"
-                    variant="outlined"
-                    onChange={(e) => {
-                        const r = roomMutation;
-                        r.seatCount = parseInt(e.target.value);
-                        setRoomMutation(r);
-                    }}/>
+                        type='number'
+                        defaultValue={room.seatCount}
+                        label="Number of seats"
+                        variant="outlined"
+                        onChange={(e) => {
+                            const r = roomMutation;
+                            r.seatCount = parseInt(e.target.value);
+                            setRoomMutation(r);
+                        }} />
                     <Box display={'flex'} flexDirection={'column'} alignItems={'flex-start'}>
                         <Checkbox defaultChecked={room.hasWindow} onChange={(e) => {
                             const r = roomMutation;
                             r.hasWindow = e.target.checked;
                             setRoomMutation(r);
-                        }}/>
+                        }} />
                         <Typography ml={1.5} variant="body1">
                             Room has a window
                         </Typography>
@@ -84,33 +100,35 @@ function EditRoomContent(props: { room: Room, theme: Theme, labels: string[] }) 
                 </Stack>
                 <Stack direction={"row"} minHeight={"fit-content"} alignItems={'center'} gap={8}>
                     <Slider
-                    sx={{minHeight: "12rem"}}
-                    aria-label='Temperature slider'
-                    orientation='vertical'
-                    defaultValue={[20, 23]}
-                    valueLabelDisplay="auto"
-                    valueLabelFormat={(value) => value + " °C"}
-                    min={15}
-                    max={30}
+                        sx={{ minHeight: "12rem" }}
+                        disabled={!room.hasTemperature}
+                        orientation='vertical'
+                        defaultValue={[20, 23]}
+                        valueLabelDisplay="auto"
+                        valueLabelFormat={(value) => value + " °C"}
+                        min={15}
+                        max={30}
                     />
                     <Slider
-                    sx={{minHeight: "12rem"}}
-                    orientation='vertical'
-                    defaultValue={[40, 70]}
-                    valueLabelDisplay="auto"
-                    valueLabelFormat={(value) => value + "%"}
-                    min={0}
-                    max={100}
+                        sx={{ minHeight: "12rem" }}
+                        disabled={!room.hasHumidity}
+                        orientation='vertical'
+                        defaultValue={[40, 70]}
+                        valueLabelDisplay="auto"
+                        valueLabelFormat={(value) => value + "%"}
+                        min={0}
+                        max={100}
                     />
                     <Slider
-                    sx={{minHeight: "12rem"}}
-                    orientation='vertical'
-                    defaultValue={800}
-                    valueLabelDisplay="auto"
-                    valueLabelFormat={(value) => value + " PPM"}
-                    min={400}
-                    step={100}
-                    max={5000}
+                        sx={{ minHeight: "12rem" }}
+                        disabled={!room.hasCo2}
+                        orientation='vertical'
+                        defaultValue={800}
+                        valueLabelDisplay="auto"
+                        valueLabelFormat={(value) => value + " PPM"}
+                        min={400}
+                        step={100}
+                        max={5000}
                     />
                 </Stack >
                 <Autocomplete
@@ -147,7 +165,7 @@ export function EditRoomPage() {
                                 <EditRoomContent
                                     room={room}
                                     theme={theme}
-                                    labels={labels}/>
+                                    labels={labels} />
                             </Box>
                         </Fade>
                         :
