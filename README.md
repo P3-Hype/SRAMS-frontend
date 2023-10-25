@@ -25,3 +25,15 @@ If you are developing a production application, we recommend updating the config
 - Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
 - Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
 - Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+
+
+# GitHub Actions
+## Build and push Docker image
+1. Commit changes to working branch
+2. Make a PR to main
+3. Create new tag for updated main \
+`git tag -a v*.*.* -m "Version *.*.*"`
+4. Push the tag with the updated main \
+`git push origin main <tag>`
+5. GitHub action should now build and push a new image based on latest changes.
+To use a specific version look under packages for the desired repository.
