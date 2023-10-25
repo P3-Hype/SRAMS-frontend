@@ -1,20 +1,10 @@
-import { Box, Container, Divider, Typography } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import theme from "../../theme";
 
 type TimelineProps = {
   rooms: { name: string; reservations: { start: number; end: number }[] }[];
 };
-
-function generateTimelineLabel() {
-  const startHour = 8;
-  const endHour = 22;
-  const labels = [];
-  for (let i = startHour; i <= endHour; i++) {
-    labels.push(`${i.toString().padStart(2, "0")}:00`);
-  }
-  return `Timeline: ${labels.join(" ")}`;
-}
 
 const Timeline = ({ rooms }: TimelineProps) => {
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -42,16 +32,12 @@ const Timeline = ({ rooms }: TimelineProps) => {
 
   const position = ((currentTime.getHours() - startHour) / totalHours) * 100;
 
-  const timelineLabel = generateTimelineLabel();
-
   return (
     <Container>
-      <Typography variant="h6">{timelineLabel}</Typography>
-      <Divider />
       {rooms.map((room) => (
         <Box key={room.name} display="flex" alignItems="center" mb={2}>
           <Typography variant="body1">{room.name}</Typography>
-          <Box flexGrow={1} ml={2}>
+          <Box flexGrow={1}>
             <Box
               sx={{
                 position: "relative",
@@ -59,9 +45,9 @@ const Timeline = ({ rooms }: TimelineProps) => {
                 backgroundColor: "white",
               }}
             >
-              {room.reservations.map((reservation, index) => (
+              {room.reservations.map((reservation) => (
                 <Box
-                  key={index}
+                  key={`${reservation.start}-${reservation.end}`}
                   sx={{
                     position: "absolute",
                     ...calculateOccupiedPosition(
@@ -71,9 +57,21 @@ const Timeline = ({ rooms }: TimelineProps) => {
                     top: 0,
                     bottom: 0,
                     backgroundColor: "red",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    padding: "0 4px",
                   }}
-                />
+                >
+                  <Typography variant="caption" color="white">
+                    {`${reservation.start}:00`}
+                  </Typography>
+                  <Typography variant="caption" color="white">
+                    {`${reservation.end}:00`}
+                  </Typography>
+                </Box>
               ))}
+
               {position !== null && (
                 <Box
                   sx={{

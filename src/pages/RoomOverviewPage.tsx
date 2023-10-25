@@ -20,7 +20,13 @@ function RoomOverviewPage() {
           <Timeline
             rooms={[
               { name: "Room 1", reservations: [{ start: 9, end: 12 }] },
-              { name: "Room 2", reservations: [{ start: 14, end: 16 }] },
+              {
+                name: "Room 2",
+                reservations: [
+                  { start: 13, end: 16 },
+                  { start: 17, end: 19 },
+                ],
+              },
             ]}
           />
         </Box>
