@@ -1,13 +1,14 @@
-import Header from './components/Header/Header';
 import { CssBaseline, ThemeProvider } from '@mui/material';
-import theme from './theme';
-import HomePage from './pages/HomePage';
-import RoomAdministrationPage from './pages/RoomAdministrationPage';
-import RoomOverviewPage from './pages/RoomOverviewPage';
-import NoPage from './pages/NoPage';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { ReactQueryDevtools } from 'react-query/devtools'
 import {QueryClient, QueryClientProvider} from 'react-query'
+import theme from './theme';
+import Header from './components/Header/Header';
+import RoomAdministrationPage from './pages/RoomAdministrationPage';
+import RoomOverviewPage from './pages/RoomOverviewPage';
+import HomePage from './pages/HomePage';
+import NoPage from './pages/NoPage';
+import EditRoomPage from './pages/EditRoomPage';
 
 const queryClient = new QueryClient()
 
@@ -22,8 +23,9 @@ function App() {
           <Header/>
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="admin" element={<RoomAdministrationPage/>} />
-            <Route path="overview" element={<RoomOverviewPage/>} />
+            <Route path="admin" element={<RoomAdministrationPage />} />
+            <Route path="overview" element={<RoomOverviewPage />} />
+            <Route path='room/:id' element={<EditRoomPage />} />
             <Route path="*" element={<NoPage/>} />
           </Routes>
         </BrowserRouter>
