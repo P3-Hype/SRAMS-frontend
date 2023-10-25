@@ -10,7 +10,7 @@ import SaveButton from '../components/SaveButton/SaveButton';
 import axios from 'axios';
 import { useMutation, useQueryClient } from 'react-query';
 
-function AutoCompleteDropdown(props: {readonly children?: React.ReactNode}) {
+function AutoCompleteDropdown(props: { readonly children?: React.ReactNode }) {
     const theme = useTheme();
     return (
         <Paper sx={{ border: "1px solid " + theme.palette.primary.main, marginTop: 1 }}>
@@ -19,9 +19,10 @@ function AutoCompleteDropdown(props: {readonly children?: React.ReactNode}) {
     )
 }
 
-function EditRoomContent(props: { 
-    readonly room: Room, 
-    readonly labels: string[] }) {
+function EditRoomContent(props: {
+    readonly room: Room,
+    readonly labels: string[]
+}) {
 
     const room = props.room;
     const labels = props.labels;
@@ -45,13 +46,13 @@ function EditRoomContent(props: {
     const deleteRoomMutation = useMutation((id: string) => axios.delete(
         `${import.meta.env.VITE_SRAMS_API_ADDRESS}room/deleteRoom`,
         { params: { roomId: id } }
-      ), {
+    ), {
         onSuccess: () => {
             console.log("Room deleted");
             queryClient.invalidateQueries("allRooms");
             navigate("/admin")
         }
-      });
+    });
     const handleDelete = () => {
         deleteRoomMutation.mutate(room.id);
     }
@@ -157,24 +158,26 @@ export function EditRoomPage() {
     const { room, isLoading } = useRoom(params.id ?? "")
     const [labels, setLabels] = useState<string[]>([]);
 
+    const Content = () => {
+        if (isLoading) return <LinearProgress />
+        if (room == null || room == undefined) {
+            return <Typography> Room not found </Typography>
+        }
+        return (
+            <Fade in timeout={200}>
+                <Box>
+                    <EditRoomContent
+                        room={room}
+                        labels={labels} />
+                </Box>
+            </Fade>
+        )
+    }
+
     return (
         <BasePage alert={alert}>
             <Container>
-                {isLoading
-                    ?
-                    <LinearProgress />
-                    : room
-                    ?
-                    <Fade in timeout={200}>
-                        <Box>
-                            <EditRoomContent
-                                room={room}
-                                labels={labels} />
-                        </Box>
-                    </Fade>
-                    :
-                    <Typography> Room not found </Typography>
-                }
+                <Content />
             </Container>
         </BasePage>
     );

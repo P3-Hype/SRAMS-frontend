@@ -12,7 +12,7 @@ import { Co2, Thermostat, WaterDropTwoTone, DirectionsWalk } from "@mui/icons-ma
 import Room from "../room";
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import axios from "axios";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 
 
 function RoomAdministrationPage() {
@@ -20,6 +20,7 @@ function RoomAdministrationPage() {
     const theme = useTheme();
     const allRooms = useAllRooms();
     const navigate = useNavigate();
+    const queryClient = useQueryClient();
     const addRoomMutation = useMutation(() => axios.post(`${import.meta.env.VITE_SRAMS_API_ADDRESS}room/addRoom`), {
         onSuccess(data) {
             console.log("Room added", data);
@@ -30,49 +31,62 @@ function RoomAdministrationPage() {
         addRoomMutation.mutate();
     };
 
+    const Content = () => {
+        if (allRooms.isLoading) {
+            return <LinearProgress />;
+        }
+        if (allRooms == undefined || allRooms.rooms?.length === 0) {
+            return <Typography>No rooms found</Typography>;
+        }
+
+        return (
+        <>
+            <Card sx={{ mb: 2 }}>
+                {allRooms.rooms?.map((r: Room) => (
+                    <Accordion key={r.id}>
+                        <AccordionSummary
+                            expandIcon={<ExpandMoreIcon />}
+                            sx={{ width: "100%" }}
+                            aria-controls="panel1a-content"
+                            id="panel1a-header">
+                            {r.name ? <Typography>{r.name}</Typography> : <Typography color={theme.palette.warning.light}>Room {r.id}</Typography>}
+                            <Stack mr={2} direction={"row-reverse"} gap={2} sx={{ alignItems: "center" }}>
+                                <IconButton component={RouterLink} to={"/room/" + r.id}>
+                                    <SettingsIcon />
+                                </IconButton>
+                                <Tooltip title="Co2">
+                                    <Co2 />
+                                </Tooltip>
+                                <Tooltip title="Temperature">
+                                    <Thermostat />
+                                </Tooltip>
+                                <Tooltip title="Humidity">
+                                    <WaterDropTwoTone />
+                                </Tooltip>
+                                <Tooltip title="Passive Infrared">
+                                    <DirectionsWalk />
+                                </Tooltip>
+                            </Stack>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                            <Typography>
+                                Her skal vi vel have nogle forskelige information omkring rummet.
+                            </Typography>
+                        </AccordionDetails>
+                    </Accordion>
+                ))}
+            </Card>
+            <Button size="large" variant="contained" color="primary" fullWidth onClick={handleAddRoom}>
+                <Typography textTransform={"none"} variant="h6">Add room</Typography>
+            </Button>
+        </>
+        )
+    }
+
     return (
         <BasePage alert={alert}>
             <Container>
-                {allRooms.isLoading ? <LinearProgress /> : allRooms == undefined || allRooms.rooms?.length === 0 ? "No rooms found" : <>
-                    <Card sx={{ mb: 2 }}>
-                        {allRooms.rooms?.map((r: Room) => (
-                            <Accordion key={r.id}>
-                                <AccordionSummary
-                                    expandIcon={<ExpandMoreIcon />}
-                                    sx={{ width: "100%" }}
-                                    aria-controls="panel1a-content"
-                                    id="panel1a-header">
-                                    {r.name ? <Typography>{r.name}</Typography> : <Typography color={theme.palette.warning.light}>Room {r.id}</Typography>}
-                                    <Stack mr={2} direction={"row-reverse"} gap={2} sx={{ alignItems: "center" }}>
-                                        <IconButton component={RouterLink} to={"/room/" + r.id}>
-                                            <SettingsIcon />
-                                        </IconButton>
-                                        <Tooltip title="Co2">
-                                            <Co2 />
-                                        </Tooltip>
-                                        <Tooltip title="Temperature">
-                                            <Thermostat />
-                                        </Tooltip>
-                                        <Tooltip title="Humidity">
-                                            <WaterDropTwoTone />
-                                        </Tooltip>
-                                        <Tooltip title="Passive Infrared">
-                                            <DirectionsWalk />
-                                        </Tooltip>
-                                    </Stack>
-                                </AccordionSummary>
-                                <AccordionDetails>
-                                    <Typography>
-                                        Her skal vi vel have nogle forskelige information omkring rummet.
-                                    </Typography>
-                                </AccordionDetails>
-                            </Accordion>
-                        ))}
-                    </Card>
-                    <Button size="large" variant="contained" color="primary" fullWidth onClick={handleAddRoom}>
-                        <Typography textTransform={"none"} variant="h6">Add room</Typography>
-                    </Button>
-                </>}
+                <Content />
             </Container>
         </BasePage>
     );

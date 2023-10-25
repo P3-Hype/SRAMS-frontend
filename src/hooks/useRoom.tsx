@@ -7,7 +7,8 @@ export function useAllRooms() {
         queryFn: async () => {
             const { data } = await axios.get(`${import.meta.env.VITE_SRAMS_API_ADDRESS}room/all`);
             return data as Room[];
-        }
+        },
+        staleTime: 3000,
     });
     return { rooms: data, isLoading }
 }
@@ -17,7 +18,8 @@ export function useRoom(id: string) {
         queryFn: async () => {
             const { data } = await axios.get(`${import.meta.env.VITE_SRAMS_API_ADDRESS}room/getRoom`, {params: {roomId: id}});
             return data as Room;
-        }
+        },
+        staleTime: 5000,
     });
     return { room: data, isLoading }
 }
