@@ -1,19 +1,19 @@
-import { AlertColor } from "@mui/material";
-import { useState } from "react"
+import { AlertColor } from '@mui/material';
+import { useState } from 'react';
 
 export function useAlert() {
-    const [isOpen, setIsOpen] = useState(false);
-    const [message, setMessage] = useState("");
-    const [severity, setSeverity] = useState<AlertColor>("info");
+	const [isOpen, setIsOpen] = useState(false);
+	const [message, setMessage] = useState('');
+	const [severity, setSeverity] = useState<AlertColor>('info');
 
-    return {
-        isOpen,
-        setIsOpen,
-        message,
-        setMessage,
-        severity,
-        setSeverity
-    };
+	return {
+		isOpen,
+		setIsOpen,
+		message,
+		setMessage,
+		severity,
+		setSeverity,
+	};
 }
 
-export default useAlert
+export default useAlert;
