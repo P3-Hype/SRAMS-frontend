@@ -6,7 +6,6 @@ import useAlert from "../hooks/useAlert";
 
 function RoomOverviewPage() {
   const alert = useAlert();
-  const rooms = ["Room A", "Room B"];
 
   return (
     <BasePage alert={alert}>
@@ -18,7 +17,12 @@ function RoomOverviewPage() {
           <RoomStatusCard />
         </Stack>
         <Box>
-          <Timeline rooms={rooms} />
+          <Timeline
+            rooms={[
+              { name: "Room 1", reservations: [{ start: 9, end: 12 }] },
+              { name: "Room 2", reservations: [{ start: 14, end: 16 }] },
+            ]}
+          />
         </Box>
       </Container>
     </BasePage>
