@@ -1,5 +1,6 @@
 import { Box, Container, Divider, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
+import theme from "../../theme";
 
 //Denne type-definition specificerer, at Timeline-komponenten forventer en props-objekt med en nøgle rooms, der er en streng-array.
 type TimelineProps = {
@@ -78,7 +79,7 @@ const Timeline = ({ rooms }: TimelineProps) => {
                     top: 0,
                     bottom: 0,
                     width: "2px",
-                    backgroundColor: "red",
+                    backgroundColor: theme.palette.secondary.main,
                   }}
                 />
               )}
