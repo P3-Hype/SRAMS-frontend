@@ -10,7 +10,7 @@ import SaveButton from '../components/SaveButton/SaveButton';
 import axios from 'axios';
 import { useMutation, useQueryClient } from 'react-query';
 
-function AutoCompleteDropdown(props: {children?: React.ReactNode}) {
+function AutoCompleteDropdown(props: {readonly children?: React.ReactNode}) {
     const theme = useTheme();
     return (
         <Paper sx={{ border: "1px solid " + theme.palette.primary.main, marginTop: 1 }}>
@@ -25,7 +25,7 @@ function EditRoomContent(props: {
 
     const room = props.room;
     const labels = props.labels;
-    const [roomMutation, setRoomMutation] = useState<Room>(room);
+    const [mutatedRoom, setMutatedRoom] = useState<Room>(room);
     const [isLoading, setIsloading] = useState(false);
     const queryClient = useQueryClient();
     const navigate = useNavigate();
@@ -39,7 +39,7 @@ function EditRoomContent(props: {
         },
     });
     const mutate = () => {
-        updateRoomMutation.mutate(roomMutation);
+        updateRoomMutation.mutate(mutatedRoom);
     }
 
     const deleteRoomMutation = useMutation((id: string) => axios.delete(
@@ -58,7 +58,7 @@ function EditRoomContent(props: {
 
     //set initatl room state
     useEffect(() => {
-        setRoomMutation(room);
+        setMutatedRoom(room);
     }, [room])
 
     return (
@@ -68,9 +68,9 @@ function EditRoomContent(props: {
                     <TextField
                         sx={{ flexGrow: 1 }}
                         onChange={(e) => {
-                            const r = roomMutation;
+                            const r = mutatedRoom;
                             r.name = e.target.value;
-                            setRoomMutation(r);
+                            setMutatedRoom(r);
                         }}
                         label="Name"
                         defaultValue={room.name}
@@ -93,15 +93,15 @@ function EditRoomContent(props: {
                         label="Number of seats"
                         variant="outlined"
                         onChange={(e) => {
-                            const r = roomMutation;
+                            const r = mutatedRoom;
                             r.seatCount = parseInt(e.target.value);
-                            setRoomMutation(r);
+                            setMutatedRoom(r);
                         }} />
                     <Box display={'flex'} flexDirection={'column'} alignItems={'flex-start'}>
                         <Checkbox defaultChecked={room.hasWindow} onChange={(e) => {
-                            const r = roomMutation;
+                            const r = mutatedRoom;
                             r.hasWindow = e.target.checked;
-                            setRoomMutation(r);
+                            setMutatedRoom(r);
                         }} />
                         <Typography ml={1.5} variant="body1">
                             Room has a window
