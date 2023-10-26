@@ -1,17 +1,27 @@
-FROM alpine:3.18.4
+# STAGE 1: Build
+FROM node:alpine as build-step
 
-RUN mkdir -p /usr/src/app
+RUN mkdir -p /app
 
-WORKDIR /usr/src/app
+RUN npm cache clear --force
 
-COPY frontend/package.json /usr/src/app
+WORKDIR /app
 
-RUN apk add --no-cache nodejs npm
+COPY package.json /usr/src/app
 
 RUN npm install
 
-COPY frontend /usr/src/app
+COPY . /app
 
-EXPOSE $PORT
+RUN npm run build
 
-CMD [ "npm", "run", "dev" ]
+# STAGE 2: Run
+FROM nginx
+
+COPY --from=build-step /app/public /usr/share/nginx/html
+
+EXPOSE 9000
+
+STOPSIGNAL SIGTERM
+
+CMD [ "nginx", "-g", "daemon off;" ]
