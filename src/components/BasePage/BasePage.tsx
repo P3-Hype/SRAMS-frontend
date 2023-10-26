@@ -15,7 +15,12 @@ import { ReactNode } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import useAlert from '../../hooks/useAlert';
 
-function MyFallbackComponent({ error, resetErrorBoundary }) {
+interface MyFallbackComponentProps {
+	error: Error;
+	resetErrorBoundary: () => void;
+}
+
+function MyFallbackComponent({ error, resetErrorBoundary }: MyFallbackComponentProps) {
 	return (
 		<Container>
 			<Card
