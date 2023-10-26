@@ -22,4 +22,7 @@ export default defineConfig({
 		css: true,
 	},
 	plugins: [react()],
+	server: {
+	    port: 9000,
+	},
 });
