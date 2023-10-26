@@ -2,8 +2,6 @@ name: Create and publish container for provisioning
 
 on:
   push:
-    branches:
-      - main
     tags:
       - "v*.*.*"
     paths-ignore:
