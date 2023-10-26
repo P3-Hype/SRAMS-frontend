@@ -180,7 +180,7 @@ function Content() {
 	const params = useParams<{ id: string }>();
 	const { room, isLoading } = useRoom(params.id ?? '');
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const [labels, setLabels] = useState<string[]>([]);
+	const [labels] = useState<string[]>([]);
 
 	if (isLoading) return <LinearProgress />;
 	if (room == null || room == undefined) {
