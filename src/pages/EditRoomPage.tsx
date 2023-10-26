@@ -24,6 +24,7 @@ import SaveButton from '../components/SaveButton/SaveButton';
 import useAlert from '../hooks/useAlert';
 import { useRoom } from '../hooks/useRoom';
 import Room from '../room';
+import RoomInformation from '../components/RoomInformation/RoomInformation';
 
 function AutoCompleteDropdown(props: { readonly children?: React.ReactNode }) {
 	const theme = useTheme();
@@ -171,6 +172,7 @@ function EditRoomContent(props: { readonly room: Room; readonly labels: string[]
 					options={labels}
 					renderInput={(params) => <TextField {...params} label='Prom label' />}
 				/>
+				<RoomInformation />
 			</Stack>
 		</Card>
 	);
