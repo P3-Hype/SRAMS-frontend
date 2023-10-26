@@ -1,27 +1,23 @@
 # STAGE 1: Build
-FROM node:alpine as build-step
-
-RUN mkdir -p /app
+FROM node:21.1.0-alpine3.17 as react-build
 
 RUN npm cache clear --force
 
 WORKDIR /app
 
-COPY package.json /app
+COPY package*.json /app
 
 RUN npm install
 
-COPY . /app
+COPY . .
 
 RUN npm run build
 
 # STAGE 2: Run
-FROM nginx:alpine
+FROM nginx:1.25.3-alpine3.18
 
-COPY --from=build-step /app/public /usr/share/nginx/html
+COPY --from=react-build /app/dist /usr/share/nginx/html
 
-EXPOSE 9000
+EXPOSE 80
 
-STOPSIGNAL SIGTERM
-
-CMD [ "nginx", "-g", "daemon off;" ]
+CMD ["nginx", "-g", "daemon off;"]
