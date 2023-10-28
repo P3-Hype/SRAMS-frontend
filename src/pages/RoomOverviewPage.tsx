@@ -2,25 +2,26 @@ import { Box, Container, Typography } from '@mui/material';
 import Booking from '../booking';
 import BasePage from '../components/BasePage/BasePage';
 import useAlert from '../hooks/useAlert';
-import useBookings from '../hooks/useBooking';
+import useAllBookings from '../hooks/useBooking';
 import { useAllRooms } from '../hooks/useRoom';
 import Room from '../room';
 
 function convertTimestampToTime(timestamp: number) {
 	const date = new Date(timestamp * 1000);
-	const options = {
+	const options: Intl.DateTimeFormatOptions = {
 		hour: '2-digit',
 		minute: '2-digit',
 	};
+
 	return date.toLocaleTimeString('da-DK', options);
 }
 
-function renderBookings(allRooms: Room[], bookings: Booking[]) {
+function getRoomsWithBookings(allRooms: Room[], bookings: Booking[]) {
 	let roomsWithBookings: { room: Room; bookings: Booking[] }[] = [];
-	allRooms.forEach((r: Room) => {
-		const bookingsInRoom = bookings.filter((booking: Booking) => booking.roomId === r.id);
+	allRooms.forEach((room: Room) => {
+		const bookingsInRoom = bookings.filter((booking: Booking) => booking.roomId === room.id);
 		roomsWithBookings.push({
-			room: r,
+			room: room,
 			bookings: bookingsInRoom,
 		});
 	});
@@ -30,10 +31,10 @@ function renderBookings(allRooms: Room[], bookings: Booking[]) {
 
 function RoomOverviewPage() {
 	const alert = useAlert();
-	const bookings = useBookings();
+	const allBookings = useAllBookings();
 	const allRooms = useAllRooms();
 
-	const roomsWithBookings = renderBookings(allRooms.rooms || [], bookings.bookings || []);
+	const roomsWithBookings = getRoomsWithBookings(allRooms.rooms || [], allBookings.bookings || []);
 
 	return (
 		<BasePage alert={alert}>
