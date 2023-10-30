@@ -25,8 +25,9 @@ type PromResponse = {
 	data: Data;
 };
 
-export function useMetric(metricLabel: string, span?: number, updateFrequency?: number) {
-	const spanString = span != undefined && span > 0 ? `[${span}m]` : '';
+export function useMetric(metricLabel: string, span?: number, spanInterval?: number, updateFrequency?: number) {
+	const spanIntervalString = spanInterval != undefined && spanInterval > 0 ? `:${spanInterval}s` : '';
+	const spanString = span != undefined && span > 0 ? `[${span}m${spanIntervalString}]` : '';
 	const { data, isLoading } = useQuery(['metric', metricLabel], {
 		queryFn: async () => {
 			const { data } = await axios.get(import.meta.env.VITE_PROMETHEUS_API_ADDRESS + 'query', {
