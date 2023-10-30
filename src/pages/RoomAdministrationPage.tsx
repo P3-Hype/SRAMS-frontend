@@ -1,5 +1,4 @@
-import BasePage from '../components/BasePage/BasePage';
-import useAlert from '../hooks/useAlert';
+import { Co2, DirectionsWalk, Thermostat, WaterDropTwoTone } from '@mui/icons-material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { Button, Card, Container, IconButton, LinearProgress, Stack, Tooltip, useTheme } from '@mui/material';
@@ -7,12 +6,13 @@ import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import Typography from '@mui/material/Typography';
-import { useAllRooms } from '../hooks/useRoom';
-import { Co2, Thermostat, WaterDropTwoTone, DirectionsWalk } from '@mui/icons-material';
-import Room from '../room';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useMutation } from 'react-query';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import BasePage from '../components/BasePage/BasePage';
+import useAlert from '../hooks/useAlert';
+import { useAllRooms } from '../hooks/useRoom';
+import Room from '../room';
 
 function Content() {
 	const theme = useTheme();
