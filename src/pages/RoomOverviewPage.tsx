@@ -87,9 +87,12 @@ function CustomTimeLine() {
 		</Box>
 	);
 }
+type BookingProps = {
+	booking: any; // Erstat "any" med den faktiske type for "booking"
+};
 
 // Opretter og viser en enkelt reservation
-function BookingComponent({ booking }) {
+function BookingComponent({ booking }: BookingProps) {
 	const startTime = new Date(booking.startTime * 1000);
 	const endTime = new Date(booking.endTime * 1000);
 	const startHour = startTime.getHours();
@@ -154,9 +157,10 @@ function RoomOverviewPage() {
 							>
 								{roomWithBooking.room.name}
 							</Typography>
-							{roomWithBooking.bookings.map((booking) => (
+							{roomWithBooking.bookings.map((booking: Booking) => (
 								<BookingComponent key={booking.id} booking={booking} />
 							))}
+
 							<CurrentTimeLine />
 						</Box>
 					</Box>
