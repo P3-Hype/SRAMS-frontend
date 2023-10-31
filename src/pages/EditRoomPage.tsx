@@ -24,6 +24,7 @@ import SaveButton from '../components/SaveButton/SaveButton';
 import useAlert from '../hooks/useAlert';
 import { useRoom } from '../hooks/useRoom';
 import Room from '../room';
+import RoomInformation from '../components/RoomInformation/RoomInformation';
 
 function AutoCompleteDropdown(props: { readonly children?: React.ReactNode }) {
 	const theme = useTheme();
@@ -46,6 +47,7 @@ function EditRoomContent(props: { readonly room: Room; readonly labels: string[]
 	const [isLoading, setIsloading] = useState(false);
 	const queryClient = useQueryClient();
 	const navigate = useNavigate();
+	
 	const updateRoomMutation = useMutation({
 		mutationFn: (room: Room) => {
 			setIsloading(true);
@@ -55,6 +57,7 @@ function EditRoomContent(props: { readonly room: Room; readonly labels: string[]
 			setIsloading(false);
 		},
 	});
+	
 	const mutate = () => {
 		updateRoomMutation.mutate(mutatedRoom);
 	};
@@ -134,6 +137,7 @@ function EditRoomContent(props: { readonly room: Room; readonly labels: string[]
 					</Box>
 				</Stack>
 				<Stack direction={'row'} minHeight={'fit-content'} alignItems={'center'} gap={8}>
+					
 					<Slider
 						sx={{ minHeight: '12rem' }}
 						disabled={!room.hasTemperature}
@@ -171,6 +175,7 @@ function EditRoomContent(props: { readonly room: Room; readonly labels: string[]
 					options={labels}
 					renderInput={(params) => <TextField {...params} label='Prom label' />}
 				/>
+				<RoomInformation room={room} />
 			</Stack>
 		</Card>
 	);

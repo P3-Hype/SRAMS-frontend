@@ -25,18 +25,20 @@ type PromResponse = {
 	data: Data;
 };
 
-export function useMetric(metricLabel: string, span?: number, updateFrequency?: number) {
-	const spanString = span != undefined && span > 0 ? `[${span}m]` : '';
-	const { data, isLoading } = useQuery(['metric', metricLabel], {
-		queryFn: async () => {
+export function useMetric(metricQuery: string | null, span?: number, spanInterval?: number, updateFrequency?: number) {
+	const spanIntervalString = spanInterval != undefined && spanInterval > 0 ? `:${spanInterval}s` : '';
+	const spanString = span != undefined && span > 0 ? `[${span}m${spanIntervalString}]` : '';
+	const { data, isLoading } = useQuery(['metric', metricQuery], {
+		queryFn: async () => {			
 			const { data } = await axios.get(import.meta.env.VITE_PROMETHEUS_API_ADDRESS + 'query', {
 				params: {
-					query: metricLabel + spanString,
+					query: metricQuery + spanString,
 				},
 			});
 			return data as PromResponse;
 		},
 		refetchInterval: updateFrequency ?? 5000,
+		enabled: !!metricQuery,
 	});
 
 	return { data, isLoading };

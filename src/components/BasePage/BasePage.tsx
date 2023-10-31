@@ -67,7 +67,7 @@ export function BasePage(props: BasePageProps) {
 	};
 
 	return (
-		<>
+		<Box mb={8}>
 			<ErrorBoundary
 				FallbackComponent={MyFallbackComponent}
 				onReset={() => {
@@ -97,7 +97,7 @@ export function BasePage(props: BasePageProps) {
 					{props.alert.message || 'snackbar'}
 				</Alert>
 			</Snackbar>
-		</>
+		</Box>
 	);
 }
 
