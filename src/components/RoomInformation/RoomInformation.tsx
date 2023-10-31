@@ -6,8 +6,7 @@ import * as echarts from 'echarts';
 import { useEffect, useState } from 'react';
 import Room from '../../room';
 import { MetricLink } from '../../metricLink';
-import { useQuery } from 'react-query';
-import axios from 'axios';
+import { UseQueryResult } from 'react-query';
 import MetricAutoIcon from '../MetricAutoIcon/MetricAutoIcon';
 
 const formatUnix = (unix: number) => {
@@ -25,6 +24,7 @@ interface DataItem {
 
 interface RoomInformationProps {
 	readonly room: Room;
+	metricLinks: UseQueryResult<MetricLink[], unknown>;
 }
 
 export function RoomInformation(props: RoomInformationProps) {
@@ -33,22 +33,12 @@ export function RoomInformation(props: RoomInformationProps) {
 	const [metricQuery, setMetricQuery] = useState<string | null>(null);
 	const [chartData, setChartData] = useState<DataItem[]>([]);
 
-	const metricLinks = useQuery(['roomMetricLinks', props.room.id], {
-		queryFn: async () => {
-			const { data } = await axios.get(`${import.meta.env.VITE_SRAMS_API_ADDRESS}metricLink/getAllByRoomId`, {
-				params: {
-					roomId: props.room.id,
-				},
-			});
-			return data as MetricLink[];
-		},
-	});
 	const { data, isLoading } = useMetric(metricQuery, 120, 5, 5000);
 
 	const metricChartOptions: EChartsOption = {
 		grid: {
 			left: 100,
-			right: 20,
+			right: 0,
 			top: 20,
 			bottom: 20,
 		},
@@ -90,58 +80,68 @@ export function RoomInformation(props: RoomInformationProps) {
 	const handleSelectMetricLink = (_: React.MouseEvent<HTMLElement>, ml: MetricLink) => {
 		if (ml === undefined) return;
 		const query = `${ml.metricId}_${ml.type.toLocaleLowerCase()}`;
-		
+		console.log('Selected metric link ', query);
+
 		setSelectedMetricLink(ml);
 		setMetricQuery(query);
 	};
 
-	if (metricLinks.isLoading) return <LinearProgress />;
+	if (props.metricLinks.isLoading) return <LinearProgress />;
 	return (
 		<Stack direction={'row'} display={'flex'}>
-			<ToggleButtonGroup
-			orientation='vertical'
-			value={selectedMetricLink} 
-			exclusive 
-			onChange={handleSelectMetricLink}>
-				{metricLinks.data?.map((ml) => {
-					return (
-						<ToggleButton key={ml.id} value={ml}>
-							<MetricAutoIcon tooltip metric={ml.type} />
-						</ToggleButton>
-					);
-				})}
-			</ToggleButtonGroup>
+			<Fade in={!props.metricLinks.isLoading} timeout={1000}>
+				<ToggleButtonGroup
+					orientation='vertical'
+					value={selectedMetricLink}
+					exclusive
+					onChange={handleSelectMetricLink}
+				>
+					{props.metricLinks.data?.map((ml) => {
+						return (
+							<ToggleButton key={ml.id} value={ml}>
+								<MetricAutoIcon tooltip metric={ml.type} />
+							</ToggleButton>
+						);
+					})}
+				</ToggleButtonGroup>
+			</Fade>
 			{!isLoading && !!metricQuery ? (
-				<Fade in><Box width={1}><ReactECharts
-					option={
-						{
-							...metricChartOptions,
-							series: [
+				<Fade in>
+					<Box width={1}>
+						<ReactECharts
+							option={
 								{
-									data: chartData,
-									showSymbol: false,
-									type: 'line',
-									color: theme.palette.secondary.main,
-									areaStyle: {
-										opacity: 0.8,
-										color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-											{
-												offset: 0,
-												color: theme.palette.secondary.main,
+									...metricChartOptions,
+									series: [
+										{
+											data: chartData,
+											showSymbol: false,
+											type: 'line',
+											color: theme.palette.secondary.main,
+											areaStyle: {
+												opacity: 0.8,
+												color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+													{
+														offset: 0,
+														color: theme.palette.secondary.main,
+													},
+													{
+														offset: 1,
+														color: '#ffffff00',
+													},
+												]),
 											},
-											{
-												offset: 1,
-												color: '#ffffff00',
-											},
-										]),
-									},
-								},
-							],
-						} as echarts.EChartsOption
-					}
-				/></Box></Fade>
+										},
+									],
+								} as echarts.EChartsOption
+							}
+						/>
+					</Box>
+				</Fade>
 			) : (
-				<Typography variant='subtitle2' color={theme.palette.warning.light}>No metric selected</Typography>
+				<Typography ml={4} variant='subtitle2' color={theme.palette.primary.light}>
+					No metric selected
+				</Typography>
 			)}
 		</Stack>
 	);
