@@ -80,7 +80,6 @@ export function RoomInformation(props: RoomInformationProps) {
 	const handleSelectMetricLink = (_: React.MouseEvent<HTMLElement>, ml: MetricLink) => {
 		if (ml === undefined) return;
 		const query = `${ml.metricId}_${ml.type.toLocaleLowerCase()}`;
-		console.log('Selected metric link ', query);
 
 		setSelectedMetricLink(ml);
 		setMetricQuery(query);
