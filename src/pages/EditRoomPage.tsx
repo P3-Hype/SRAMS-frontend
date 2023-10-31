@@ -17,7 +17,7 @@ import {
 } from '@mui/material';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { Link as RouterLink, useNavigate, useParams } from 'react-router-dom';
 import BasePage from '../components/BasePage/BasePage';
 import SaveButton from '../components/SaveButton/SaveButton';
@@ -25,7 +25,6 @@ import useAlert from '../hooks/useAlert';
 import { useRoom } from '../hooks/useRoom';
 import Room from '../room';
 import RoomInformation from '../components/RoomInformation/RoomInformation';
-import { MetricLink } from '../metricLink';
 
 function AutoCompleteDropdown(props: { readonly children?: React.ReactNode }) {
 	const theme = useTheme();
@@ -48,16 +47,6 @@ function EditRoomContent(props: { readonly room: Room; readonly labels: string[]
 	const [isLoading, setIsloading] = useState(false);
 	const queryClient = useQueryClient();
 	const navigate = useNavigate();
-	const metricLinks = useQuery(['roomMetricLinks', props.room.id], {
-		queryFn: async () => {
-			const { data } = await axios.get(`${import.meta.env.VITE_SRAMS_API_ADDRESS}metricLink/getAllByRoomId`, {
-				params: {
-					roomId: props.room.id,
-				},
-			});
-			return data as MetricLink[];
-		},
-	});
 	
 	const updateRoomMutation = useMutation({
 		mutationFn: (room: Room) => {

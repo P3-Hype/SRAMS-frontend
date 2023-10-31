@@ -24,8 +24,7 @@ interface DataItem {
 }
 
 interface RoomInformationProps {
-	room: Room;
-	selectedMetricLink?: MetricLink;
+	readonly room: Room;
 }
 
 export function RoomInformation(props: RoomInformationProps) {
@@ -108,7 +107,7 @@ export function RoomInformation(props: RoomInformationProps) {
 				{metricLinks.data?.map((ml) => {
 					return (
 						<ToggleButton key={ml.id} value={ml}>
-							<MetricAutoIcon metric={ml.type} />
+							<MetricAutoIcon tooltip metric={ml.type} />
 						</ToggleButton>
 					);
 				})}
