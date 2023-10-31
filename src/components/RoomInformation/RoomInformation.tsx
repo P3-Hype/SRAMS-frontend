@@ -1,9 +1,14 @@
 import useMetric from '../../hooks/useMetric';
-import { useTheme } from '@mui/material';
+import { Box, Fade, LinearProgress, Stack, ToggleButton, ToggleButtonGroup, Typography, useTheme } from '@mui/material';
 import { EChartsOption } from 'echarts';
 import ReactECharts from 'echarts-for-react';
 import * as echarts from 'echarts';
 import { useEffect, useState } from 'react';
+import Room from '../../room';
+import { MetricLink } from '../../metricLink';
+import { useQuery } from 'react-query';
+import axios from 'axios';
+import MetricAutoIcon from '../MetricAutoIcon/MetricAutoIcon';
 
 const formatUnix = (unix: number) => {
 	const date = new Date(unix * 1000);
@@ -18,16 +23,35 @@ interface DataItem {
 	value: [number, number];
 }
 
-export function RoomInformation() {
+interface RoomInformationProps {
+	room: Room;
+	selectedMetricLink?: MetricLink;
+}
+
+export function RoomInformation(props: RoomInformationProps) {
 	const theme = useTheme();
-	const { data, isLoading } = useMetric('alex_pico_room_co2_level', 120, 5, 5);
+	const [selectedMetricLink, setSelectedMetricLink] = useState<MetricLink>();
+	const [metricQuery, setMetricQuery] = useState<string | null>(null);
 	const [chartData, setChartData] = useState<DataItem[]>([]);
-	const metricChartOptions:EChartsOption = {
-		title: {
-			textStyle: {
-				color: theme.palette.primary.main,
-			},
-			text: 'CO2',
+
+	const metricLinks = useQuery(['roomMetricLinks', props.room.id], {
+		queryFn: async () => {
+			const { data } = await axios.get(`${import.meta.env.VITE_SRAMS_API_ADDRESS}metricLink/getAllByRoomId`, {
+				params: {
+					roomId: props.room.id,
+				},
+			});
+			return data as MetricLink[];
+		},
+	});
+	const { data, isLoading } = useMetric(metricQuery, 120, 5, 5000);
+
+	const metricChartOptions: EChartsOption = {
+		grid: {
+			left: 100,
+			right: 20,
+			top: 20,
+			bottom: 20,
 		},
 		tooltip: {
 			shadowColor: theme.palette.background.default,
@@ -36,7 +60,7 @@ export function RoomInformation() {
 				animation: false,
 				lineStyle: {
 					color: theme.palette.primary.light,
-				}
+				},
 			},
 		},
 		xAxis: {
@@ -56,47 +80,72 @@ export function RoomInformation() {
 	useEffect(() => {
 		const x =
 			data?.data.result[0].values.map((value) => {
-				const d = new Date(value[0]);
 				return {
 					name: formatUnix(value[0]),
-					value: [value[0]*1000, parseFloat(value[1])],
+					value: [value[0] * 1000, parseFloat(value[1])],
 				} as DataItem;
 			}) ?? [];
 		setChartData(x);
-		console.log(chartData);
-		
 	}, [data]);
 
-	if (isLoading) return <div>Loading...</div>;
+	const handleSelectMetricLink = (_: React.MouseEvent<HTMLElement>, ml: MetricLink) => {
+		if (ml === undefined) return;
+		const query = `${ml.metricId}_${ml.type.toLocaleLowerCase()}`;
+		console.log(query);
+		
+		setSelectedMetricLink(ml);
+		setMetricQuery(query);
+	};
 
+	if (metricLinks.isLoading) return <LinearProgress />;
 	return (
-		<ReactECharts
-			option={
-				{
-					...metricChartOptions,
-					series: [
+		<Stack direction={'row'} display={'flex'}>
+			<ToggleButtonGroup
+			orientation='vertical'
+			value={selectedMetricLink} 
+			exclusive 
+			onChange={handleSelectMetricLink}>
+				{metricLinks.data?.map((ml) => {
+					return (
+						<ToggleButton key={ml.id} value={ml}>
+							<MetricAutoIcon metric={ml.type} />
+						</ToggleButton>
+					);
+				})}
+			</ToggleButtonGroup>
+			{!isLoading && !!metricQuery ? (
+				<Fade in><Box width={1}><ReactECharts
+					option={
 						{
-							data: chartData,
-							showSymbol: false,
-							type: 'line',
-							color: theme.palette.secondary.main,
-							areaStyle: {
-								color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-								  {
-									offset: 0,
-									color: theme.palette.secondary.main
-								  },
-								  {
-									offset: 1,
-									color: "#ffffff00"
-								  }
-								])
-							  },
-						}
-					]
-				} as echarts.EChartsOption
-			}
-		/>
+							...metricChartOptions,
+							series: [
+								{
+									data: chartData,
+									showSymbol: false,
+									type: 'line',
+									color: theme.palette.secondary.main,
+									areaStyle: {
+										opacity: 0.8,
+										color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+											{
+												offset: 0,
+												color: theme.palette.secondary.main,
+											},
+											{
+												offset: 1,
+												color: '#ffffff00',
+											},
+										]),
+									},
+								},
+							],
+						} as echarts.EChartsOption
+					}
+				/></Box></Fade>
+			) : (
+				<Typography variant='subtitle2' color={theme.palette.warning.light}>No metric selected</Typography>
+			)}
+		</Stack>
 	);
 }
 
