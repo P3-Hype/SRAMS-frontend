@@ -103,7 +103,7 @@ function LinkMetricToRoomInput(props: { readonly room: Room }) {
 					)})
 				  }
 			/>
-			<Tooltip arrow title="Link selected metrics to room">
+			<Tooltip arrow placement='bottom-end' title="Link selected metrics to room">
 				<Button color={"success"} variant='outlined' onClick={() => {
 					setMetricsToAdd([]);
 					addLinkMutation.mutate();
@@ -226,11 +226,11 @@ function EditRoomContent(props: { readonly room: Room }) {
 				<Typography variant='caption' color={theme.palette.primary.light}>Metrics</Typography>
 				<Divider />
 				</Stack>
-				<Stack direction={'row'} minHeight={'fit-content'} alignItems={'center'} gap={8}>
+				{!metricLinks.isLoading && <Stack direction={'row'} minHeight={'fit-content'} alignItems={'center'} gap={8}>
 					<MetricSlider type={MetricType.CO2_LEVEL} metricLink={co2MetricLink}/>
 					<MetricSlider type={MetricType.TEMPERATURE} metricLink={temperatureMetricLink}/>
 					<MetricSlider type={MetricType.HUMIDITY} metricLink={humidityMetricLink}/>
-				</Stack>
+				</Stack>}
 				<LinkMetricToRoomInput room={room} />
 				<RoomInformation room={room} metricLinks={metricLinks}/>
 			</Stack>
