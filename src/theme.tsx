@@ -4,6 +4,9 @@ export const theme = createTheme({
 	shadows: Array(25).fill('none') as Shadows,
 	palette: {
 		mode: 'light',
+		text: {
+			primary: '#2c3a42',
+		},
 		primary: {
 			main: '#2c3a42',
 		},
@@ -14,6 +17,9 @@ export const theme = createTheme({
 			default: '#e7f5f5',
 			paper: '#f7fdfd',
 		},
+	},
+	typography: {
+		fontFamily: 'Geist-Regular',
 	},
 	components: {
 		MuiToggleButton: {

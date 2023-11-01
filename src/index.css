@@ -1,3 +1,45 @@
+@font-face {
+	font-family: 'Geist-Thin';
+	src: 	local('Geist'), url(./fonts/Geist-Thin.otf) format('open-type'),
+			local('Geist'), url(./fonts/Geist-Thin.woff2) format('woff');
+}
+@font-face {
+	font-family: 'Geist-UltraLight';
+	src: 	local('Geist'), url(./fonts/Geist-UltraLight.otf) format('open-type'),
+			local('Geist'), url(./fonts/Geist-UltraLight.otf) format('woff');
+}
+@font-face {
+	font-family: 'Geist-Light';
+	src: 	local('Geist'), url(./fonts/Geist-Light.otf) format('open-type'),
+			local('Geist'), url(./fonts/Geist-Light.otf) format('woff');
+}
+@font-face {
+	font-family: 'Geist-Regular';
+	src: 	local('Geist'), url(./fonts/Geist-Regular.otf) format('open-type'),
+			local('Geist'), url(./fonts/Geist-Regular.woff2) format('woff');
+}
+@font-face {
+	font-family: 'Geist-Medium';
+	src: 	local('Geist'), url(./fonts/Geist-Medium.otf) format('open-type'),
+			local('Geist'), url(./fonts/Geist-Medium.woff2) format('woff');
+}
+@font-face {
+	font-family: 'Geist-Bold';
+	src: 	local('Geist'), url(./fonts/Geist-Bold.otf) format('open-type'),
+			local('Geist'), url(./fonts/Geist-Bold.woff2) format('woff');
+}
+@font-face {
+	font-family: 'Geist-Black';
+	src: 	local('Geist'), url(./fonts/Geist-Black.otf) format('open-type'),
+			local('Geist'), url(./fonts/Geist-Black.woff2) format('woff');
+}
+
+@font-face {
+	font-family: 'Geist-UltraBlack';
+	src: 	local('Geist'), url(./fonts/Geist-UltraBlack.otf) format('open-type'),
+			local('Geist'), url(./fonts/Geist-UltraBlack.woff2) format('woff');
+}
+
 :root {
 	font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 	line-height: 1.5;
