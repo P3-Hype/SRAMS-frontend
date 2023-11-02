@@ -9,7 +9,7 @@ interface SaveButtonProps {
 function SaveButton(props: SaveButtonProps) {
 	return (
 		<Button
-			variant='text'
+			variant='outlined'
 			color={'success'}
 			sx={{
 				width: 'fit-content',

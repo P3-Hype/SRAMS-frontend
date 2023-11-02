@@ -1,52 +1,138 @@
-import { DeleteForeverRounded, ViewListRounded } from '@mui/icons-material';
+import { DeleteForeverRounded, Link, ViewListRounded } from '@mui/icons-material';
 import {
 	Autocomplete,
+	Button,
 	Box,
 	Card,
 	Checkbox,
+	Chip,
 	Container,
+	Divider,
 	Fade,
+	Grow,
 	IconButton,
 	LinearProgress,
 	Paper,
-	Slider,
 	Stack,
 	TextField,
+	Tooltip,
 	Typography,
 	useTheme,
 } from '@mui/material';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { Link as RouterLink, useNavigate, useParams } from 'react-router-dom';
 import BasePage from '../components/BasePage/BasePage';
 import SaveButton from '../components/SaveButton/SaveButton';
 import useAlert from '../hooks/useAlert';
 import { useRoom } from '../hooks/useRoom';
-import Room from '../room';
 import RoomInformation from '../components/RoomInformation/RoomInformation';
+import MetricAutoIcon from '../components/MetricAutoIcon/MetricAutoIcon';
+import { LabelToMetricType } from '../utils/prometheusUtil';
+import { MetricLink, MetricType } from '../metricLink';
+import MetricSlider from '../components/MetricLimitSlider/MetricLimitSlider';
+import Room from '../room';
+import theme from '../theme';
 
 function AutoCompleteDropdown(props: { readonly children?: React.ReactNode }) {
 	const theme = useTheme();
 	return (
-		<Paper
-			sx={{
-				border: '1px solid ' + theme.palette.primary.main,
-				marginTop: 1,
-			}}
-		>
-			{props.children}
-		</Paper>
+		<Grow in>
+			<Paper
+				sx={{
+					border: '1px solid ' + theme.palette.primary.main,
+					marginTop: 1,
+					marginBottom: 1,
+				}}
+			>
+				{props.children}
+			</Paper>
+		</Grow>
 	);
 }
 
-function EditRoomContent(props: { readonly room: Room; readonly labels: string[] }) {
+function LinkMetricToRoomInput(props: { readonly room: Room }) {
+	const theme = useTheme();
+	const queryClient = useQueryClient();
 	const room = props.room;
-	const labels = props.labels;
+	const [metricsToAdd, setMetricsToAdd] = useState<string[]>([]);
+	const { data, isLoading } = useQuery(['allLabels'], {
+		queryFn: async () => {
+			const { data } = await axios.get(
+				`${import.meta.env.VITE_SRAMS_API_ADDRESS}metricLink/getAvailableMetricSources`
+			);
+			return data as string[];
+		},
+	});
+
+	const addLinkMutation = useMutation(() => axios.post(`${import.meta.env.VITE_SRAMS_API_ADDRESS}metricLink/addMetricLinks`, {
+		roomId: room.id,
+		metrics: metricsToAdd.map(m => {
+			const arr = m.split('_');
+			const id = arr[0];
+			arr.shift();
+			const type = arr.join('_').toUpperCase();
+			return {id, type};
+		}),
+	}), {
+		onSuccess: () => {
+			queryClient.invalidateQueries(['roomMetricLinks', room.id]);
+		}
+	});
+
+	return (
+		<Stack direction={'row'} gap={1}>
+			<Autocomplete
+				sx={{flexGrow:1}}
+				PaperComponent={AutoCompleteDropdown}
+				multiple
+				options={isLoading ? ['Loading...'] : data ?? []}
+				renderInput={(params) => <TextField {...params} label='Add metric sources' />}
+				autoHighlight
+				filterSelectedOptions
+				value={metricsToAdd}
+				onChange={(_, value) => {
+					setMetricsToAdd(value)
+				}}
+				renderTags={(value: readonly string[], getTagProps) =>
+					value.map((option: string, index: number) => {
+						const metricType = MetricType[LabelToMetricType(option) as keyof typeof MetricType];
+						return (
+					  <Chip sx={{paddingLeft:1}} icon={<MetricAutoIcon tooltip color={theme.palette.primary.light} metric={metricType} />} label={option} {...getTagProps({ index })} />
+					)})
+				  }
+			/>
+			<Tooltip arrow placement='bottom-end' title="Link selected metrics to room">
+				<Button color={"success"} variant='outlined' onClick={() => {
+					setMetricsToAdd([]);
+					addLinkMutation.mutate();
+					}}><Link /></Button>
+			</Tooltip>
+		</Stack>
+	);
+}
+
+function EditRoomContent(props: { readonly room: Room }) {
+	const room = props.room;
 	const [mutatedRoom, setMutatedRoom] = useState<Room>(room);
 	const [isLoading, setIsloading] = useState(false);
 	const queryClient = useQueryClient();
 	const navigate = useNavigate();
+
+	const metricLinks = useQuery(['roomMetricLinks', props.room.id], {
+		queryFn: async () => {
+			const { data } = await axios.get(`${import.meta.env.VITE_SRAMS_API_ADDRESS}metricLink/getAllByRoomId`, {
+				params: {
+					roomId: props.room.id,
+				},
+			});
+			return data as MetricLink[];
+		},
+	});
+	const co2MetricLink = metricLinks.data?.find((ml) => ml.type == MetricType.CO2_LEVEL);
+	const temperatureMetricLink = metricLinks.data?.find((ml) => ml.type == MetricType.TEMPERATURE);
+	const humidityMetricLink = metricLinks.data?.find((ml) => ml.type == MetricType.HUMIDITY);
 
 	const updateRoomMutation = useMutation({
 		mutationFn: (room: Room) => {
@@ -136,45 +222,17 @@ function EditRoomContent(props: { readonly room: Room; readonly labels: string[]
 						</Typography>
 					</Box>
 				</Stack>
-				<Stack direction={'row'} minHeight={'fit-content'} alignItems={'center'} gap={8}>
-					<Slider
-						sx={{ minHeight: '12rem' }}
-						disabled={!room.hasTemperature}
-						orientation='vertical'
-						defaultValue={[20, 23]}
-						valueLabelDisplay='auto'
-						valueLabelFormat={(value) => value + ' °C'}
-						min={15}
-						max={30}
-					/>
-					<Slider
-						sx={{ minHeight: '12rem' }}
-						disabled={!room.hasHumidity}
-						orientation='vertical'
-						defaultValue={[40, 70]}
-						valueLabelDisplay='auto'
-						valueLabelFormat={(value) => value + '%'}
-						min={0}
-						max={100}
-					/>
-					<Slider
-						sx={{ minHeight: '12rem' }}
-						disabled={!room.hasCo2}
-						orientation='vertical'
-						defaultValue={800}
-						valueLabelDisplay='auto'
-						valueLabelFormat={(value) => value + ' PPM'}
-						min={400}
-						step={100}
-						max={5000}
-					/>
+				<Stack>
+				<Typography variant='caption' color={theme.palette.primary.light}>Metrics</Typography>
+				<Divider />
 				</Stack>
-				<Autocomplete
-					PaperComponent={AutoCompleteDropdown}
-					options={labels}
-					renderInput={(params) => <TextField {...params} label='Prom label' />}
-				/>
-				<RoomInformation room={room} />
+				{!metricLinks.isLoading && <Stack direction={'row'} minHeight={'fit-content'} alignItems={'center'} gap={8}>
+					<MetricSlider type={MetricType.CO2_LEVEL} metricLink={co2MetricLink}/>
+					<MetricSlider type={MetricType.TEMPERATURE} metricLink={temperatureMetricLink}/>
+					<MetricSlider type={MetricType.HUMIDITY} metricLink={humidityMetricLink}/>
+				</Stack>}
+				<LinkMetricToRoomInput room={room} />
+				<RoomInformation metricLinks={metricLinks}/>
 			</Stack>
 		</Card>
 	);
@@ -183,8 +241,6 @@ function EditRoomContent(props: { readonly room: Room; readonly labels: string[]
 function Content() {
 	const params = useParams<{ id: string }>();
 	const { room, isLoading } = useRoom(params.id ?? '');
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const [labels] = useState<string[]>([]);
 
 	if (isLoading) return <LinearProgress />;
 	if (room == null || room == undefined) {
@@ -194,7 +250,7 @@ function Content() {
 	return (
 		<Fade in timeout={200}>
 			<Box>
-				<EditRoomContent room={room} labels={labels} />
+				<EditRoomContent room={room} />
 			</Box>
 		</Fade>
 	);

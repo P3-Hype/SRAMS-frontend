@@ -4,10 +4,8 @@ import { EChartsOption } from 'echarts';
 import ReactECharts from 'echarts-for-react';
 import * as echarts from 'echarts';
 import { useEffect, useState } from 'react';
-import Room from '../../room';
-import { MetricLink } from '../../metricLink';
-import { useQuery } from 'react-query';
-import axios from 'axios';
+import { MetricLink, MetricType } from '../../metricLink';
+import { UseQueryResult } from 'react-query';
 import MetricAutoIcon from '../MetricAutoIcon/MetricAutoIcon';
 
 const formatUnix = (unix: number) => {
@@ -18,13 +16,29 @@ const formatUnix = (unix: number) => {
 	return `${h}:${m}:${s}`;
 };
 
+const typeToUnit = (type: MetricType) => {
+	switch (type) {
+		case MetricType.CO2_LEVEL:
+			return 'PPM';
+		case MetricType.HUMIDITY:
+			return '%';
+		case MetricType.TEMPERATURE:
+			return '°C';
+	}
+};
+
+const roundTo = function (num: number, places: number) {
+	const factor = 10 ** places;
+	return Math.round(num * factor) / factor;
+};
+
 interface DataItem {
 	name: string;
 	value: [number, number];
 }
 
 interface RoomInformationProps {
-	readonly room: Room;
+	readonly metricLinks: UseQueryResult<MetricLink[], unknown>;
 }
 
 export function RoomInformation(props: RoomInformationProps) {
@@ -32,23 +46,33 @@ export function RoomInformation(props: RoomInformationProps) {
 	const [selectedMetricLink, setSelectedMetricLink] = useState<MetricLink>();
 	const [metricQuery, setMetricQuery] = useState<string | null>(null);
 	const [chartData, setChartData] = useState<DataItem[]>([]);
-
-	const metricLinks = useQuery(['roomMetricLinks', props.room.id], {
-		queryFn: async () => {
-			const { data } = await axios.get(`${import.meta.env.VITE_SRAMS_API_ADDRESS}metricLink/getAllByRoomId`, {
-				params: {
-					roomId: props.room.id,
-				},
-			});
-			return data as MetricLink[];
-		},
-	});
 	const { data, isLoading } = useMetric(metricQuery, 120, 5, 5000);
 
 	const metricChartOptions: EChartsOption = {
+		title: {
+			text: chartData
+				? `${typeToUnit(selectedMetricLink?.type
+					?? MetricType.CO2_LEVEL)} ${roundTo(chartData[chartData.length - 1]?.value[1], 2).toString()}`
+				: "",
+			textAlign: 'center',
+			left: '85%',
+			top: '10%',
+			textStyle: {
+				fontFamily: 'Geist-UltraBlack',
+				fontSize: 24,
+				color: theme.palette.secondary.dark,
+				textShadowColor: theme.palette.background.paper,
+				textShadowBlur: 20,
+				textShadowOffsetY: 2,
+			},
+		},
+		textStyle: {
+			fontFamily: 'Geist-Regular',
+			color: theme.palette.primary.main,
+		},
 		grid: {
 			left: 100,
-			right: 20,
+			right: 0,
 			top: 20,
 			bottom: 20,
 		},
@@ -74,6 +98,35 @@ export function RoomInformation(props: RoomInformationProps) {
 				show: false,
 			},
 			min: 'dataMin',
+			max: 'dataMax',
+		},
+		series: {
+			data: chartData,
+			showSymbol: false,
+			type: 'line',
+			color: theme.palette.secondary.main,
+			areaStyle: {
+				opacity: 0.8,
+				color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+					{
+						offset: 0,
+						color: theme.palette.secondary.main,
+					},
+					{
+						offset: 1,
+						color: '#ffffff00',
+					},
+				]),
+			},
+			markLine: {
+				symbol: ['none', 'none'],
+				label: { show: false },
+				silent: true,
+				data: [
+					{ yAxis: selectedMetricLink?.lowLimit, lineStyle: { color: theme.palette.info.main } },
+					{ yAxis: selectedMetricLink?.highLimit, lineStyle: { color: theme.palette.error.main, width: 1 } },
+				],
+			},
 		},
 	};
 	useEffect(() => {
@@ -95,23 +148,25 @@ export function RoomInformation(props: RoomInformationProps) {
 		setMetricQuery(query);
 	};
 
-	if (metricLinks.isLoading) return <LinearProgress />;
+	if (props.metricLinks.isLoading) return <LinearProgress />;
 	return (
 		<Stack direction={'row'} display={'flex'}>
-			<ToggleButtonGroup
-				orientation='vertical'
-				value={selectedMetricLink}
-				exclusive
-				onChange={handleSelectMetricLink}
-			>
-				{metricLinks.data?.map((ml) => {
-					return (
-						<ToggleButton key={ml.id} value={ml}>
-							<MetricAutoIcon tooltip metric={ml.type} />
-						</ToggleButton>
-					);
-				})}
-			</ToggleButtonGroup>
+			<Fade in={!props.metricLinks.isLoading} timeout={1000}>
+				<ToggleButtonGroup
+					orientation='vertical'
+					value={selectedMetricLink}
+					exclusive
+					onChange={handleSelectMetricLink}
+				>
+					{props.metricLinks.data?.map((ml) => {
+						return (
+							<ToggleButton key={ml.id} value={ml}>
+								<MetricAutoIcon tooltip metric={ml.type} />
+							</ToggleButton>
+						);
+					})}
+				</ToggleButtonGroup>
+			</Fade>
 			{!isLoading && !!metricQuery ? (
 				<Fade in>
 					<Box width={1}>
@@ -146,7 +201,8 @@ export function RoomInformation(props: RoomInformationProps) {
 					</Box>
 				</Fade>
 			) : (
-				<Typography variant='subtitle2' color={theme.palette.warning.light}>
+				<Typography ml={4} variant='subtitle2' color={theme.palette.primary.light}>
+
 					No metric selected
 				</Typography>
 			)}
