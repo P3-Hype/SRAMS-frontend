@@ -174,7 +174,27 @@ export function RoomInformation(props: RoomInformationProps) {
 							option={
 								{
 									...metricChartOptions,
-
+									series: [
+										{
+											data: chartData,
+											showSymbol: false,
+											type: 'line',
+											color: theme.palette.secondary.main,
+											areaStyle: {
+												opacity: 0.8,
+												color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+													{
+														offset: 0,
+														color: theme.palette.secondary.main,
+													},
+													{
+														offset: 1,
+														color: '#ffffff00',
+													},
+												]),
+											},
+										},
+									],
 								} as echarts.EChartsOption
 							}
 						/>
@@ -182,6 +202,7 @@ export function RoomInformation(props: RoomInformationProps) {
 				</Fade>
 			) : (
 				<Typography ml={4} variant='subtitle2' color={theme.palette.primary.light}>
+
 					No metric selected
 				</Typography>
 			)}

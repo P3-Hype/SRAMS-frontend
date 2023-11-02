@@ -29,7 +29,7 @@ export function useMetric(metricQuery: string | null, span?: number, spanInterva
 	const spanIntervalString = spanInterval != undefined && spanInterval > 0 ? `:${spanInterval}s` : '';
 	const spanString = span != undefined && span > 0 ? `[${span}m${spanIntervalString}]` : '';
 	const { data, isLoading } = useQuery(['metric', metricQuery], {
-		queryFn: async () => {			
+		queryFn: async () => {
 			const { data } = await axios.get(import.meta.env.VITE_PROMETHEUS_API_ADDRESS + 'query', {
 				params: {
 					query: metricQuery + spanString,

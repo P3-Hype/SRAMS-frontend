@@ -1,5 +1,5 @@
 // Importerer de nødvendige biblioteker og komponenter
-import { Box, Card, CardContent, Container, Typography } from '@mui/material';
+import { Box, Card, CardContent, Container, LinearProgress, Typography } from '@mui/material';
 import Booking from '../booking';
 import BasePage from '../components/BasePage/BasePage';
 import useAlert from '../hooks/useAlert';
@@ -13,7 +13,6 @@ function convertTimestampToTime(timestamp: number) {
 	const options: Intl.DateTimeFormatOptions = {
 		hour: '2-digit',
 		minute: '2-digit',
-		second: '2-digit',
 	};
 	return date.toLocaleTimeString('da-DK', options);
 }
@@ -129,6 +128,10 @@ function RoomOverviewPage() {
 	const allRooms = useAllRooms();
 	const roomsWithBookings = getRoomsWithBookings(allRooms.rooms || [], allBookings.bookings || []);
 	const customTimeline = <CustomTimeLine></CustomTimeLine>;
+
+	if (allBookings.isLoading) {
+		return <LinearProgress />;
+	}
 
 	return (
 		<BasePage alert={alert}>

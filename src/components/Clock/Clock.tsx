@@ -2,16 +2,15 @@ import { Typography } from '@mui/material';
 import { useEffect, useState } from 'react'
 
 export const Clock = () => {
-    const [time , setTime] = useState(new Date());
+	const [time, setTime] = useState(new Date());
 
-    useEffect(() => {
-        const timer = setInterval(() => {
-             setTime(new Date())
-        }, 1000)
+	useEffect(() => {
+		const timer = setInterval(() => {
+			setTime(new Date());
+		}, 1000);
 
-        return () => clearInterval(timer)
-    },[]);
-  
-    return (<Typography>{time.toLocaleTimeString(undefined, {hour: '2-digit', minute: '2-digit'})}</Typography>)
-}
+		return () => clearInterval(timer);
+	}, []);
 
+	return <Typography>{time.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })}</Typography>;
+};
