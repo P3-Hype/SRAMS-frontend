@@ -52,14 +52,20 @@ export function RoomInformation(props: RoomInformationProps) {
 
 	const metricChartOptions: EChartsOption = {
 		title: {
-			text: chartData ? `${typeToUnit(selectedMetricLink?.type ?? MetricType.CO2_LEVEL)} ${roundTo(chartData[chartData.length-1]?.value[1],2).toString()}` : "",
+			text: chartData 
+				? `${typeToUnit(selectedMetricLink?.type 
+				?? MetricType.CO2_LEVEL)} ${roundTo(chartData[chartData.length-1]?.value[1],2).toString()}` 
+				: "",
 			textAlign: 'center',
 			left: '85%',
 			top: '10%',
 			textStyle: {
 				fontFamily: 'Geist-UltraBlack',
 				fontSize: 24,
-				color: theme.palette.primary.main,
+				color: theme.palette.secondary.dark,
+				textShadowColor: theme.palette.background.paper,
+				textShadowBlur: 20,
+				textShadowOffsetY: 2,
 			},
 		},
 		textStyle: {
