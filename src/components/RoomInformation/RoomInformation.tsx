@@ -90,7 +90,7 @@ export function RoomInformation(props: RoomInformationProps) {
 	const handleSelectMetricLink = (_: React.MouseEvent<HTMLElement>, ml: MetricLink) => {
 		if (ml === undefined) return;
 		const query = `${ml.metricId}_${ml.type.toLocaleLowerCase()}`;
-		
+
 		setSelectedMetricLink(ml);
 		setMetricQuery(query);
 	};
@@ -99,10 +99,11 @@ export function RoomInformation(props: RoomInformationProps) {
 	return (
 		<Stack direction={'row'} display={'flex'}>
 			<ToggleButtonGroup
-			orientation='vertical'
-			value={selectedMetricLink} 
-			exclusive 
-			onChange={handleSelectMetricLink}>
+				orientation='vertical'
+				value={selectedMetricLink}
+				exclusive
+				onChange={handleSelectMetricLink}
+			>
 				{metricLinks.data?.map((ml) => {
 					return (
 						<ToggleButton key={ml.id} value={ml}>
@@ -112,36 +113,42 @@ export function RoomInformation(props: RoomInformationProps) {
 				})}
 			</ToggleButtonGroup>
 			{!isLoading && !!metricQuery ? (
-				<Fade in><Box width={1}><ReactECharts
-					option={
-						{
-							...metricChartOptions,
-							series: [
+				<Fade in>
+					<Box width={1}>
+						<ReactECharts
+							option={
 								{
-									data: chartData,
-									showSymbol: false,
-									type: 'line',
-									color: theme.palette.secondary.main,
-									areaStyle: {
-										opacity: 0.8,
-										color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-											{
-												offset: 0,
-												color: theme.palette.secondary.main,
+									...metricChartOptions,
+									series: [
+										{
+											data: chartData,
+											showSymbol: false,
+											type: 'line',
+											color: theme.palette.secondary.main,
+											areaStyle: {
+												opacity: 0.8,
+												color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+													{
+														offset: 0,
+														color: theme.palette.secondary.main,
+													},
+													{
+														offset: 1,
+														color: '#ffffff00',
+													},
+												]),
 											},
-											{
-												offset: 1,
-												color: '#ffffff00',
-											},
-										]),
-									},
-								},
-							],
-						} as echarts.EChartsOption
-					}
-				/></Box></Fade>
+										},
+									],
+								} as echarts.EChartsOption
+							}
+						/>
+					</Box>
+				</Fade>
 			) : (
-				<Typography variant='subtitle2' color={theme.palette.warning.light}>No metric selected</Typography>
+				<Typography variant='subtitle2' color={theme.palette.warning.light}>
+					No metric selected
+				</Typography>
 			)}
 		</Stack>
 	);
