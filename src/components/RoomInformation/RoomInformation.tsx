@@ -39,8 +39,7 @@ interface DataItem {
 }
 
 interface RoomInformationProps {
-	readonly room: Room;
-	metricLinks: UseQueryResult<MetricLink[], unknown>;
+	readonly metricLinks: UseQueryResult<MetricLink[], unknown>;
 }
 
 export function RoomInformation(props: RoomInformationProps) {
@@ -52,9 +51,9 @@ export function RoomInformation(props: RoomInformationProps) {
 
 	const metricChartOptions: EChartsOption = {
 		title: {
-			text: chartData 
-				? `${typeToUnit(selectedMetricLink?.type 
-				?? MetricType.CO2_LEVEL)} ${roundTo(chartData[chartData.length-1]?.value[1],2).toString()}` 
+			text: chartData
+				? `${typeToUnit(selectedMetricLink?.type
+					?? MetricType.CO2_LEVEL)} ${roundTo(chartData[chartData.length - 1]?.value[1], 2).toString()}`
 				: "",
 			textAlign: 'center',
 			left: '85%',
@@ -126,7 +125,7 @@ export function RoomInformation(props: RoomInformationProps) {
 				silent: true,
 				data: [
 					{ yAxis: selectedMetricLink?.lowLimit, lineStyle: { color: theme.palette.info.main } },
-					{ yAxis: selectedMetricLink?.highLimit, lineStyle: { color: theme.palette.error.main, width: 1} },
+					{ yAxis: selectedMetricLink?.highLimit, lineStyle: { color: theme.palette.error.main, width: 1 } },
 				],
 			},
 		},
@@ -152,44 +151,42 @@ export function RoomInformation(props: RoomInformationProps) {
 
 	if (props.metricLinks.isLoading) return <LinearProgress />;
 	return (
-		<>
-			<Stack direction={'row'} display={'flex'}>
-				<Fade in={!props.metricLinks.isLoading} timeout={1000}>
-					<ToggleButtonGroup
-						orientation='vertical'
-						value={selectedMetricLink}
-						exclusive
-						onChange={handleSelectMetricLink}
-					>
-						{props.metricLinks.data?.map((ml) => {
-							return (
-								<ToggleButton key={ml.id} value={ml}>
-									<MetricAutoIcon tooltip metric={ml.type} />
-								</ToggleButton>
-							);
-						})}
-					</ToggleButtonGroup>
+		<Stack direction={'row'} display={'flex'}>
+			<Fade in={!props.metricLinks.isLoading} timeout={1000}>
+				<ToggleButtonGroup
+					orientation='vertical'
+					value={selectedMetricLink}
+					exclusive
+					onChange={handleSelectMetricLink}
+				>
+					{props.metricLinks.data?.map((ml) => {
+						return (
+							<ToggleButton key={ml.id} value={ml}>
+								<MetricAutoIcon tooltip metric={ml.type} />
+							</ToggleButton>
+						);
+					})}
+				</ToggleButtonGroup>
+			</Fade>
+			{!isLoading && !!metricQuery ? (
+				<Fade in>
+					<Box width={1}>
+						<ReactECharts
+							option={
+								{
+									...metricChartOptions,
+
+								} as echarts.EChartsOption
+							}
+						/>
+					</Box>
 				</Fade>
-				{!isLoading && !!metricQuery ? (
-					<Fade in>
-						<Box width={1}>
-							<ReactECharts
-								option={
-									{
-										...metricChartOptions,
-										
-									} as echarts.EChartsOption
-								}
-							/>
-						</Box>
-					</Fade>
-				) : (
-					<Typography ml={4} variant='subtitle2' color={theme.palette.primary.light}>
-						No metric selected
-					</Typography>
-				)}
-			</Stack>
-		</>
+			) : (
+				<Typography ml={4} variant='subtitle2' color={theme.palette.primary.light}>
+					No metric selected
+				</Typography>
+			)}
+		</Stack>
 	);
 }
 

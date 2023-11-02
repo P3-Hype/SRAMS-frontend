@@ -1,6 +1,5 @@
-import { Slider, useTheme } from '@mui/material';
+import { Stack, Slider, useTheme } from '@mui/material';
 import { MetricLink, MetricType } from '../../metricLink';
-import { Stack } from '@mui/material';
 import MetricAutoIcon from '../MetricAutoIcon/MetricAutoIcon';
 import { useMutation, useQueryClient } from 'react-query';
 import axios from 'axios';

@@ -1,6 +1,7 @@
 import { DeleteForeverRounded, Link, ViewListRounded } from '@mui/icons-material';
 import {
 	Autocomplete,
+	Button,
 	Box,
 	Card,
 	Checkbox,
@@ -26,13 +27,12 @@ import BasePage from '../components/BasePage/BasePage';
 import SaveButton from '../components/SaveButton/SaveButton';
 import useAlert from '../hooks/useAlert';
 import { useRoom } from '../hooks/useRoom';
-import Room from '../room';
 import RoomInformation from '../components/RoomInformation/RoomInformation';
 import MetricAutoIcon from '../components/MetricAutoIcon/MetricAutoIcon';
 import { LabelToMetricType } from '../utils/prometheusUtil';
 import { MetricLink, MetricType } from '../metricLink';
-import { Button } from '@mui/material';
 import MetricSlider from '../components/MetricLimitSlider/MetricLimitSlider';
+import Room from '../room';
 import theme from '../theme';
 
 function AutoCompleteDropdown(props: { readonly children?: React.ReactNode }) {
@@ -232,7 +232,7 @@ function EditRoomContent(props: { readonly room: Room }) {
 					<MetricSlider type={MetricType.HUMIDITY} metricLink={humidityMetricLink}/>
 				</Stack>}
 				<LinkMetricToRoomInput room={room} />
-				<RoomInformation room={room} metricLinks={metricLinks}/>
+				<RoomInformation metricLinks={metricLinks}/>
 			</Stack>
 		</Card>
 	);
