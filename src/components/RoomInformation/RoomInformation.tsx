@@ -4,7 +4,6 @@ import { EChartsOption } from 'echarts';
 import ReactECharts from 'echarts-for-react';
 import * as echarts from 'echarts';
 import { useEffect, useState } from 'react';
-import Room from '../../room';
 import { MetricLink, MetricType } from '../../metricLink';
 import { UseQueryResult } from 'react-query';
 import MetricAutoIcon from '../MetricAutoIcon/MetricAutoIcon';
