@@ -239,7 +239,7 @@ function EditRoomContent(props: { readonly room: Room }) {
 							<Typography variant='body1'>Room has a window</Typography>
 						</Box>
 
-						<Box display={'flex'} flexDirection={'row'} alignItems={'center'}>
+						<Box display={'flex'} flexDirection={'column'} alignItems={'center'}>
 							<Checkbox
 								defaultChecked={room.isBookable}
 								onChange={(e) => {
