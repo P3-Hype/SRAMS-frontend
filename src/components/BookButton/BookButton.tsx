@@ -9,17 +9,13 @@ function BookButton() {
 
 
 	const buttonStyle = {
-		fontSize: '1.5rem',
-		padding: '15px 30px',
-		width: '200px',
-		height: '125px',
 		variant: 'contained',
-		backgroundColor: theme.palette.primary.main, // Use primary theme color
+		backgroundColor: theme.palette.secondary.main,
 		color: 'white', // Set text color
 	};
 
 	return (
-			<Link component={RouterLink} to='/Booking'>
+			<Link component={RouterLink} to='/booking'>
 				<Button sx={buttonStyle}>Book Room</Button>
 			</Link>
 	);
