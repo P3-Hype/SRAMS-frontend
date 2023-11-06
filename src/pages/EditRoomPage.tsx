@@ -226,7 +226,7 @@ function EditRoomContent(props: { readonly room: Room }) {
 							setMutatedRoom(r);
 						}}
 					/>
-					<Box display={'flex'} flexDirection={'column'} alignItems={'left'}>
+					<Box display={'flex'} flexDirection={'row'} alignItems={'left'}>
 						<Box display={'flex'} flexDirection={'column'} alignItems={'center'}>
 							<Checkbox
 								defaultChecked={room.hasWindow}
