@@ -1,8 +1,8 @@
 import { DeleteForeverRounded, Link, ViewListRounded } from '@mui/icons-material';
 import {
 	Autocomplete,
-	Button,
 	Box,
+	Button,
 	Card,
 	Checkbox,
 	Chip,
@@ -24,16 +24,16 @@ import { useEffect, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { Link as RouterLink, useNavigate, useParams } from 'react-router-dom';
 import BasePage from '../components/BasePage/BasePage';
+import MetricAutoIcon from '../components/MetricAutoIcon/MetricAutoIcon';
+import MetricSlider from '../components/MetricLimitSlider/MetricLimitSlider';
+import RoomInformation from '../components/RoomInformation/RoomInformation';
 import SaveButton from '../components/SaveButton/SaveButton';
 import useAlert from '../hooks/useAlert';
 import { useRoom } from '../hooks/useRoom';
-import RoomInformation from '../components/RoomInformation/RoomInformation';
-import MetricAutoIcon from '../components/MetricAutoIcon/MetricAutoIcon';
-import { LabelToMetricType } from '../utils/prometheusUtil';
 import { MetricLink, MetricType } from '../metricLink';
-import MetricSlider from '../components/MetricLimitSlider/MetricLimitSlider';
 import Room from '../room';
 import theme from '../theme';
+import { LabelToMetricType } from '../utils/prometheusUtil';
 
 function AutoCompleteDropdown(props: { readonly children?: React.ReactNode }) {
 	const theme = useTheme();
@@ -66,25 +66,29 @@ function LinkMetricToRoomInput(props: { readonly room: Room }) {
 		},
 	});
 
-	const addLinkMutation = useMutation(() => axios.post(`${import.meta.env.VITE_SRAMS_API_ADDRESS}metricLink/addMetricLinks`, {
-		roomId: room.id,
-		metrics: metricsToAdd.map(m => {
-			const arr = m.split('_');
-			const id = arr[0];
-			arr.shift();
-			const type = arr.join('_').toUpperCase();
-			return {id, type};
-		}),
-	}), {
-		onSuccess: () => {
-			queryClient.invalidateQueries(['roomMetricLinks', room.id]);
+	const addLinkMutation = useMutation(
+		() =>
+			axios.post(`${import.meta.env.VITE_SRAMS_API_ADDRESS}metricLink/addMetricLinks`, {
+				roomId: room.id,
+				metrics: metricsToAdd.map((m) => {
+					const arr = m.split('_');
+					const id = arr[0];
+					arr.shift();
+					const type = arr.join('_').toUpperCase();
+					return { id, type };
+				}),
+			}),
+		{
+			onSuccess: () => {
+				queryClient.invalidateQueries(['roomMetricLinks', room.id]);
+			},
 		}
-	});
+	);
 
 	return (
 		<Stack direction={'row'} gap={1}>
 			<Autocomplete
-				sx={{flexGrow:1}}
+				sx={{ flexGrow: 1 }}
 				PaperComponent={AutoCompleteDropdown}
 				multiple
 				options={isLoading ? ['Loading...'] : data ?? []}
@@ -93,21 +97,35 @@ function LinkMetricToRoomInput(props: { readonly room: Room }) {
 				filterSelectedOptions
 				value={metricsToAdd}
 				onChange={(_, value) => {
-					setMetricsToAdd(value)
+					setMetricsToAdd(value);
 				}}
 				renderTags={(value: readonly string[], getTagProps) =>
 					value.map((option: string, index: number) => {
 						const metricType = MetricType[LabelToMetricType(option) as keyof typeof MetricType];
 						return (
-					  <Chip sx={{paddingLeft:1}} icon={<MetricAutoIcon tooltip color={theme.palette.primary.light} metric={metricType} />} label={option} {...getTagProps({ index })} />
-					)})
-				  }
+							<Chip
+								sx={{ paddingLeft: 1 }}
+								icon={
+									<MetricAutoIcon tooltip color={theme.palette.primary.light} metric={metricType} />
+								}
+								label={option}
+								{...getTagProps({ index })}
+							/>
+						);
+					})
+				}
 			/>
-			<Tooltip arrow placement='bottom-end' title="Link selected metrics to room">
-				<Button color={"success"} variant='outlined' onClick={() => {
-					setMetricsToAdd([]);
-					addLinkMutation.mutate();
-					}}><Link /></Button>
+			<Tooltip arrow placement='bottom-end' title='Link selected metrics to room'>
+				<Button
+					color={'success'}
+					variant='outlined'
+					onClick={() => {
+						setMetricsToAdd([]);
+						addLinkMutation.mutate();
+					}}
+				>
+					<Link />
+				</Button>
 			</Tooltip>
 		</Stack>
 	);
@@ -208,31 +226,47 @@ function EditRoomContent(props: { readonly room: Room }) {
 							setMutatedRoom(r);
 						}}
 					/>
-					<Box display={'flex'} flexDirection={'column'} alignItems={'flex-start'}>
-						<Checkbox
-							defaultChecked={room.hasWindow}
-							onChange={(e) => {
-								const r = mutatedRoom;
-								r.hasWindow = e.target.checked;
-								setMutatedRoom(r);
-							}}
-						/>
-						<Typography ml={1.5} variant='body1'>
-							Room has a window
-						</Typography>
+					<Box display={'flex'} flexDirection={'column'} alignItems={'left'}>
+						<Box display={'flex'} flexDirection={'row'} alignItems={'center'}>
+							<Checkbox
+								defaultChecked={room.hasWindow}
+								onChange={(e) => {
+									const r = mutatedRoom;
+									r.hasWindow = e.target.checked;
+									setMutatedRoom(r);
+								}}
+							/>
+							<Typography variant='body1'>Room has a window</Typography>
+						</Box>
+
+						<Box display={'flex'} flexDirection={'row'} alignItems={'center'}>
+							<Checkbox
+								defaultChecked={room.isBookable}
+								onChange={(e) => {
+									const r = mutatedRoom;
+									r.isBookable = e.target.checked;
+									setMutatedRoom(r);
+								}}
+							/>
+							<Typography variant='body1'>Room is bookable</Typography>
+						</Box>
 					</Box>
 				</Stack>
 				<Stack>
-				<Typography variant='caption' color={theme.palette.primary.light}>Metrics</Typography>
-				<Divider />
+					<Typography variant='caption' color={theme.palette.primary.light}>
+						Metrics
+					</Typography>
+					<Divider />
 				</Stack>
-				{!metricLinks.isLoading && <Stack direction={'row'} minHeight={'fit-content'} alignItems={'center'} gap={8}>
-					<MetricSlider type={MetricType.CO2_LEVEL} metricLink={co2MetricLink}/>
-					<MetricSlider type={MetricType.TEMPERATURE} metricLink={temperatureMetricLink}/>
-					<MetricSlider type={MetricType.HUMIDITY} metricLink={humidityMetricLink}/>
-				</Stack>}
+				{!metricLinks.isLoading && (
+					<Stack direction={'row'} minHeight={'fit-content'} alignItems={'center'} gap={8}>
+						<MetricSlider type={MetricType.CO2_LEVEL} metricLink={co2MetricLink} />
+						<MetricSlider type={MetricType.TEMPERATURE} metricLink={temperatureMetricLink} />
+						<MetricSlider type={MetricType.HUMIDITY} metricLink={humidityMetricLink} />
+					</Stack>
+				)}
 				<LinkMetricToRoomInput room={room} />
-				<RoomInformation metricLinks={metricLinks}/>
+				<RoomInformation metricLinks={metricLinks} />
 			</Stack>
 		</Card>
 	);
