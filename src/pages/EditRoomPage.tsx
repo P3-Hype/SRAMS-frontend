@@ -227,7 +227,7 @@ function EditRoomContent(props: { readonly room: Room }) {
 						}}
 					/>
 					<Box display={'flex'} flexDirection={'column'} alignItems={'left'}>
-						<Box display={'flex'} flexDirection={'row'} alignItems={'center'}>
+						<Box display={'flex'} flexDirection={'column'} alignItems={'center'}>
 							<Checkbox
 								defaultChecked={room.hasWindow}
 								onChange={(e) => {
