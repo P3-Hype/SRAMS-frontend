@@ -3,6 +3,7 @@ type Room = {
 	name: string;
 	seatCount: number;
 	hasWindow: boolean;
+	isBookable: boolean;
 	hasCo2: boolean;
 	hasTemperature: boolean;
 	hasHumidity: boolean;
