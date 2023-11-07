@@ -1,13 +1,14 @@
 import BasePage from "../components/BasePage/BasePage";
 import useAlert from '../hooks/useAlert';
-import { Container, Autocomplete, Tooltip, useTheme, Typography, TextField } from '@mui/material';
+import { Container, Autocomplete, Typography, TextField, Stack } from '@mui/material';
 import "../hooks/useRoom";
 import Room from "../room";
-import { useAllRooms, useRoom } from "../hooks/useRoom";
+import { useAllRooms } from "../hooks/useRoom";
 import { DateTimePicker } from '@mui/x-date-pickers';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import 'dayjs/locale/en-gb';
 
 
 
@@ -15,17 +16,14 @@ function Content(props: { listofRooms: Room[] }) {
   const inputStyles = {
     width: '200px',
   };
-    const headerStyles = {
-    align: 'center',
+/*  const headerStyles = {
+    textAlign: 'center',
   };
-    const datePickerStyles = {
-    height: '40px',
-  };
-
+*/
 
   return (
     <div>
-      <Typography variant="h2" style={headerStyles}>
+      <Typography variant="h2">
         Booking
       </Typography>
 
@@ -35,16 +33,20 @@ function Content(props: { listofRooms: Room[] }) {
         renderInput={(params) => <TextField {...params} label='Available rooms' style={inputStyles} />}
       />
 
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DemoContainer components={['DateTimePicker']}>
-          <DateTimePicker label="Basic date time picker" style={datePickerStyles} />
-        </DemoContainer>
+      <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
+        <Stack spacing={3} sx={{ width: 300 }}>
+          <DemoContainer components={['DateTimePicker']}>
+            <DateTimePicker label="Basic date time picker" />
+          </DemoContainer>
+        </Stack>
       </LocalizationProvider>
 
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DemoContainer components={['DateTimePicker']}>
-          <DateTimePicker label="Basic date time picker" style={datePickerStyles} />
-        </DemoContainer>
+      <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
+        <Stack spacing={3} sx={{ width: 300 }}>
+          <DemoContainer components={['DateTimePicker']}>
+            <DateTimePicker label="Basic date time picker" />
+          </DemoContainer>
+        </Stack>
       </LocalizationProvider>
     </div>
 
