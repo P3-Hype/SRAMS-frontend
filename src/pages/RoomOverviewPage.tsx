@@ -3,7 +3,6 @@ import resourceTimelinePlugin from '@fullcalendar/resource-timeline';
 import { LinearProgress } from '@mui/material';
 import { useEffect, useRef, useState } from 'react';
 import Booking from '../booking';
-import useAlert from '../hooks/useAlert';
 import useAllBookings from '../hooks/useBooking';
 import { useAllRooms } from '../hooks/useRoom';
 import Room from '../room';
@@ -21,15 +20,6 @@ interface Event {
 	title: string;
 }
 
-function convertTimestampToTime(timestamp: number) {
-	const date = new Date(timestamp * 1000);
-	const options: Intl.DateTimeFormatOptions = {
-		hour: '2-digit',
-		minute: '2-digit',
-	};
-	return date.toLocaleTimeString('da-DK', options);
-}
-
 function getRoomsWithBookings(allRooms: Room[], bookings: Booking[]) {
 	let roomsWithBookings: { room: Room; bookings: Booking[] }[] = [];
 	allRooms.forEach((room: Room) => {
@@ -44,14 +34,15 @@ function getRoomsWithBookings(allRooms: Room[], bookings: Booking[]) {
 
 const MyFullCalendarComponent = () => {
 	const calendarRef = useRef(null);
-	const alert = useAlert();
 	const allBookings = useAllBookings();
 	const allRooms = useAllRooms();
-
 	const [resources, setResources] = useState<Resource[]>([]);
 	const [events, setEvents] = useState<Event[]>([]);
-
 	const roomsWithBookings = getRoomsWithBookings(allRooms.rooms || [], allBookings.bookings || []);
+
+	if (allBookings.isLoading) {
+		return <LinearProgress />;
+	}
 
 	useEffect(() => {
 		const newResources: Resource[] = roomsWithBookings.map(({ room }) => ({
@@ -61,20 +52,23 @@ const MyFullCalendarComponent = () => {
 		setResources(newResources);
 
 		const newEvents: Event[] = roomsWithBookings.flatMap(({ room, bookings }: any) =>
-			bookings.map((booking: { id: { toString: () => any }; startTime: number; endTime: number }) => ({
-				id: booking.id.toString(),
-				start: new Date(booking.startTime * 1000).toISOString(),
-				end: new Date(booking.endTime * 1000).toISOString(),
-				resourceId: room.id.toString(),
-				title: `Booking ${booking.id}`,
-			}))
+			bookings.map((booking: { id: { toString: () => any }; startTime: number; endTime: number }) => {
+				const start = new Date(booking.startTime * 1000);
+				const end = new Date(booking.endTime * 1000);
+				const startTimeStr = start.toTimeString().substring(0, 5);
+				const endTimeStr = end.toTimeString().substring(0, 5);
+
+				return {
+					id: booking.id.toString(),
+					start: start.toISOString(),
+					end: end.toISOString(),
+					resourceId: room.id.toString(),
+					title: `${startTimeStr} - ${endTimeStr}`,
+				};
+			})
 		);
 		setEvents(newEvents);
 	}, [roomsWithBookings]);
-
-	if (allBookings.isLoading) {
-		return <LinearProgress />;
-	}
 
 	return (
 		<FullCalendar
