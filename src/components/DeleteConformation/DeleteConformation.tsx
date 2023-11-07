@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -8,45 +7,51 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { DeleteForeverRounded } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
+import { useState } from 'react';
+import useAlert from '../../hooks/useAlert';
 
-export default function FormDialog() {
-  const [open, setOpen] = React.useState(false);
+export default function FormDialog(props: { readonly handleDelete: () => void }) {
+	const [open, setOpen] = useState(false);
+	const [confirmText, setConfirmText] = useState('');
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+	const handleClickOpen = () => {
+		setOpen(true);
+	};
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+	const handleClose = () => {
+		setOpen(false);
+	};
 
-  return (
-    <React.Fragment>
-      <IconButton onClick={handleClickOpen}>
-        <DeleteForeverRounded color='error' />
-      </IconButton>
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Subscribe</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            To subscribe to this website, please enter your email address here. We
-            will send updates occasionally.
-          </DialogContentText>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Email Address"
-            type="email"
-            fullWidth
-            variant="standard"
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Subscribe</Button>
-        </DialogActions>
-      </Dialog>
-    </React.Fragment>
-  );
+	const handleConfirme = () => {
+		if (confirmText.toLowerCase() == 'delete') {
+			props.handleDelete();
+		}
+	};
+
+	return (
+		<>
+			<IconButton onClick={handleClickOpen}>
+				<DeleteForeverRounded color='error' />
+			</IconButton>
+			<Dialog open={open} onClose={handleClose}>
+				<DialogTitle>Delete</DialogTitle>
+				<DialogContent>
+					<DialogContentText>Deleting this room is permenent, and can not be recovered.</DialogContentText>
+					<TextField
+						autoFocus
+						margin='dense'
+						id='name'
+						label='Write Delete to confirme'
+						fullWidth
+						variant='standard'
+						onChange={(event) => setConfirmText(event.target.value)}
+					/>
+				</DialogContent>
+				<DialogActions>
+					<Button onClick={handleClose}>Cancel</Button>
+					<Button onClick={handleConfirme}>Delete</Button>
+				</DialogActions>
+			</Dialog>
+		</>
+	);
 }
