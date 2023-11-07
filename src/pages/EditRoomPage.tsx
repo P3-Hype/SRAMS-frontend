@@ -1,8 +1,8 @@
 import { DeleteForeverRounded, Link, ViewListRounded } from '@mui/icons-material';
 import {
 	Autocomplete,
-	Button,
 	Box,
+	Button,
 	Card,
 	Checkbox,
 	Chip,
@@ -24,17 +24,17 @@ import { useEffect, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { Link as RouterLink, useNavigate, useParams } from 'react-router-dom';
 import BasePage from '../components/BasePage/BasePage';
+import MetricAutoIcon from '../components/MetricAutoIcon/MetricAutoIcon';
+import MetricSlider from '../components/MetricLimitSlider/MetricLimitSlider';
+import RoomInformation from '../components/RoomInformation/RoomInformation';
 import SaveButton from '../components/SaveButton/SaveButton';
 import useAlert from '../hooks/useAlert';
 import { useRoom } from '../hooks/useRoom';
-import RoomInformation from '../components/RoomInformation/RoomInformation';
-import MetricAutoIcon from '../components/MetricAutoIcon/MetricAutoIcon';
-import { LabelToMetricType } from '../utils/prometheusUtil';
 import { MetricLink, MetricType } from '../metricLink';
-import MetricSlider from '../components/MetricLimitSlider/MetricLimitSlider';
 import Room from '../room';
 import theme from '../theme';
 import DeleteConformation from '../components/DeleteConformation/DeleteConformation';
+import { LabelToMetricType } from '../utils/prometheusUtil';
 
 function AutoCompleteDropdown(props: { readonly children?: React.ReactNode }) {
 	const theme = useTheme();
@@ -226,18 +226,30 @@ function EditRoomContent(props: { readonly room: Room }) {
 							setMutatedRoom(r);
 						}}
 					/>
-					<Box display={'flex'} flexDirection={'column'} alignItems={'flex-start'}>
-						<Checkbox
-							defaultChecked={room.hasWindow}
-							onChange={(e) => {
-								const r = mutatedRoom;
-								r.hasWindow = e.target.checked;
-								setMutatedRoom(r);
-							}}
-						/>
-						<Typography ml={1.5} variant='body1'>
-							Room has a window
-						</Typography>
+					<Box display={'flex'} flexDirection={'row'} alignItems={'left'}>
+						<Box display={'flex'} flexDirection={'column'} alignItems={'center'}>
+							<Checkbox
+								defaultChecked={room.hasWindow}
+								onChange={(e) => {
+									const r = mutatedRoom;
+									r.hasWindow = e.target.checked;
+									setMutatedRoom(r);
+								}}
+							/>
+							<Typography variant='body1'>Room has a window</Typography>
+						</Box>
+
+						<Box display={'flex'} flexDirection={'column'} alignItems={'center'}>
+							<Checkbox
+								defaultChecked={room.isBookable}
+								onChange={(e) => {
+									const r = mutatedRoom;
+									r.isBookable = e.target.checked;
+									setMutatedRoom(r);
+								}}
+							/>
+							<Typography variant='body1'>Room is bookable</Typography>
+						</Box>
 					</Box>
 				</Stack>
 				<Stack>

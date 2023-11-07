@@ -10,7 +10,6 @@ export function useBookings() {
 		},
 		staleTime: 3000,
 	});
-	console.log(data);
 
 	return { bookings: data, isLoading };
 }
