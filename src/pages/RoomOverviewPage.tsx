@@ -40,10 +40,6 @@ const MyFullCalendarComponent = () => {
 	const [events, setEvents] = useState<Event[]>([]);
 	const roomsWithBookings = getRoomsWithBookings(allRooms.rooms || [], allBookings.bookings || []);
 
-	if (allBookings.isLoading) {
-		return <LinearProgress />;
-	}
-
 	useEffect(() => {
 		const newResources: Resource[] = roomsWithBookings.map(({ room }) => ({
 			id: room.id.toString(),
@@ -69,6 +65,10 @@ const MyFullCalendarComponent = () => {
 		);
 		setEvents(newEvents);
 	}, [roomsWithBookings]);
+
+	if (allBookings.isLoading) {
+		return <LinearProgress />;
+	}
 
 	return (
 		<FullCalendar
