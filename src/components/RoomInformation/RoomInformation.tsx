@@ -152,10 +152,11 @@ export function RoomInformation(props: RoomInformationProps) {
 	return (
 		<Stack direction={'row'} display={'flex'}>
 			<ToggleButtonGroup
-			orientation='vertical'
-			value={selectedMetricLink} 
-			exclusive 
-			onChange={handleSelectMetricLink}>
+				orientation='vertical'
+				value={selectedMetricLink}
+				exclusive
+				onChange={handleSelectMetricLink}
+			>
 				{metricLinks.data?.map((ml) => {
 					return (
 						<ToggleButton key={ml.id} value={ml}>
@@ -198,7 +199,9 @@ export function RoomInformation(props: RoomInformationProps) {
 					</Box>
 				</Fade>
 			) : (
-				<Typography variant='subtitle2' color={theme.palette.warning.light}>No metric selected</Typography>
+				<Typography variant='subtitle2' color={theme.palette.warning.light}>
+					No metric selected
+				</Typography>
 			)}
 		</Stack>
 	);

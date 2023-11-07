@@ -137,7 +137,7 @@ function EditRoomContent(props: { readonly room: Room }) {
 	const [isLoading, setIsloading] = useState(false);
 	const queryClient = useQueryClient();
 	const navigate = useNavigate();
-	
+
 	const updateRoomMutation = useMutation({
 		mutationFn: (room: Room) => {
 			setIsloading(true);
@@ -239,7 +239,6 @@ function EditRoomContent(props: { readonly room: Room }) {
 					</Box>
 				</Stack>
 				<Stack direction={'row'} minHeight={'fit-content'} alignItems={'center'} gap={8}>
-					
 					<Slider
 						sx={{ minHeight: '12rem' }}
 						disabled={!room.hasTemperature}
