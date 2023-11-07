@@ -16,17 +16,13 @@ function Content(props: { listofRooms: Room[] }) {
   const inputStyles = {
     width: '200px',
   };
-/*  const headerStyles = {
-    textAlign: 'center',
-  };
-*/
+
 
   return (
     <div>
       <Typography variant="h2">
         Booking
       </Typography>
-
 
       <Autocomplete
         options={props.listofRooms.map((r) => r.name)}
@@ -49,7 +45,6 @@ function Content(props: { listofRooms: Room[] }) {
         </Stack>
       </LocalizationProvider>
     </div>
-
   )
 }
 
