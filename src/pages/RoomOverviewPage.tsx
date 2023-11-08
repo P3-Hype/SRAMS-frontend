@@ -74,7 +74,7 @@ const MyFullCalendarComponent = () => {
 		<FullCalendar
 			plugins={[resourceTimelinePlugin]}
 			ref={calendarRef}
-			timeZone='local'
+			timeZone='UTC'
 			initialView='resourceTimelineDay'
 			aspectRatio={1.5}
 			headerToolbar={{

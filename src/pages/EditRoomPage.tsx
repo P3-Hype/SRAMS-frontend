@@ -33,7 +33,6 @@ import { useRoom } from '../hooks/useRoom';
 import { MetricLink, MetricType } from '../metricLink';
 import Room from '../room';
 import theme from '../theme';
-import DeleteConformation from '../components/DeleteConformation/DeleteConformation';
 import { LabelToMetricType } from '../utils/prometheusUtil';
 
 function AutoCompleteDropdown(props: { readonly children?: React.ReactNode }) {
@@ -139,20 +138,6 @@ function EditRoomContent(props: { readonly room: Room }) {
 	const queryClient = useQueryClient();
 	const navigate = useNavigate();
 
-	const metricLinks = useQuery(['roomMetricLinks', props.room.id], {
-		queryFn: async () => {
-			const { data } = await axios.get(`${import.meta.env.VITE_SRAMS_API_ADDRESS}metricLink/getAllByRoomId`, {
-				params: {
-					roomId: props.room.id,
-				},
-			});
-			return data as MetricLink[];
-		},
-	});
-	const co2MetricLink = metricLinks.data?.find((ml) => ml.type == MetricType.CO2_LEVEL);
-	const temperatureMetricLink = metricLinks.data?.find((ml) => ml.type == MetricType.TEMPERATURE);
-	const humidityMetricLink = metricLinks.data?.find((ml) => ml.type == MetricType.HUMIDITY);
-
 	const updateRoomMutation = useMutation({
 		mutationFn: (room: Room) => {
 			setIsloading(true);
@@ -204,8 +189,9 @@ function EditRoomContent(props: { readonly room: Room }) {
 						defaultValue={room.name}
 						variant='standard'
 					/>
-					<DeleteConformation handleDelete={handleDelete}></DeleteConformation>
-
+					<IconButton onClick={handleDelete}>
+						<DeleteForeverRounded color='error' />
+					</IconButton>
 					<SaveButton saveHandler={mutate} isLoading={isLoading} />
 					<IconButton component={RouterLink} to='/admin'>
 						<ViewListRounded />
@@ -252,11 +238,38 @@ function EditRoomContent(props: { readonly room: Room }) {
 						</Box>
 					</Box>
 				</Stack>
-				<Stack>
-					<Typography variant='caption' color={theme.palette.primary.light}>
-						Metrics
-					</Typography>
-					<Divider />
+				<Stack direction={'row'} minHeight={'fit-content'} alignItems={'center'} gap={8}>
+					<Slider
+						sx={{ minHeight: '12rem' }}
+						disabled={!room.hasTemperature}
+						orientation='vertical'
+						defaultValue={[20, 23]}
+						valueLabelDisplay='auto'
+						valueLabelFormat={(value) => value + ' °C'}
+						min={15}
+						max={30}
+					/>
+					<Slider
+						sx={{ minHeight: '12rem' }}
+						disabled={!room.hasHumidity}
+						orientation='vertical'
+						defaultValue={[40, 70]}
+						valueLabelDisplay='auto'
+						valueLabelFormat={(value) => value + '%'}
+						min={0}
+						max={100}
+					/>
+					<Slider
+						sx={{ minHeight: '12rem' }}
+						disabled={!room.hasCo2}
+						orientation='vertical'
+						defaultValue={800}
+						valueLabelDisplay='auto'
+						valueLabelFormat={(value) => value + ' PPM'}
+						min={400}
+						step={100}
+						max={5000}
+					/>
 				</Stack>
 				{!metricLinks.isLoading && (
 					<Stack direction={'row'} minHeight={'fit-content'} alignItems={'center'} gap={8}>
