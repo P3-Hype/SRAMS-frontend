@@ -32,7 +32,7 @@ function Content(props: { listofRooms: Room[] }) {
       <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
         <Stack spacing={3} sx={{ width: 300 }}>
           <DemoContainer components={['DateTimePicker']}>
-            <DateTimePicker label="Basic date time picker" />
+            <DateTimePicker label="Pick start time" />
           </DemoContainer>
         </Stack>
       </LocalizationProvider>
@@ -40,7 +40,7 @@ function Content(props: { listofRooms: Room[] }) {
       <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en-gb">
         <Stack spacing={3} sx={{ width: 300 }}>
           <DemoContainer components={['DateTimePicker']}>
-            <DateTimePicker label="Basic date time picker" />
+            <DateTimePicker label="Pick end time" />
           </DemoContainer>
         </Stack>
       </LocalizationProvider>
