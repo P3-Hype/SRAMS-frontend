@@ -86,6 +86,11 @@ const MyFullCalendarComponent = () => {
 			resourceAreaHeaderContent='Rooms'
 			resources={resources}
 			events={events}
+			slotLabelFormat={{
+				hour: '2-digit',
+				minute: '2-digit',
+				hour12: false, // Use 24-hour format
+			}}
 		/>
 	);
 };
