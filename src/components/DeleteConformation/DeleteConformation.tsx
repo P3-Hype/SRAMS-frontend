@@ -8,7 +8,6 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { DeleteForeverRounded } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
 import { useState } from 'react';
-import useAlert from '../../hooks/useAlert';
 
 export default function FormDialog(props: { readonly handleDelete: () => void }) {
 	const [open, setOpen] = useState(false);

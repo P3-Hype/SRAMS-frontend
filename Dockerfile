@@ -18,7 +18,9 @@ FROM nginx:1.25.3-alpine3.18
 
 RUN apk update && apk add openssl --no-cache
 
-RUN chmod +x htpasswd.sh
+COPY htpasswd.sh .
+
+RUN chmod +x htpasswd.sh && ./htpasswd.sh
 
 RUN rm /etc/nginx/conf.d/default.conf  # <= This line solved my issue
 

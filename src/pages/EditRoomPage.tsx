@@ -1,4 +1,4 @@
-import { DeleteForeverRounded, Link, ViewListRounded } from '@mui/icons-material';
+import { Link, ViewListRounded } from '@mui/icons-material';
 import {
 	Autocomplete,
 	Box,

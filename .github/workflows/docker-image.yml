@@ -10,8 +10,6 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-  SRAMS_USER: ${{ secrets.SRAMS_USER }}
-  SRAMS_PASS: ${{ secrets.SRAMS_PASS }}
 
 jobs:
   build-and-push-image:

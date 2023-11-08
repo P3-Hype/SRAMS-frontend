@@ -1,4 +1,4 @@
 #!/bin/sh
 
-sh -c "echo -n '${process.env.SRAMS_USER}:' >> /etc/nginx/.htpasswd"
-sh -c "echo '${process.env.SRAMS_PASS}' | openssl passwd -apr1 >> /etc/nginx/.htpasswd"
+sh -c "echo -n 'srams :' >> /etc/nginx/.htpasswd"
+sh -c 'echo "$(openssl passwd -apr1 srams)" >> /etc/nginx/.htpasswd'
