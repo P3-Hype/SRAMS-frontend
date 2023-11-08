@@ -16,6 +16,10 @@ RUN npm run build
 # STAGE 2: Run
 FROM nginx:1.25.3-alpine3.18
 
+RUN apk update && apk add openssl --no-cache
+
+RUN chmod +x htpasswd.sh
+
 RUN rm /etc/nginx/conf.d/default.conf  # <= This line solved my issue
 
 COPY nginx.conf /etc/nginx/conf.d
