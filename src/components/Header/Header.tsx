@@ -4,6 +4,7 @@ import Logo from '../Logo/Logo';
 import Link from '@mui/material/Link';
 import { Link as RouterLink } from 'react-router-dom';
 import ToggleView from '../ToggleView/ToggleView';
+import BookButton from '../BookButton/BookButton';
 
 function Header() {
 	return (
@@ -26,8 +27,9 @@ function Header() {
 								<Logo expandOnHover />
 							</Link>
 						</Box>
-						<Stack direction={'row'} alignItems={'center'} spacing={2}>
+						<Stack direction={'row'} alignItems={'center'} spacing={3}>
 							<ToggleView></ToggleView>
+							<BookButton></BookButton>
 							<IconButton>
 								<HelpOutlineOutlinedIcon
 									sx={{

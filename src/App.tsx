@@ -9,6 +9,7 @@ import RoomOverviewPage from './pages/RoomOverviewPage';
 import HomePage from './pages/HomePage';
 import NoPage from './pages/NoPage';
 import EditRoomPage from './pages/EditRoomPage';
+import { CreateBookingPage } from './pages/CreateBookingPage';
 
 const queryClient = new QueryClient();
 
@@ -24,6 +25,7 @@ function App() {
 						<Route path='admin' element={<RoomAdministrationPage />} />
 						<Route path='overview' element={<RoomOverviewPage />} />
 						<Route path='room/:id' element={<EditRoomPage />} />
+						<Route path='booking' element={<CreateBookingPage />} />
 						<Route path='*' element={<NoPage />} />
 					</Routes>
 				</BrowserRouter>
