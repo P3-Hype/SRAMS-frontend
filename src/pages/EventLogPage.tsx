@@ -15,7 +15,7 @@ function FormatUnix(unix: number) {
 }
 
 function EventTypeIcon(props: { readonly eventType: string }) {
-	const type = EventType[props.eventType];
+	const type = EventType[props.eventType as keyof typeof EventType];
 	console.log(props.eventType);
 
 	if (type == EventType.PRESENCE_NEW) return <Login color='success' />;
