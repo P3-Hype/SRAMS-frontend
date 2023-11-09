@@ -151,20 +151,22 @@ export function RoomInformation(props: RoomInformationProps) {
 	if (props.metricLinks.isLoading) return <LinearProgress />;
 	return (
 		<Stack direction={'row'} display={'flex'}>
-			<ToggleButtonGroup
-				orientation='vertical'
-				value={selectedMetricLink}
-				exclusive
-				onChange={handleSelectMetricLink}
-			>
-				{metricLinks.data?.map((ml) => {
-					return (
-						<ToggleButton key={ml.id} value={ml}>
-							<MetricAutoIcon tooltip metric={ml.type} />
-						</ToggleButton>
-					);
-				})}
-			</ToggleButtonGroup>
+			<Fade in={!props.metricLinks.isLoading} timeout={1000}>
+				<ToggleButtonGroup
+					orientation='vertical'
+					value={selectedMetricLink}
+					exclusive
+					onChange={handleSelectMetricLink}
+				>
+					{props.metricLinks.data?.map((ml) => {
+						return (
+							<ToggleButton key={ml.id} value={ml}>
+								<MetricAutoIcon tooltip metric={ml.type} />
+							</ToggleButton>
+						);
+					})}
+				</ToggleButtonGroup>
+			</Fade>
 			{!isLoading && !!metricQuery ? (
 				<Fade in>
 					<Box width={1}>
@@ -199,7 +201,8 @@ export function RoomInformation(props: RoomInformationProps) {
 					</Box>
 				</Fade>
 			) : (
-				<Typography variant='subtitle2' color={theme.palette.warning.light}>
+				<Typography ml={4} variant='subtitle2' color={theme.palette.primary.light}>
+
 					No metric selected
 				</Typography>
 			)}
