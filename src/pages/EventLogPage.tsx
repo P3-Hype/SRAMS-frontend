@@ -14,7 +14,7 @@ function FormatUnix(unix: number) {
 	return unix;
 }
 
-function EventTypeIcon(props: { eventType: string }) {
+function EventTypeIcon(props: { readonly eventType: string }) {
 	const type = EventType[props.eventType];
 	console.log(props.eventType);
 
@@ -24,7 +24,7 @@ function EventTypeIcon(props: { eventType: string }) {
 	return <QuestionMarkTwoTone color='warning' />;
 }
 
-function EventCard(props: { event: SramsEvent; index: number }) {
+function EventCard(props: { readonly event: SramsEvent; readonly index: number }) {
 	const event = props.event;
 	const dateTime = new Date(event.timeStamp);
 
@@ -68,7 +68,7 @@ function EventLogPage() {
 					{isLoading ? (
 						<LinearProgress />
 					) : (
-						events?.map((e: SramsEvent, i) => <EventCard event={e} index={i} />)
+						events?.map((e: SramsEvent, i) => <EventCard key={e.id} event={e} index={i} />)
 					)}
 				</Stack>
 			</Container>
