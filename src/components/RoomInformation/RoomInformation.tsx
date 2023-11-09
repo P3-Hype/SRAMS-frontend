@@ -51,9 +51,11 @@ export function RoomInformation(props: RoomInformationProps) {
 	const metricChartOptions: EChartsOption = {
 		title: {
 			text: chartData
-				? `${typeToUnit(selectedMetricLink?.type
-					?? MetricType.CO2_LEVEL)} ${roundTo(chartData[chartData.length - 1]?.value[1], 2).toString()}`
-				: "",
+				? `${typeToUnit(selectedMetricLink?.type ?? MetricType.CO2_LEVEL)} ${roundTo(
+						chartData[chartData.length - 1]?.value[1],
+						2
+				  ).toString()}`
+				: '',
 			textAlign: 'center',
 			left: '85%',
 			top: '10%',
@@ -202,7 +204,6 @@ export function RoomInformation(props: RoomInformationProps) {
 				</Fade>
 			) : (
 				<Typography ml={4} variant='subtitle2' color={theme.palette.primary.light}>
-
 					No metric selected
 				</Typography>
 			)}

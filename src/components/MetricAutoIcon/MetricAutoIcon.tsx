@@ -14,15 +14,15 @@ const formatMetricType = (metric: MetricType) => {
 
 function MetricAutoIcon(props: MetricAutoIconProps) {
 	const metric = props.metric;
-	const sxProps:SxProps<Theme> = props.color ? {color: props.color} : {};
+	const sxProps: SxProps<Theme> = props.color ? { color: props.color } : {};
 
 	if (props.tooltip) {
 		return (
 			<>
-				{metric == MetricType.CO2_LEVEL && <Co2 sx={sxProps}/>}
-				{metric == MetricType.TEMPERATURE && <Thermostat  sx={sxProps}/>}
-				{metric == MetricType.HUMIDITY && <WaterDropTwoTone  sx={sxProps}/>}
-				{metric == MetricType.PASSIVE_INFRARED && <DirectionsWalk  sx={sxProps}/>}
+				{metric == MetricType.CO2_LEVEL && <Co2 sx={sxProps} />}
+				{metric == MetricType.TEMPERATURE && <Thermostat sx={sxProps} />}
+				{metric == MetricType.HUMIDITY && <WaterDropTwoTone sx={sxProps} />}
+				{metric == MetricType.PASSIVE_INFRARED && <DirectionsWalk sx={sxProps} />}
 			</>
 		);
 	}
@@ -30,10 +30,10 @@ function MetricAutoIcon(props: MetricAutoIconProps) {
 	return (
 		<Tooltip title={formatMetricType(metric)}>
 			<>
-				{metric == MetricType.CO2_LEVEL && <Co2 sx={sxProps}/>}
-				{metric == MetricType.TEMPERATURE && <Thermostat sx={sxProps}/>}
-				{metric == MetricType.HUMIDITY && <WaterDropTwoTone sx={sxProps}/>}
-				{metric == MetricType.PASSIVE_INFRARED && <DirectionsWalk sx={sxProps}/>}
+				{metric == MetricType.CO2_LEVEL && <Co2 sx={sxProps} />}
+				{metric == MetricType.TEMPERATURE && <Thermostat sx={sxProps} />}
+				{metric == MetricType.HUMIDITY && <WaterDropTwoTone sx={sxProps} />}
+				{metric == MetricType.PASSIVE_INFRARED && <DirectionsWalk sx={sxProps} />}
 			</>
 		</Tooltip>
 	);

@@ -5,8 +5,8 @@ export function shiftPush(arr: any[], newEntry: any) {
 	return arr;
 }
 
-export function LabelToMetricType(label: string):string {
-	if (!label) return "";
+export function LabelToMetricType(label: string): string {
+	if (!label) return '';
 	const idRemoved = label.split('_');
 	idRemoved.shift();
 	const key = idRemoved.join('_').toUpperCase();
