@@ -11,7 +11,7 @@ function HomePage() {
 		alert.setIsOpen(true);
 		alert.setMessage('Welcome to the home page!');
 		alert.setSeverity('info');
-	}, [])
+	}, []);
 
 	return (
 		<BasePage alert={alert}>

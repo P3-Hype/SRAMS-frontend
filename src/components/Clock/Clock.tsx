@@ -1,5 +1,5 @@
 import { Typography } from '@mui/material';
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
 
 export const Clock = () => {
 	const [time, setTime] = useState(new Date());
