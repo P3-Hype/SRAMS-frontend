@@ -34,21 +34,21 @@ function EventCard(props: { readonly event: SramsEvent; readonly index: number }
 				<Stack flexDirection={'row'} justifyContent={'space-between'}>
 					<Grid container spacing={2}>
 						<Grid item xs={1}>
-						<EventTypeIcon eventType={props.event.eventType} />
+							<EventTypeIcon eventType={props.event.eventType} />
 						</Grid>
 						<Grid item xs={5}>
-						<Typography fontFamily={'Geist-UltraLight'}>room: {event.roomId}</Typography>
+							<Typography fontFamily={'Geist-UltraLight'}>room: {event.roomId}</Typography>
 						</Grid>
 						<Grid item xs={3}>
-						<Typography>[{event.eventType}]</Typography>
+							<Typography>[{event.eventType}]</Typography>
 						</Grid>
 						<Grid item xs={2}>
-						<Typography>
-							{dateTime.getDate()} / {dateTime.getMonth() + 1}
-						</Typography>
+							<Typography>
+								{dateTime.getDate()} / {dateTime.getMonth() + 1}
+							</Typography>
 						</Grid>
 						<Grid item xs={0}>
-						<Typography>{dateTime.toLocaleTimeString('de')}</Typography>
+							<Typography>{dateTime.toLocaleTimeString('de')}</Typography>
 						</Grid>
 					</Grid>
 				</Stack>
@@ -77,27 +77,27 @@ function EventLogPage() {
 		<BasePage alert={alert}>
 			<Container>
 				<Stack display={'flex'} flexDirection={'column'} gap={4}>				
-				<Card sx={{ padding: 2 }}>
-					<Stack>
-						<Grid container spacing={2}>
-							<Grid item xs={1}>
-							<Typography>Type</Typography>
+					<Card sx={{ padding: 2 }}>
+						<Stack>
+							<Grid container spacing={2}>
+								<Grid item xs={1}>
+									<Typography>Type</Typography>
+								</Grid>
+								<Grid item xs={5}>
+									<Typography>Room ID</Typography>
+								</Grid>
+								<Grid item xs={3}>
+									<Typography>Event</Typography>
+								</Grid>
+								<Grid item xs={2}>
+									<Typography>Date</Typography>
+								</Grid>
+								<Grid item xs={0}>
+									<Typography>Time</Typography>
+								</Grid>
 							</Grid>
-							<Grid item xs={5}>
-							<Typography>Room ID</Typography>
-							</Grid>
-							<Grid item xs={3}>
-							<Typography>Event</Typography>
-							</Grid>
-							<Grid item xs={2}>
-							<Typography>Date</Typography>
-							</Grid>
-							<Grid item xs={0}>
-							<Typography>Time</Typography>
-							</Grid>
-						</Grid>
-					</Stack>
-				</Card>
+						</Stack>
+					</Card>
 					{isLoading ? (
 						<LinearProgress />
 					) : (
