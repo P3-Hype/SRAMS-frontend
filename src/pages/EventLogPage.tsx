@@ -1,7 +1,7 @@
 import { useQuery } from 'react-query';
 import BasePage from '../components/BasePage/BasePage';
 import axios from 'axios';
-import { Card, Container, Grow, LinearProgress, Stack, Typography } from '@mui/material';
+import { Card, Container, Grid, Grow, LinearProgress, Stack, Typography } from '@mui/material';
 import SramsEvent, { EventType } from '../event';
 import useAlert from '../hooks/useAlert';
 import { EventBusyTwoTone, Login, Logout, QuestionMarkTwoTone } from '@mui/icons-material';
@@ -36,9 +36,9 @@ function EventCard(props: { readonly event: SramsEvent; readonly index: number }
 					<Typography fontFamily={'Geist-UltraLight'}>room: {event.roomId}</Typography>
 					<Typography>[{event.eventType}]</Typography>
 					<Typography>
-						{dateTime.getDate()} / {dateTime.getMonth()}
+						{dateTime.getDate()} / {dateTime.getMonth()+1}
 					</Typography>
-					<Typography>{dateTime.toLocaleTimeString()}</Typography>
+					<Typography>{dateTime.toLocaleTimeString('de')}</Typography>
 				</Stack>
 			</Card>
 		</Grow>
@@ -64,13 +64,35 @@ function EventLogPage() {
 	return (
 		<BasePage alert={alert}>
 			<Container>
-				<Stack display={'flex'} flexDirection={'column'} gap={4}>
+				<Stack display={'flex'} flexDirection={'column'} gap={4}>				
+				<Card sx={{ padding: 2 }}>
+					<Stack>
+						<Grid container spacing={2}>
+							<Grid item xs={1.5}>
+							<Typography>Type</Typography>
+							</Grid>
+							<Grid item xs={5.15}>
+							<Typography>Room ID</Typography>
+							</Grid>
+							<Grid item xs={2.8}>
+							<Typography>Event</Typography>
+							</Grid>
+							<Grid item xs={1.8}>
+							<Typography>Date</Typography>
+							</Grid>
+							<Grid item xs={0}>
+							<Typography>Time</Typography>
+							</Grid>
+						</Grid>
+					</Stack>
+				</Card>
 					{isLoading ? (
 						<LinearProgress />
 					) : (
 						events?.map((e: SramsEvent, i) => <EventCard key={e.id} event={e} index={i} />)
 					)}
-				</Stack>
+				</Stack>				
+
 			</Container>
 		</BasePage>
 	);
