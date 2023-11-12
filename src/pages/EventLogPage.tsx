@@ -32,13 +32,25 @@ function EventCard(props: { readonly event: SramsEvent; readonly index: number }
 		<Grow in={true} timeout={props.index * 100}>
 			<Card sx={{ padding: 2 }}>
 				<Stack flexDirection={'row'} justifyContent={'space-between'}>
-					<EventTypeIcon eventType={props.event.eventType} />
-					<Typography fontFamily={'Geist-UltraLight'}>room: {event.roomId}</Typography>
-					<Typography>[{event.eventType}]</Typography>
-					<Typography>
-						{dateTime.getDate()} / {dateTime.getMonth()+1}
-					</Typography>
-					<Typography>{dateTime.toLocaleTimeString('de')}</Typography>
+					<Grid container spacing={2}>
+						<Grid item xs={1}>
+						<EventTypeIcon eventType={props.event.eventType} />
+						</Grid>
+						<Grid item xs={5}>
+						<Typography fontFamily={'Geist-UltraLight'}>room: {event.roomId}</Typography>
+						</Grid>
+						<Grid item xs={3}>
+						<Typography>[{event.eventType}]</Typography>
+						</Grid>
+						<Grid item xs={2}>
+						<Typography>
+							{dateTime.getDate()} / {dateTime.getMonth() + 1}
+						</Typography>
+						</Grid>
+						<Grid item xs={0}>
+						<Typography>{dateTime.toLocaleTimeString('de')}</Typography>
+						</Grid>
+					</Grid>
 				</Stack>
 			</Card>
 		</Grow>
@@ -68,16 +80,16 @@ function EventLogPage() {
 				<Card sx={{ padding: 2 }}>
 					<Stack>
 						<Grid container spacing={2}>
-							<Grid item xs={1.5}>
+							<Grid item xs={1}>
 							<Typography>Type</Typography>
 							</Grid>
-							<Grid item xs={5.15}>
+							<Grid item xs={5}>
 							<Typography>Room ID</Typography>
 							</Grid>
-							<Grid item xs={2.8}>
+							<Grid item xs={3}>
 							<Typography>Event</Typography>
 							</Grid>
-							<Grid item xs={1.8}>
+							<Grid item xs={2}>
 							<Typography>Date</Typography>
 							</Grid>
 							<Grid item xs={0}>
