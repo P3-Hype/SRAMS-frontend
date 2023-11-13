@@ -8,6 +8,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { TimeClock } from '@mui/x-date-pickers/TimeClock';
 import 'dayjs/locale/en-gb';
+import ConfirmBookingButton from "../components/ConfirmBookingButton/ConfirmBookingButton";
 
 
 function Content(props: { listofRooms: Room[] }) {
@@ -28,12 +29,15 @@ function Content(props: { listofRooms: Room[] }) {
             options={props.listofRooms.map((r) => r.name)}
             renderInput={(params) => <TextField {...params} label='Available rooms' style={inputStyles} />}
           />
-
+          
           <DatePicker label="Choose a booking date" />
-
           <TimeClock views={['hours', 'minutes']} />
         </Stack>
       </LocalizationProvider>
+
+      <Container sx={{ display: 'flex', justifyContent: 'center' }}>
+        <ConfirmBookingButton></ConfirmBookingButton>
+      </Container>
     </>
   )
 }
@@ -47,7 +51,7 @@ export function CreateBookingPage() {
   return (
     <BasePage alert={alert}>
       <Container>
-        <Paper sx={{padding:2}}>
+        <Paper sx={{ padding: 2 }}>
           <Content listofRooms={mappedRooms} />
         </Paper>
       </Container>
