@@ -1,4 +1,5 @@
 import BasePage from "../components/BasePage/BasePage";
+import { useState } from 'react';
 import useAlert from '../hooks/useAlert';
 import { Container, Autocomplete, Typography, TextField, Stack, Paper } from '@mui/material';
 import Room from "../room";
@@ -10,11 +11,13 @@ import { TimeClock } from '@mui/x-date-pickers/TimeClock';
 import 'dayjs/locale/en-gb';
 import ConfirmBookingButton from "../components/ConfirmBookingButton/ConfirmBookingButton";
 
-
 function Content(props: { listofRooms: Room[] }) {
   const inputStyles = {
     width: '200px',
   };
+  const [time, setTime] = useState(new Date());
+  if (!time) { return false;}
+    
 
 
   return (
@@ -31,7 +34,7 @@ function Content(props: { listofRooms: Room[] }) {
           />
           
           <DatePicker label="Choose a booking date" />
-          <TimeClock views={['hours', 'minutes']} />
+          <TimeClock views={['hours', 'minutes']} value={[time]} onChange={(newTime) => setTime(newTime)} />
         </Stack>
       </LocalizationProvider>
 
