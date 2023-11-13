@@ -33,8 +33,8 @@ import { useRoom } from '../hooks/useRoom';
 import { MetricLink, MetricType } from '../metricLink';
 import Room from '../room';
 import theme from '../theme';
-import DeleteConformation from '../components/DeleteConformation/DeleteConformation';
 import { LabelToMetricType } from '../utils/prometheusUtil';
+import DeleteConformation from '../components/DeleteConformation/DeleteConformation';
 
 function AutoCompleteDropdown(props: { readonly children?: React.ReactNode }) {
 	const theme = useTheme();
@@ -205,7 +205,6 @@ function EditRoomContent(props: { readonly room: Room }) {
 						variant='standard'
 					/>
 					<DeleteConformation handleDelete={handleDelete}></DeleteConformation>
-
 					<SaveButton saveHandler={mutate} isLoading={isLoading} />
 					<IconButton component={RouterLink} to='/admin'>
 						<ViewListRounded />
