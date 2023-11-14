@@ -17,6 +17,7 @@ import DashboardPage from './pages/DashboardPage';
 const queryClient = new QueryClient();
 
 function App() {
+
 	return (
 		<QueryClientProvider client={queryClient}>
 			<ThemeProvider theme={theme}>
