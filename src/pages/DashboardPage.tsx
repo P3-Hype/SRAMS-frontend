@@ -3,7 +3,7 @@ import BasePage from "../components/BasePage/BasePage";
 import axios from "axios";
 import useAlert from "../hooks/useAlert";
 import { RoomSuggestion } from "../room";
-import { Box, Card, Stack, Typography, useTheme } from "@mui/material";
+import { Box, Card, LinearProgress, Stack, Typography, useTheme } from "@mui/material";
 import MiniGauge from "../components/MiniGauge/MiniGauge";
 import { lerpColor } from "../utils/colorUtil";
 import { TransitionGroup } from 'react-transition-group';
@@ -43,7 +43,7 @@ function Content() {
     });
 
     if (suggestedRooms.isLoading === undefined) {
-        return <div>Loading...</div>
+        return <LinearProgress />
     }
 
     if (suggestedRooms.data === undefined) return <></>
