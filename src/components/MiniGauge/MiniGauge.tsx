@@ -41,6 +41,9 @@ const gaugeOption: EChartsOption = {
 			title: {
 				show: false,
 			},
+			emphasis: {
+				disabled: true,
+			},
 			detail: {
 				valueAnimation: true,
 				fontSize: 14,

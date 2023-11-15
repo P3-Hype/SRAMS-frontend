@@ -6,7 +6,7 @@ import * as echarts from 'echarts';
 import { useEffect, useState } from 'react';
 import { MetricLink, MetricType } from '../../metricLink';
 import { UseQueryResult } from 'react-query';
-import MetricAutoIcon from '../MetricAutoIcon/MetricAutoIcon';
+import MetricAutoIcon from '../AutoIcon/MetricAutoIcon';
 
 const formatUnix = (unix: number) => {
 	const date = new Date(unix * 1000);

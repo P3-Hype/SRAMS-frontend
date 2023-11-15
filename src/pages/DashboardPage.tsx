@@ -10,7 +10,6 @@ import RoomSuggestionCard from "../components/Dashboard/RoomSuggestionCard";
 import DashboardAlerts from "../components/Dashboard/DashboardAlerts";
 import DashboardCalendar from "../components/Dashboard/DashboardCalendar";
 import theme from "../theme";
-import Grid from "@mui/material/Unstable_Grid2/Grid2";
 
 function Content() {
     const suggestedRooms = useQuery('suggestedRooms', {
@@ -34,16 +33,16 @@ function Content() {
         <Box height={"100%"} >
             <Stack margin={4} gap={4} height={"100%"}>
                 <Box>
-                    <Typography color={theme.palette.primary.light} variant="subtitle1">Suggested Rooms</Typography>
+                    <Typography color={theme.palette.primary.light} variant="subtitle1" mt={-2}>Suggestions</Typography>
                     <Stack direction={"row"} gap={2} flexWrap={"wrap"} component={TransitionGroup}>
                         {suggestedRooms.data.map((suggestedRoom) => <Grow><Box key={suggestedRoom.room.id}><RoomSuggestionCard roomSuggestion={suggestedRoom} /></Box></Grow>)}
                     </Stack>
                 </Box>
-                <Stack gap={2} display={"flex"} flexDirection={"row"} flexGrow={1} height={"1px"}>
-                    <Box flexGrow={3} flex={1}>
+                <Stack gap={2} display={"flex"} flexDirection={"row"} flexGrow={1} height={"0px"}>
+                    <Box flex={3}>
                         <DashboardCalendar />
                     </Box>
-                    <Box flexGrow={1} flex={1}>
+                    <Box flex={1}>
                         <DashboardAlerts />
                     </Box>
                 </Stack>
