@@ -2,7 +2,7 @@ import { Paper } from "@mui/material";
 
 function DashboardCalendar() {
     return (
-        <Paper sx={{height: "100%"}}>
+        <Paper sx={{width: "100%", height: "100%"}}>
 
         </Paper>
     );
