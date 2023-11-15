@@ -2,16 +2,14 @@ import { AppBar, Box, Container, IconButton, Stack, Toolbar } from '@mui/materia
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import Logo from '../Logo/Logo';
 import Link from '@mui/material/Link';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useLocation } from 'react-router-dom';
 import ToggleView from '../ToggleView/ToggleView';
 import BookButton from '../BookButton/BookButton';
+import { useEffect, useState } from 'react';
 
-function Header() {
+function BarContent() {
 	return (
-		<AppBar position='relative' sx={{ bgcolor: 'primary.main' }}>
-			<Toolbar>
-				<Container>
-					<Stack direction={'row'} alignItems={'center'}>
+		<Stack direction={'row'} alignItems={'center'} width={"100%"}>
 						<Box
 							sx={{
 								flexGrow: '1',
@@ -39,7 +37,24 @@ function Header() {
 							</IconButton>
 						</Stack>
 					</Stack>
-				</Container>
+	)
+}
+
+function Header() {
+	const location = useLocation();
+	const [fullWidth, setFullWidth] = useState(false);
+
+	useEffect(() => {
+		setFullWidth(location.pathname === '/dashboard')
+	}, [location]);
+
+	return (
+		<AppBar position='relative' sx={{ bgcolor: 'primary.main' }}>
+			<Toolbar>
+				{fullWidth 
+				? <BarContent />
+				: <Container><BarContent /></Container>
+				}
 			</Toolbar>
 		</AppBar>
 	);

@@ -45,7 +45,12 @@ export default function NavButtons() {
 			</Grid>
 			<Grid item>
 				<Link component={RouterLink} to='/overview'>
-					<Button sx={buttonStyle}>Employee</Button>
+					<Button sx={buttonStyle}>Manage Bookings</Button>
+				</Link>
+			</Grid>
+			<Grid item>
+				<Link component={RouterLink} to='/dashboard'>
+					<Button sx={buttonStyle}>Dashboard</Button>
 				</Link>
 			</Grid>
 		</Grid>

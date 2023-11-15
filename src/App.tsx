@@ -1,4 +1,5 @@
-import { CssBaseline, ThemeProvider } from '@mui/material';
+import { CssBaseline } from '@mui/material';
+import {ThemeProvider } from '@mui/material/styles';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { QueryClient, QueryClientProvider } from 'react-query';
@@ -11,10 +12,12 @@ import NoPage from './pages/NoPage';
 import EditRoomPage from './pages/EditRoomPage';
 import EventLogPage from './pages/EventLogPage';
 import { CreateBookingPage } from './pages/CreateBookingPage';
+import DashboardPage from './pages/DashboardPage';
 
 const queryClient = new QueryClient();
 
 function App() {
+
 	return (
 		<QueryClientProvider client={queryClient}>
 			<ThemeProvider theme={theme}>
@@ -24,7 +27,8 @@ function App() {
 					<Routes>
 						<Route path='/' element={<HomePage />} />
 						<Route path='admin' element={<RoomAdministrationPage />} />
-						<Route path='overview' element={<RoomOverviewPage />} />
+						<Route path='overview' element={<RoomOverviewPage />} />	
+						<Route path='dashboard' element={<DashboardPage />} />
 						<Route path='room/:id' element={<EditRoomPage />} />
 						<Route path='events' element={<EventLogPage />} />
 						<Route path='booking' element={<CreateBookingPage />} />
