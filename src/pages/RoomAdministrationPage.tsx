@@ -7,12 +7,14 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
-import { useMutation } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import BasePage from '../components/BasePage/BasePage';
 import useAlert from '../hooks/useAlert';
 import { useAllRooms } from '../hooks/useRoom';
 import Room from '../room';
+import { MetricLink } from '../metricLink';
+import MetricAutoIcon from '../components/MetricAutoIcon/MetricAutoIcon';
 
 function Content() {
 	const theme = useTheme();
@@ -23,6 +25,12 @@ function Content() {
 			console.log('Room added', data);
 			navigate('/room/' + data.data);
 		},
+	});
+	const {data: allMetrics, isLoading: metricsLoading} = useQuery('allMetrics', {
+		queryFn: async () => {
+			const { data } = await axios.get(`${import.meta.env.VITE_SRAMS_API_ADDRESS}metricLink/getAllMetricLinks`);
+			return data as MetricLink[];
+		}
 	});
 
 	const handleAddRoom = () => {
@@ -62,18 +70,9 @@ function Content() {
 								<IconButton component={RouterLink} to={'/room/' + r.id}>
 									<SettingsIcon />
 								</IconButton>
-								<Tooltip title='Co2'>
-									<Co2 />
-								</Tooltip>
-								<Tooltip title='Temperature'>
-									<Thermostat />
-								</Tooltip>
-								<Tooltip title='Humidity'>
-									<WaterDropTwoTone />
-								</Tooltip>
-								<Tooltip title='Passive Infrared'>
-									<DirectionsWalk />
-								</Tooltip>
+								{(!metricsLoading && allMetrics != undefined) && <Stack direction={'row'} gap={1}>
+									{allMetrics.filter(m => m.roomId == r.id).map(m => <MetricAutoIcon key={m.id} metric={m.type}/>)}
+								</Stack>}
 							</Stack>
 						</AccordionSummary>
 						<AccordionDetails>
