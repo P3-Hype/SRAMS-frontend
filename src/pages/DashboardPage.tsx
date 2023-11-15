@@ -8,6 +8,7 @@ import MiniGauge from "../components/MiniGauge/MiniGauge";
 import { lerpColor } from "../utils/colorUtil";
 import { TransitionGroup } from 'react-transition-group';
 import { Grow } from "@mui/material";
+import { CloudTwoTone } from "@mui/icons-material";
 
 function RoomSuggestionCard(props: { readonly roomSuggestion: RoomSuggestion }) {
     const room = props.roomSuggestion.room;
@@ -17,6 +18,7 @@ function RoomSuggestionCard(props: { readonly roomSuggestion: RoomSuggestion }) 
     ? lerpColor(theme.palette.success.main, theme.palette.warning.main, props.roomSuggestion.climateScore)
     : lerpColor(theme.palette.warning.main, theme.palette.error.main, props.roomSuggestion.climateScore);
 
+    //TODO: change icon from cloud to autoicon if bad metrics
     return (
         <Grow in>
             <Card sx={{padding: 2, outline: "2px solid", outlineColor: climateColor}}>
@@ -25,7 +27,15 @@ function RoomSuggestionCard(props: { readonly roomSuggestion: RoomSuggestion }) 
                         <Typography variant="h6" minWidth={"12rem"}>{room.name}</Typography>
                         <Typography>{props.roomSuggestion.availabilityTime}m</Typography>
                     </Stack>
-                    <MiniGauge value={props.roomSuggestion.climateScore} color={climateColor}/>
+                    <Box display={"flex"} flexDirection={"row"} justifyContent={"center"} alignItems={"flex-end"} >
+                        <MiniGauge value={props.roomSuggestion.climateScore} color={climateColor}/>
+                        <CloudTwoTone sx={{
+                            color: climateColor,
+                            position: "absolute",
+                            marginBottom: "-0.5rem",
+                            //TODO: if critical use animation: "pulsate 1s ease-in-out infinite"
+                            }} />
+                    </Box>
                 </Stack>
             </Card>
         </Grow>
