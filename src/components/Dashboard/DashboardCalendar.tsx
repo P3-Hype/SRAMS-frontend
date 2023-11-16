@@ -5,6 +5,7 @@ import Booking from "../../booking";
 import Room from "../../room";
 import { Box, alpha } from "@mui/system";
 import { useEffect, useRef, useState } from "react";
+import { clear } from "console";
 
 function calculatePosition(startUnix: number, endUnix: number, rowWidth: number, startSpanUnix: number, endSpanUnix: number) {
     const start = startUnix - startSpanUnix;
@@ -59,6 +60,7 @@ function CalendarRow(props: CalendarRowProps) {
     const [spanOffsetHours] = useState(0);
     const [startUnix, setStartUnix] = useState(new Date().getTime());
     const [endUnix, setEndUnix] = useState(0);
+    const [updateInterval, setUpdateInterval] = useState<NodeJS.Timeout>();
 
     const updateSpan = () => {
         setStartUnix(new Date().getTime() - spanOffsetHours * 60 * 60 * 1000);
@@ -67,7 +69,8 @@ function CalendarRow(props: CalendarRowProps) {
 
     useEffect(() => {
         updateSpan();
-        setInterval(updateSpan, 1000);
+        clearInterval(updateInterval ?? 0);
+        setUpdateInterval(setInterval(updateSpan, 1000));
     }, [])
 
     useEffect(() => {
