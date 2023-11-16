@@ -34,6 +34,7 @@ import { MetricLink, MetricType } from '../metricLink';
 import Room from '../room';
 import theme from '../theme';
 import { LabelToMetricType } from '../utils/prometheusUtil';
+import DeleteConfirmation from '../components/DeleteConfirmation/DeleteConfirmation';
 
 function AutoCompleteDropdown(props: { readonly children?: React.ReactNode }) {
 	const theme = useTheme();
@@ -203,9 +204,7 @@ function EditRoomContent(props: { readonly room: Room }) {
 						defaultValue={room.name}
 						variant='standard'
 					/>
-					<IconButton onClick={handleDelete}>
-						<DeleteForeverRounded color='error' />
-					</IconButton>
+					<DeleteConfirmation handleDelete={handleDelete}></DeleteConfirmation>
 					<SaveButton saveHandler={mutate} isLoading={isLoading} />
 					<IconButton component={RouterLink} to='/admin'>
 						<ViewListRounded />
