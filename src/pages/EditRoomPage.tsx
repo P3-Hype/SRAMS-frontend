@@ -1,3 +1,4 @@
+import { Link, ViewListRounded } from '@mui/icons-material';
 import {
 	Autocomplete,
 	Box,
@@ -22,8 +23,9 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { Link as RouterLink, useNavigate, useParams } from 'react-router-dom';
-import BasePage from '../components/BasePage/BasePage';
 import MetricAutoIcon from '../components/AutoIcon/MetricAutoIcon';
+import BasePage from '../components/BasePage/BasePage';
+import DeleteConfirmation from '../components/DeleteConfirmation/DeleteConfirmation';
 import MetricSlider from '../components/MetricLimitSlider/MetricLimitSlider';
 import RoomInformation from '../components/RoomInformation/RoomInformation';
 import SaveButton from '../components/SaveButton/SaveButton';
@@ -33,8 +35,6 @@ import { MetricLink, MetricType } from '../metricLink';
 import Room from '../room';
 import theme from '../theme';
 import { LabelToMetricType } from '../utils/prometheusUtil';
-import DeleteConfirmation from '../components/DeleteConfirmation/DeleteConfirmation';
-import { Link, ViewListRounded } from '@mui/icons-material';
 
 function AutoCompleteDropdown(props: { readonly children?: React.ReactNode }) {
 	const theme = useTheme();
@@ -225,8 +225,8 @@ function EditRoomContent(props: { readonly room: Room }) {
 							setMutatedRoom(r);
 						}}
 					/>
-					<Box display={'flex'} flexDirection={'row'} alignItems={'left'}>
-						<Box display={'flex'} flexDirection={'column'} alignItems={'center'}>
+					<Box display={'flex'} flexDirection={'column'} alignItems={'left'}>
+						<Box display={'flex'} flexDirection={'row'} alignItems={'center'}>
 							<Checkbox
 								defaultChecked={room.hasWindow}
 								onChange={(e) => {
@@ -238,7 +238,7 @@ function EditRoomContent(props: { readonly room: Room }) {
 							<Typography variant='body1'>Room has a window</Typography>
 						</Box>
 
-						<Box display={'flex'} flexDirection={'column'} alignItems={'center'}>
+						<Box display={'flex'} flexDirection={'row'} alignItems={'center'}>
 							<Checkbox
 								defaultChecked={room.isBookable}
 								onChange={(e) => {
