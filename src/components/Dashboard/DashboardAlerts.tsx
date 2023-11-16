@@ -15,8 +15,7 @@ import {
 import useAllEvents from '../../hooks/useEvents';
 import SramsEvent, { EventType } from '../../event';
 import { TransitionGroup } from 'react-transition-group';
-// @ts-ignore
-import a from 'color-alpha';
+import {alpha} from '@mui/system';
 import { useRoom } from '../../hooks/useRoom';
 import EventAutoIcon from '../AutoIcon/EventAutoIcon';
 
@@ -58,7 +57,7 @@ function SramsAlert(props: SramsAlertProps) {
 function DashboardAlerts() {
 	const { events, isLoading } = useAllEvents();
 	const theme = useTheme();
-	const gradientColors = [theme.palette.background.paper, a(theme.palette.background.paper, 0.0)];
+	const gradientColors = [theme.palette.background.paper, alpha(theme.palette.background.paper, 0.0)];
 
 	if (isLoading) return <Skeleton variant='rounded' height={'100%'} />;
 
