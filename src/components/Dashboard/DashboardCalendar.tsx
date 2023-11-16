@@ -5,7 +5,6 @@ import Booking from "../../booking";
 import Room from "../../room";
 import { Box, alpha } from "@mui/system";
 import { useEffect, useRef, useState } from "react";
-import { clear } from "console";
 
 function calculatePosition(startUnix: number, endUnix: number, rowWidth: number, startSpanUnix: number, endSpanUnix: number) {
     const start = startUnix - startSpanUnix;
@@ -62,9 +61,12 @@ function CalendarRow(props: CalendarRowProps) {
     const [endUnix, setEndUnix] = useState(0);
     const [updateInterval, setUpdateInterval] = useState<NodeJS.Timeout>();
 
+    const [rowReady, setRowReady] = useState(false);
+
     const updateSpan = () => {
         setStartUnix(new Date().getTime() - spanOffsetHours * 60 * 60 * 1000);
         setEndUnix(startUnix + span * 60 * 60 * 1000);
+        setRowReady(true);
     }
 
     useEffect(() => {
@@ -92,10 +94,10 @@ function CalendarRow(props: CalendarRowProps) {
                         height={"100%"}
                         width={"100%"}
                         sx={{
-                            background: `linear-gradient(90deg, ${gradientStart} 0%, ${gradientEnd} 10%);`,
+                            background: `linear-gradient(90deg, ${gradientStart} 0%, ${gradientEnd} 30%);`,
                         }}
                     ></Box>
-                    {props.bookings.map((booking) => 
+                    {rowReady && props.bookings.filter(b => (b.endTime > startUnix && b.startTime < endUnix)).map((booking) => 
                         <BookingBox 
                             key={booking.id}
                             booking={booking} 
