@@ -2,8 +2,6 @@ import {
 	Alert,
 	AlertTitle,
 	Box,
-	Chip,
-	Collapse,
 	Fade,
 	List,
 	ListItem,
@@ -17,6 +15,7 @@ import {
 import useAllEvents from '../../hooks/useEvents';
 import SramsEvent, { EventType } from '../../event';
 import { TransitionGroup } from 'react-transition-group';
+// @ts-ignore
 import a from 'color-alpha';
 import { useRoom } from '../../hooks/useRoom';
 import EventAutoIcon from '../AutoIcon/EventAutoIcon';
@@ -28,7 +27,7 @@ interface SramsAlertProps {
 
 function SramsAlert(props: SramsAlertProps) {
 	const { room } = useRoom(props.event.roomId);
-	const type = EventType[props.event.eventType];
+	const type = EventType[props.event.eventType as unknown as EventType];
 
 	return (
 		<Alert
@@ -47,7 +46,7 @@ function SramsAlert(props: SramsAlertProps) {
 					{<Typography>{room?.name}</Typography> ?? <Skeleton variant='rounded' width={'4rem'} />}
                     <Box display={'flex'} flexDirection={'row'} alignItems={'center'} gap={1}>
                         <Typography variant='body2'>{new Date(props.event.timeStamp).toLocaleTimeString()}</Typography>
-                        <EventAutoIcon type={type} />
+                        <EventAutoIcon type={EventType[type as keyof typeof EventType]} />
                     </Box>
 				</Stack>
 			</AlertTitle>
@@ -78,7 +77,7 @@ function DashboardAlerts() {
                         }}
                     />
                         <TransitionGroup>
-                            {events?.map((e, i) => (
+                            {events?.map((e) => (
                                 <Slide direction='left' timeout={500}>
                                     <ListItem>
                                         <SramsAlert key={e.id} event={e} chipBackground={theme.palette.background.paper} />

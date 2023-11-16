@@ -1,4 +1,3 @@
-import { DeleteForeverRounded, Link, ViewListRounded } from '@mui/icons-material';
 import {
 	Autocomplete,
 	Box,
@@ -35,6 +34,7 @@ import Room from '../room';
 import theme from '../theme';
 import { LabelToMetricType } from '../utils/prometheusUtil';
 import DeleteConfirmation from '../components/DeleteConfirmation/DeleteConfirmation';
+import { Link, ViewListRounded } from '@mui/icons-material';
 
 function AutoCompleteDropdown(props: { readonly children?: React.ReactNode }) {
 	const theme = useTheme();

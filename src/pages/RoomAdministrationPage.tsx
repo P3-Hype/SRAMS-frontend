@@ -1,7 +1,6 @@
-import { Co2, DirectionsWalk, Thermostat, WaterDropTwoTone } from '@mui/icons-material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import SettingsIcon from '@mui/icons-material/Settings';
-import { Button, Card, Container, IconButton, LinearProgress, Stack, Tooltip, useTheme } from '@mui/material';
+import { Button, Card, Container, IconButton, LinearProgress, Stack, useTheme } from '@mui/material';
 import Accordion from '@mui/material/Accordion';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -14,7 +13,7 @@ import useAlert from '../hooks/useAlert';
 import { useAllRooms } from '../hooks/useRoom';
 import Room from '../room';
 import { MetricLink } from '../metricLink';
-import MetricAutoIcon from '../components/MetricAutoIcon/MetricAutoIcon';
+import MetricAutoIcon from '../components/AutoIcon/MetricAutoIcon';
 
 function Content() {
 	const theme = useTheme();
