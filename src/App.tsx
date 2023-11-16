@@ -1,4 +1,4 @@
-import { CssBaseline } from '@mui/material';
+import { Box, CssBaseline } from '@mui/material';
 import {ThemeProvider } from '@mui/material/styles';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { ReactQueryDevtools } from 'react-query/devtools';
@@ -23,17 +23,19 @@ function App() {
 			<ThemeProvider theme={theme}>
 				<CssBaseline />
 				<BrowserRouter>
-					<Header />
-					<Routes>
-						<Route path='/' element={<HomePage />} />
-						<Route path='admin' element={<RoomAdministrationPage />} />
-						<Route path='overview' element={<RoomOverviewPage />} />	
-						<Route path='dashboard' element={<DashboardPage />} />
-						<Route path='room/:id' element={<EditRoomPage />} />
-						<Route path='events' element={<EventLogPage />} />
-						<Route path='booking' element={<CreateBookingPage />} />
-						<Route path='*' element={<NoPage />} />
-					</Routes>
+					<Box height={"100vh"} display={'flex'} flexDirection={'column'}>
+						<Header />
+						<Routes>
+							<Route path='/' element={<HomePage />} />
+							<Route path='admin' element={<RoomAdministrationPage />} />
+							<Route path='overview' element={<RoomOverviewPage />} />	
+							<Route path='dashboard' element={<DashboardPage />} />
+							<Route path='room/:id' element={<EditRoomPage />} />
+							<Route path='events' element={<EventLogPage />} />
+							<Route path='booking' element={<CreateBookingPage />} />
+							<Route path='*' element={<NoPage />} />
+						</Routes>
+				</Box>
 				</BrowserRouter>
 			</ThemeProvider>
 			<ReactQueryDevtools />

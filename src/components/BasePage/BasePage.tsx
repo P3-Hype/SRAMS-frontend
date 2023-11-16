@@ -67,7 +67,7 @@ export function BasePage(props: BasePageProps) {
 	};
 
 	return (
-		<Box mb={8}>
+		<Box mb={8} height={"100%"}>
 			<ErrorBoundary
 				FallbackComponent={MyFallbackComponent}
 				onReset={() => {
@@ -80,7 +80,7 @@ export function BasePage(props: BasePageProps) {
 					props.alert.setIsOpen(true);
 				}}
 			>
-				<Box flex={'row'} marginTop={2}>
+				<Box flex={'row'} marginTop={2} height={"100%"}>
 					{props.children}
 				</Box>
 			</ErrorBoundary>

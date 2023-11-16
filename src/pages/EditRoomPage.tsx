@@ -24,7 +24,7 @@ import { useEffect, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { Link as RouterLink, useNavigate, useParams } from 'react-router-dom';
 import BasePage from '../components/BasePage/BasePage';
-import MetricAutoIcon from '../components/MetricAutoIcon/MetricAutoIcon';
+import MetricAutoIcon from '../components/AutoIcon/MetricAutoIcon';
 import MetricSlider from '../components/MetricLimitSlider/MetricLimitSlider';
 import RoomInformation from '../components/RoomInformation/RoomInformation';
 import SaveButton from '../components/SaveButton/SaveButton';
