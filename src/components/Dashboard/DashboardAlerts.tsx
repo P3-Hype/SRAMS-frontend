@@ -78,7 +78,7 @@ function DashboardAlerts() {
                     />
                         <TransitionGroup>
                             {events?.map((e) => (
-                                <Slide direction='left' timeout={500}>
+                                <Slide key={e.id} direction='left' timeout={500}>
                                     <ListItem>
                                         <SramsAlert key={e.id} event={e} chipBackground={theme.palette.background.paper} />
                                     </ListItem>
