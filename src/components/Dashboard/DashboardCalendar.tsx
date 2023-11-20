@@ -50,9 +50,7 @@ function BookingBox(props: BookingBoxProps) {
 	}, [props.booking, props.rowWidth, props.startUnix, props.endUnix]);
 
 	// Format the start and end time
-	const startTime = new Date(props.booking.startTime).toTimeString().substring(0, 5);
 	const endTime = new Date(props.booking.endTime).toTimeString().substring(0, 5);
-	const timeRange = `${startTime} - ${endTime}`;
 
 	return (
 		<Box
@@ -65,11 +63,11 @@ function BookingBox(props: BookingBoxProps) {
 				transform: `translateX(${pos.startOffset}px)`,
 				transition: 'transform 0.2s ease-in-out',
 				display: 'flex',
-				justifyContent: 'center',
+				justifyContent: 'end',
 				alignItems: 'center',
 			}}
 		>
-			<Typography>{timeRange}</Typography>
+			<Typography sx={{ padding: '0 0.5rem' }}>{endTime}</Typography>
 		</Box>
 	);
 }
