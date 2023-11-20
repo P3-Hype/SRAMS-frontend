@@ -50,7 +50,11 @@ function BookingBox(props: BookingBoxProps) {
 	}, [props.booking, props.rowWidth, props.startUnix, props.endUnix]);
 
 	// Format the start and end time
-	const endTime = new Date(props.booking.endTime).toTimeString().substring(0, 5);
+	const startTimeDate = new Date(props.booking.startTime);
+	const endTimeDate = new Date(props.booking.endTime);
+    const startTime = startTimeDate.getTime() > props.startUnix ? startTimeDate.toTimeString().substring(0, 5) : null;
+    const endTime = endTimeDate.getTime() < props.endUnix ? endTimeDate.toTimeString().substring(0, 5) : null;
+
 
 	return (
 		<Box
@@ -63,11 +67,12 @@ function BookingBox(props: BookingBoxProps) {
 				transform: `translateX(${pos.startOffset}px)`,
 				transition: 'transform 0.2s ease-in-out',
 				display: 'flex',
-				justifyContent: 'end',
+				justifyContent: 'space-between',
 				alignItems: 'center',
 			}}
 		>
-			<Typography sx={{ padding: '0 0.5rem' }}>{endTime}</Typography>
+			<Typography color={"background.paper"} ml={1}>{startTime ? startTime : ""}</Typography>
+			<Typography color={"background.paper"} mr={1}>{endTime ? endTime : ""}</Typography>
 		</Box>
 	);
 }
@@ -192,6 +197,7 @@ function DashboardCalendar() {
 			sx={{
 				width: '100%',
 				height: '100%',
+                overflow: 'hidden',
 			}}
 		>
 			{roomsLoading || bookingsLoading ? (
