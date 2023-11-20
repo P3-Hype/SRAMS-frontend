@@ -1,16 +1,13 @@
 import BasePage from "../components/BasePage/BasePage";
-import { useState } from 'react';
 import useAlert from '../hooks/useAlert';
 import { Container, Autocomplete, Typography, TextField, Stack, Paper } from '@mui/material';
 import Room from "../room";
 import { useAllRooms } from "../hooks/useRoom";
-import { DatePicker } from '@mui/x-date-pickers';
+import { DatePicker, TimePicker, renderTimeViewClock } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-// import { TimeClock } from '@mui/x-date-pickers/TimeClock';
 import 'dayjs/locale/en-gb';
 import ConfirmBookingButton from "../components/ConfirmBookingButton/ConfirmBookingButton";
-import { StaticTimePicker } from '@mui/x-date-pickers/StaticTimePicker';
 
 
 function Content(props: { listofRooms: Room[] }) {
@@ -18,8 +15,6 @@ function Content(props: { listofRooms: Room[] }) {
     width: '200px',
   };
 
-  // const [time, setTime] = useState<Date | null>(new Date());
-    
 
 
   return (
@@ -34,11 +29,27 @@ function Content(props: { listofRooms: Room[] }) {
             options={props.listofRooms.map((r) => r.name)}
             renderInput={(params) => <TextField {...params} label='Available rooms' style={inputStyles} />}
           />
-          
+
           <DatePicker label="Choose a booking date" />
 
-          <StaticTimePicker /> 
+          <TimePicker
+            label="Select start time"
+            viewRenderers={{
+              hours: renderTimeViewClock,
+              minutes: renderTimeViewClock,
+              seconds: renderTimeViewClock,
+            }} />
+          <TimePicker
+            label="Select end time"
+            viewRenderers={{
+              hours: renderTimeViewClock,
+              minutes: renderTimeViewClock,
+              seconds: renderTimeViewClock,
+            }} />
+
         </Stack>
+
+
       </LocalizationProvider>
 
       <Container sx={{ display: 'flex', justifyContent: 'center' }}>
