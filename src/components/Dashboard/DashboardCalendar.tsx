@@ -71,8 +71,8 @@ function BookingBox(props: BookingBoxProps) {
 				alignItems: 'center',
 			}}
 		>
-			<Typography color={"background.paper"} ml={1}>{startTime ? startTime : ""}</Typography>
-			<Typography color={"background.paper"} mr={1}>{endTime ? endTime : ""}</Typography>
+			<Typography color={"info.contrastText"} ml={1}>{startTime ? startTime : ""}</Typography>
+			<Typography color={"info.contrastText"} mr={1}>{endTime ? endTime : ""}</Typography>
 		</Box>
 	);
 }
