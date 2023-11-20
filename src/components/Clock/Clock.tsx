@@ -14,3 +14,19 @@ export const Clock = () => {
 
 	return <Typography>{time.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })}</Typography>;
 };
+
+export const ClockLater = () => {
+	const [time, setTime] = useState(new Date());
+
+	useEffect(() => {
+		const timer = setInterval(() => {
+			const currentTime = new Date();
+			currentTime.setHours(currentTime.getHours() + 4); // Add four hours
+			setTime(currentTime);
+		}, 1000);
+
+		return () => clearInterval(timer);
+	}, []);
+
+	return <Typography>{time.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })}</Typography>;
+};

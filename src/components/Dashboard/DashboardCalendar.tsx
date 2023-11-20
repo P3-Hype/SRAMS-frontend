@@ -1,11 +1,11 @@
-import { Divider, Grid, Paper, Skeleton, Stack, Typography, useTheme } from "@mui/material";
-import { useAllRooms } from "../../hooks/useRoom";
-import useBookings from "../../hooks/useBooking";
-import Booking from "../../booking";
-import Room from "../../room";
-import { Box, alpha } from "@mui/system";
-import { useEffect, useRef, useState } from "react";
-import { Clock } from "../Clock/Clock";
+import { Divider, Grid, Paper, Skeleton, Stack, Typography, useTheme } from '@mui/material';
+import { Box, alpha } from '@mui/system';
+import { useEffect, useRef, useState } from 'react';
+import Booking from '../../booking';
+import useBookings from '../../hooks/useBooking';
+import { useAllRooms } from '../../hooks/useRoom';
+import Room from '../../room';
+import { Clock, ClockLater } from '../Clock/Clock';
 
 function calculatePosition(
 	startUnix: number,
@@ -50,8 +50,8 @@ function BookingBox(props: BookingBoxProps) {
 	}, [props.booking, props.rowWidth, props.startUnix, props.endUnix]);
 
 	// Format the start and end time
-	const startTime = new Date(props.booking.startTime * 1000).toTimeString().substring(0, 5);
-	const endTime = new Date(props.booking.endTime * 1000).toTimeString().substring(0, 5);
+	const startTime = new Date(props.booking.startTime).toTimeString().substring(0, 5);
+	const endTime = new Date(props.booking.endTime).toTimeString().substring(0, 5);
 	const timeRange = `${startTime} - ${endTime}`;
 
 	return (
@@ -162,6 +162,16 @@ function Calendar(props: CalendarProps) {
 			<Grid container spacing={3}>
 				<Grid item xs={1.5} overflow={'hidden'} textOverflow={'clip'}></Grid>
 				<Grid item xs></Grid>
+				<Grid item xs={1.5} overflow='hidden' textOverflow='clip' sx={{ fontSize: '1.5rem' }}>
+					Rooms:
+				</Grid>
+				<Grid item>
+					<Clock />
+				</Grid>
+				<Grid item xs /> {/* Empty item as a spacer */}
+				<Grid item>
+					<ClockLater />
+				</Grid>
 			</Grid>
 			<Divider />
 			{props.rooms.map((room) => {
