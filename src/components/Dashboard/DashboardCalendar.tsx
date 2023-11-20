@@ -1,10 +1,11 @@
-import { Divider, Grid, Paper, Skeleton, Stack, Typography, useTheme } from '@mui/material';
-import { Box, alpha } from '@mui/system';
-import { useEffect, useRef, useState } from 'react';
-import Booking from '../../booking';
-import useBookings from '../../hooks/useBooking';
-import { useAllRooms } from '../../hooks/useRoom';
-import Room from '../../room';
+import { Divider, Grid, Paper, Skeleton, Stack, Typography, useTheme } from "@mui/material";
+import { useAllRooms } from "../../hooks/useRoom";
+import useBookings from "../../hooks/useBooking";
+import Booking from "../../booking";
+import Room from "../../room";
+import { Box, alpha } from "@mui/system";
+import { useEffect, useRef, useState } from "react";
+import { Clock } from "../Clock/Clock";
 
 function calculatePosition(
 	startUnix: number,
