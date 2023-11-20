@@ -80,23 +80,22 @@ function BookingBox(props: BookingBoxProps) {
 interface CalendarRowProps {
 	room: Room;
 	bookings: Booking[];
+    span: number;
 }
 
 function CalendarRow(props: CalendarRowProps) {
 	const theme = useTheme();
 	const rowRef = useRef<HTMLDivElement>(null);
 	const [rowWidth, setRowWidth] = useState(0);
-	const [span] = useState(3);
 	const [spanOffsetHours] = useState(0);
 	const [startUnix, setStartUnix] = useState(new Date().getTime());
 	const [endUnix, setEndUnix] = useState(0);
 	const [updateInterval, setUpdateInterval] = useState<NodeJS.Timeout>();
-
 	const [rowReady, setRowReady] = useState(false);
 
 	const updateSpan = () => {
 		setStartUnix(new Date().getTime() - spanOffsetHours * 60 * 60 * 1000);
-		setEndUnix(startUnix + span * 60 * 60 * 1000);
+		setEndUnix(startUnix + props.span * 60 * 60 * 1000);
 		setRowReady(true);
 	};
 
@@ -160,20 +159,24 @@ interface CalendarProps {
 }
 
 function Calendar(props: CalendarProps) {
+    const [span] = useState(4);
+
 	return (
 		<Stack padding={3} gap={1}>
 			<Grid container spacing={3}>
 				<Grid item xs={1.5} overflow={'hidden'} textOverflow={'clip'}></Grid>
 				<Grid item xs></Grid>
 				<Grid item xs={1.5} overflow='hidden' textOverflow='clip' sx={{ fontSize: '1.5rem' }}>
-					Rooms:
+                <Typography variant='h6' fontFamily={"Geist-Thin"} color={'info.dark'} textOverflow={'ellipsis'} noWrap>
+					Rooms :
+				</Typography>
 				</Grid>
 				<Grid item>
 					<Clock />
 				</Grid>
 				<Grid item xs /> {/* Empty item as a spacer */}
 				<Grid item>
-					<ClockLater />
+					<Clock offsetHours={span} />
 				</Grid>
 			</Grid>
 			<Divider />
@@ -181,7 +184,7 @@ function Calendar(props: CalendarProps) {
 				const bookingsOfRoom = props.bookings.filter((booking) => booking.roomId == room.id);
 				return (
 					<>
-						<CalendarRow key={room.id} room={room} bookings={bookingsOfRoom} />
+						<CalendarRow span={span} key={room.id} room={room} bookings={bookingsOfRoom} />
 						<Divider />
 					</>
 				);
