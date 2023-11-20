@@ -7,16 +7,18 @@ import { useAllRooms } from "../hooks/useRoom";
 import { DatePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { TimeClock } from '@mui/x-date-pickers/TimeClock';
+// import { TimeClock } from '@mui/x-date-pickers/TimeClock';
 import 'dayjs/locale/en-gb';
 import ConfirmBookingButton from "../components/ConfirmBookingButton/ConfirmBookingButton";
+import { StaticTimePicker } from '@mui/x-date-pickers/StaticTimePicker';
+
 
 function Content(props: { listofRooms: Room[] }) {
   const inputStyles = {
     width: '200px',
   };
-  const [time, setTime] = useState(new Date());
-  if (!time) { return false;}
+
+  // const [time, setTime] = useState<Date | null>(new Date());
     
 
 
@@ -34,7 +36,8 @@ function Content(props: { listofRooms: Room[] }) {
           />
           
           <DatePicker label="Choose a booking date" />
-          <TimeClock views={['hours', 'minutes']} value={[time]} onChange={(newTime) => setTime(newTime)} />
+
+          <StaticTimePicker /> 
         </Stack>
       </LocalizationProvider>
 
