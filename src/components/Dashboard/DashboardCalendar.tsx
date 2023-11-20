@@ -5,6 +5,7 @@ import Booking from '../../booking';
 import useBookings from '../../hooks/useBooking';
 import { useAllRooms } from '../../hooks/useRoom';
 import Room from '../../room';
+import { Clock } from '../Clock/Clock';
 
 function calculatePosition(
 	startUnix: number,
@@ -160,7 +161,9 @@ function Calendar(props: CalendarProps) {
 		<Stack padding={3} gap={1}>
 			<Grid container spacing={3}>
 				<Grid item xs={1.5} overflow={'hidden'} textOverflow={'clip'}></Grid>
-				<Grid item xs></Grid>
+				<Grid item xs>
+					<Clock />
+				</Grid>
 			</Grid>
 			<Divider />
 			{props.rooms.map((room) => {
