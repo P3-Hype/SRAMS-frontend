@@ -5,6 +5,7 @@ import Booking from "../../booking";
 import Room from "../../room";
 import { Box, alpha } from "@mui/system";
 import { useEffect, useRef, useState } from "react";
+import { Clock } from "../Clock/Clock";
 
 function calculatePosition(startUnix: number, endUnix: number, rowWidth: number, startSpanUnix: number, endSpanUnix: number) {
     const start = startUnix - startSpanUnix;
@@ -124,7 +125,7 @@ function Calendar(props: CalendarProps) {
             <Grid item xs={1.5} overflow={"hidden"} textOverflow={"clip"}>
             </Grid>
             <Grid item xs>
-                
+                <Clock />
             </Grid>
         </Grid>
         <Divider />
