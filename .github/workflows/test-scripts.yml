@@ -13,7 +13,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
       - name: Test Script
-        uses: appleboy/ssh-action@master
+        uses: appleboy/ssh-action@v1.0.0
         with:
           host: ${{ secrets.BERTHA_HOST }}
           username: ${{ secrets.BERTHA_USER }}
