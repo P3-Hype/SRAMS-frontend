@@ -2,11 +2,6 @@ name: Test Scripts on Bertha
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-env:
-  HOST: ${{ secrets.BERTHA_HOST }}
 
 jobs:
   build:
@@ -20,7 +15,7 @@ jobs:
       - name: Test Script
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ env.HOST }}
+          host: ${{ secrets.BERTHA_HOST }}
           username: ${{ secrets.BERTHA_USER }}
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.BERTHA_SSH_PORT }}
