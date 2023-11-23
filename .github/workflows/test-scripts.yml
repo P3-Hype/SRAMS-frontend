@@ -2,6 +2,16 @@ name: Test Scripts on Bertha
 
 on:
   workflow_dispatch:
+    inputs:
+      var1:
+        description: 'Container Name'
+        required: true
+      var2:
+        description: 'ID Name'
+        required: true
+      var3:
+        description: 'Data'
+        required: true
 
 jobs:
   build:
@@ -19,4 +29,4 @@ jobs:
           username: ${{ secrets.BERTHA_USER }}
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.BERTHA_SSH_PORT }}
-          script: bash script.sh
+          script: bash ${HOME}/hype-scripts/sensor/datamock-add.sh  ${{ github.event.inputs.var1 }} ${{ github.event.inputs.var2 }} ${{ github.event.inputs.var3 }}
