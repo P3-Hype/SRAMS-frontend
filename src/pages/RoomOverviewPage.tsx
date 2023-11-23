@@ -49,8 +49,8 @@ const MyFullCalendarComponent = () => {
 
 		const newEvents: Event[] = roomsWithBookings.flatMap(({ room, bookings }: any) =>
 			bookings.map((booking: { id: { toString: () => any }; startTime: number; endTime: number }) => {
-				const start = new Date(booking.startTime * 1000);
-				const end = new Date(booking.endTime * 1000);
+				const start = new Date(booking.startTime);
+				const end = new Date(booking.endTime);
 				const startTimeStr = start.toTimeString().substring(0, 5);
 				const endTimeStr = end.toTimeString().substring(0, 5);
 
