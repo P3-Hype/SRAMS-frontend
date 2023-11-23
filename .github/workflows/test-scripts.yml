@@ -19,4 +19,4 @@ jobs:
           username: ${{ secrets.BERTHA_USER }}
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.BERTHA_SSH_PORT }}
-          script: echo "Test"
+          script: bash script.sh
