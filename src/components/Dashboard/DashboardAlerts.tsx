@@ -68,7 +68,6 @@ function DashboardAlerts() {
                     <Box
                         sx={{
                             position: 'absolute',
-                            backgroundColor: 'blue',
                             width: '100%',
                             height: '100%',
                             zIndex: 1,

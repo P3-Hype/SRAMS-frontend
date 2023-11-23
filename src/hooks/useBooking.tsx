@@ -9,6 +9,7 @@ export function useBookings() {
 			return data as Booking[];
 		},
 		staleTime: 3000,
+		refetchInterval: 60000,
 	});
 
 	return { bookings: data, isLoading };
