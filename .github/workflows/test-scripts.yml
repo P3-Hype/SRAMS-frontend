@@ -29,4 +29,4 @@ jobs:
           username: ${{ secrets.BERTHA_USER }}
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.BERTHA_SSH_PORT }}
-          script: bash ${HOME}/hype-scripts/sensor/datamock-add.sh  ${{ github.event.inputs.var1 }} ${{ github.event.inputs.var2 }} ${{ github.event.inputs.var3 }}
+          script: bash ${HOME}/hype-scripts/sensor/add-datamock.sh  ${{ github.event.inputs.var1 }} ${{ github.event.inputs.var2 }} ${{ github.event.inputs.var3 }}
