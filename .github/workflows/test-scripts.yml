@@ -1,0 +1,27 @@
+name: Test Scripts on Bertha
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+env:
+  HOST: ${{ secrets.BERTHA_HOST }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write      
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+      - name: Test Script
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ env.HOST }}
+          username: ${{ secrets.BERTHA_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.BERTHA_SSH_PORT }}
+          script: echo "Test"
