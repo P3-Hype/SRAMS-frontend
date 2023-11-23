@@ -5,14 +5,12 @@ function ConfirmBookingButton (){
 
     const theme = useTheme();
 
-    const buttonStyle = {
-		variant: 'contained',
-		backgroundColor: theme.palette.primary.main,
-		color: 'white',
-	};
-
 	return (
-            <Button sx={buttonStyle}>Confirm booking</Button>
+            <Button sx={{
+				variant: 'contained',
+				backgroundColor: theme.palette.primary.main,
+				color: 'white',
+			}}>Confirm booking</Button>
 	);
 
 }
