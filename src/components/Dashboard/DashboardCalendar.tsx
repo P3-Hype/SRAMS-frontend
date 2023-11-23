@@ -5,7 +5,8 @@ import Booking from '../../booking';
 import useBookings from '../../hooks/useBooking';
 import { useAllRooms } from '../../hooks/useRoom';
 import Room from '../../room';
-import { Clock, ClockLater } from '../Clock/Clock';
+import { Clock } from '../Clock/Clock';
+import React from 'react';
 
 function calculatePosition(
 	startUnix: number,
@@ -183,10 +184,10 @@ function Calendar(props: CalendarProps) {
 			{props.rooms.map((room) => {
 				const bookingsOfRoom = props.bookings.filter((booking) => booking.roomId == room.id);
 				return (
-					<>
-						<CalendarRow span={span} key={room.id} room={room} bookings={bookingsOfRoom} />
+					<React.Fragment key={room.id}>
+						<CalendarRow span={span} room={room} bookings={bookingsOfRoom} />
 						<Divider />
-					</>
+					</React.Fragment>
 				);
 			})}
 		</Stack>
