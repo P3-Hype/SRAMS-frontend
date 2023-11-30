@@ -50,3 +50,12 @@ jobs:
                   push: true
                   tags: ${{ steps.meta.outputs.tags }}
                   labels: ${{ steps.meta.outputs.labels }}
+
+            - name: Deploy application
+              uses: appleboy/ssh-action@v1.0.0
+              with:
+                host: ${{ secrets.BERTHA_HOST }}
+                username: ${{ secrets.BERTHA_USER }}
+                key: ${{ secrets.SSH_KEY }}
+                port: ${{ secrets.BERTHA_SSH_PORT }}
+                script: bash ${HOME}/hype-scripts/deploy/deploy-all.sh
