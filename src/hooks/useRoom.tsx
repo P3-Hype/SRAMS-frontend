@@ -5,7 +5,7 @@ import Room from '../room';
 export function useAllRooms() {
 	const { data, isLoading } = useQuery(['allRooms'], {
 		queryFn: async () => {
-			const { data } = await axios.get(`${import.meta.env.VITE_SRAMS_API_ADDRESS}room/all`);
+			const { data } = await axios.get(`${import.meta.env.VITE_SRAMS_API_ADDRESS}room/allRooms`);
 			return data as Room[];
 		},
 		staleTime: 3000,
