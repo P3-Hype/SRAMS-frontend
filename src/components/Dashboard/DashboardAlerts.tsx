@@ -15,8 +15,7 @@ import {
 import useAllEvents from '../../hooks/useEvents';
 import SramsEvent, { EventType } from '../../event';
 import { TransitionGroup } from 'react-transition-group';
-// @ts-ignore
-import a from 'color-alpha';
+import {alpha} from '@mui/system';
 import { useRoom } from '../../hooks/useRoom';
 import EventAutoIcon from '../AutoIcon/EventAutoIcon';
 
@@ -58,7 +57,7 @@ function SramsAlert(props: SramsAlertProps) {
 function DashboardAlerts() {
 	const { events, isLoading } = useAllEvents();
 	const theme = useTheme();
-	const gradientColors = [theme.palette.background.paper, a(theme.palette.background.paper, 0.0)];
+	const gradientColors = [theme.palette.background.paper, alpha(theme.palette.background.paper, 0.0)];
 
 	if (isLoading) return <Skeleton variant='rounded' height={'100%'} />;
 
@@ -69,7 +68,6 @@ function DashboardAlerts() {
                     <Box
                         sx={{
                             position: 'absolute',
-                            backgroundColor: 'blue',
                             width: '100%',
                             height: '100%',
                             zIndex: 1,
@@ -78,7 +76,7 @@ function DashboardAlerts() {
                     />
                         <TransitionGroup>
                             {events?.map((e) => (
-                                <Slide direction='left' timeout={500}>
+                                <Slide key={e.id} direction='left' timeout={500}>
                                     <ListItem>
                                         <SramsAlert key={e.id} event={e} chipBackground={theme.palette.background.paper} />
                                     </ListItem>

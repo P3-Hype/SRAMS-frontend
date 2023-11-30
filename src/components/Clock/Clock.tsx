@@ -1,12 +1,15 @@
 import { Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 
-export const Clock = () => {
+export const Clock = (props: {offsetHours?: number}) => {
 	const [time, setTime] = useState(new Date());
 
 	useEffect(() => {
 		const timer = setInterval(() => {
-			setTime(new Date());
+			const currentTime = new Date();
+			const offset = props.offsetHours ?? 0;
+			currentTime.setHours(currentTime.getHours() + offset);
+			setTime(currentTime);
 		}, 1000);
 
 		return () => clearInterval(timer);

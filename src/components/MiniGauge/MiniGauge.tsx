@@ -95,7 +95,7 @@ function MiniGauge(props: MiniGaugeProps) {
 					{
 						data: [
 							{
-								value: props.value.toFixed(2),
+								value: props.value > 0 ? props.value.toFixed(2) : 1,
 							},
 						],
 						itemStyle: {

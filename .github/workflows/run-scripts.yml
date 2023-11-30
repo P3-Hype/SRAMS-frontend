@@ -1,0 +1,32 @@
+name: Test Scripts on Bertha
+
+on:
+  workflow_dispatch:
+    inputs:
+      container_name:
+        description: 'Container Name'
+        required: true
+      id_name:
+        description: 'ID Name'
+        required: true
+      data:
+        description: 'Data'
+        required: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write      
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+      - name: Test Script
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.BERTHA_HOST }}
+          username: ${{ secrets.BERTHA_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.BERTHA_SSH_PORT }}
+          script: bash ${HOME}/hype-scripts/sensor/add-datamock.sh  ${{ github.event.inputs.container_name }} ${{ github.event.inputs.id_name }} ${{ github.event.inputs.data }}
