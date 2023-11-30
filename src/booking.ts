@@ -2,8 +2,8 @@ type Booking = {
 	id: string;
 	name: string;
 	roomId: string;
-	startTime: string;
-	endTime: string;
+	startTime: number;
+	endTime: number;
 };
 
 export default Booking;

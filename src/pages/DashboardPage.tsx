@@ -35,7 +35,7 @@ function Content() {
                 <Box>
                     <Typography color={theme.palette.primary.light} variant="subtitle1" mt={-2}>Suggestions</Typography>
                     <Stack direction={"row"} gap={2} flexWrap={"wrap"} component={TransitionGroup}>
-                        {suggestedRooms.data.map((suggestedRoom) => <Grow><Box key={suggestedRoom.room.id}><RoomSuggestionCard roomSuggestion={suggestedRoom} /></Box></Grow>)}
+                        {suggestedRooms.data.map((suggestedRoom) => <Grow key={suggestedRoom.room.id}><Box><RoomSuggestionCard roomSuggestion={suggestedRoom} /></Box></Grow>)}
                     </Stack>
                 </Box>
                 <Stack gap={2} display={"flex"} flexDirection={"row"} flexGrow={1} height={"0px"}>
