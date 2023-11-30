@@ -1,6 +1,5 @@
 import FullCalendar from '@fullcalendar/react';
 import resourceTimelinePlugin from '@fullcalendar/resource-timeline';
-import { LinearProgress } from '@mui/material';
 import { useEffect, useRef, useState } from 'react';
 import Booking from '../booking';
 import useAllBookings from '../hooks/useBooking';
@@ -49,8 +48,8 @@ const MyFullCalendarComponent = () => {
 
 		const newEvents: Event[] = roomsWithBookings.flatMap(({ room, bookings }: any) =>
 			bookings.map((booking: { id: { toString: () => any }; startTime: number; endTime: number }) => {
-				const start = new Date(booking.startTime * 1000);
-				const end = new Date(booking.endTime * 1000);
+				const start = new Date(booking.startTime);
+				const end = new Date(booking.endTime);
 				const startTimeStr = start.toTimeString().substring(0, 5);
 				const endTimeStr = end.toTimeString().substring(0, 5);
 
@@ -66,21 +65,16 @@ const MyFullCalendarComponent = () => {
 		setEvents(newEvents);
 	}, [roomsWithBookings]);
 
-	if (allBookings.isLoading) {
-		return <LinearProgress />;
-	}
 
 	return (
 		<FullCalendar
 			plugins={[resourceTimelinePlugin]}
 			ref={calendarRef}
-			timeZone='UTC'
 			initialView='resourceTimelineDay'
 			aspectRatio={1.5}
 			headerToolbar={{
-				left: 'prev,next',
+				left: '',
 				center: 'title',
-				right: 'resourceTimelineDay,resourceTimelineWeek,resourceTimelineMonth',
 			}}
 			editable={true}
 			resourceAreaHeaderContent='Rooms'
