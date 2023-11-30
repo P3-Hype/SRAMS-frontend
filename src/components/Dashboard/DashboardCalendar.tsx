@@ -39,22 +39,24 @@ function BookingBox(props: BookingBoxProps) {
 	const [pos, setPos] = useState({ startOffset: 0, endOffset: 0 });
 
 	useEffect(() => {
-		setPos(
-			calculatePosition(
-				props.booking.startTime,
-				props.booking.endTime,
-				props.rowWidth,
-				props.startUnix,
-				props.endUnix
-			)
-		);
+		if (props.booking.startTime && props.booking.endTime) {
+			setPos(
+				calculatePosition(
+					props.booking.startTime,
+					props.booking.endTime,
+					props.rowWidth,
+					props.startUnix,
+					props.endUnix
+				)
+			);
+		}
 	}, [props.booking, props.rowWidth, props.startUnix, props.endUnix]);
 
 	// Format the start and end time
-	const startTimeDate = new Date(props.booking.startTime);
-	const endTimeDate = new Date(props.booking.endTime);
-    const startTime = startTimeDate.getTime() > props.startUnix ? startTimeDate.toTimeString().substring(0, 5) : null;
-    const endTime = endTimeDate.getTime() < props.endUnix ? endTimeDate.toTimeString().substring(0, 5) : null;
+	const startTimeDate = props.booking.startTime ? new Date(props.booking.startTime) : null;
+	const endTimeDate = props.booking.endTime ? new Date(props.booking.endTime) : null;
+	const startTime = startTimeDate?.getTime() && props.startUnix ? startTimeDate.toTimeString().substring(0, 5) : null;
+	const endTime = endTimeDate?.getTime() && props.endUnix ? endTimeDate.toTimeString().substring(0, 5) : null;
 
 
 	return (
@@ -138,7 +140,7 @@ function CalendarRow(props: CalendarRowProps) {
 					></Box>
 					{rowReady &&
 						props.bookings
-							.filter((b) => b.endTime > startUnix && b.startTime < endUnix)
+							.filter((b) => b.endTime !== undefined && b.endTime > startUnix && (b.startTime ?? 0) < endUnix)
 							.map((booking) => (
 								<BookingBox
 									key={booking.id}
@@ -152,14 +154,14 @@ function CalendarRow(props: CalendarRowProps) {
 			</Grid>
 		</Grid>
 	);
-}
+	}
 
-interface CalendarProps {
-	rooms: Room[];
-	bookings: Booking[];
-}
+	interface CalendarProps {
+		rooms: Room[];
+		bookings: Booking[];
+	}
 
-function Calendar(props: CalendarProps) {
+	function Calendar(props: CalendarProps) {
     const [span] = useState(4);
 
 	return (
