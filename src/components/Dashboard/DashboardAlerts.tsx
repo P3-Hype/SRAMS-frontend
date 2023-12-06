@@ -13,7 +13,7 @@ import {
 	useTheme,
 } from '@mui/material';
 import useAllEvents from '../../hooks/useEvents';
-import SramsEvent, { EventType } from '../../event';
+import SramsEvent, { EventType, eventToDescription } from '../../event';
 import { TransitionGroup } from 'react-transition-group';
 import {alpha} from '@mui/system';
 import { useRoom } from '../../hooks/useRoom';
@@ -26,11 +26,30 @@ interface SramsAlertProps {
 
 function SramsAlert(props: SramsAlertProps) {
 	const { room } = useRoom(props.event.roomId);
-	const type = EventType[props.event.eventType as unknown as EventType];
+	const type = EventType[props.event.eventType as keyof typeof EventType];
+
+	const severityColor = (type: EventType) => {
+		switch (type) {
+			case EventType.PRESENCE_LEFT:
+				return 'info';
+			case EventType.PRESENCE_NEW:
+				return 'info';
+			case EventType.CANCEL_BOOKING:
+				return 'warning';
+			case EventType.OPEN_BOOKING:
+				return 'success';
+			case EventType.CLOSE_WINDOW:
+				return 'warning';
+			case EventType.OPEN_WINDOW:
+				return 'error';
+			default:
+				return 'info';
+		}
+	}
 
 	return (
 		<Alert
-			severity='info'
+			severity={severityColor(type)}
 			variant='standard'
 			sx={{
 				width: '100%',
@@ -45,11 +64,11 @@ function SramsAlert(props: SramsAlertProps) {
 					{<Typography>{room?.name}</Typography> ?? <Skeleton variant='rounded' width={'4rem'} />}
                     <Box display={'flex'} flexDirection={'row'} alignItems={'center'} gap={1}>
                         <Typography variant='body2'>{new Date(props.event.timeStamp).toLocaleTimeString()}</Typography>
-                        <EventAutoIcon type={EventType[type as keyof typeof EventType]} />
+                        <EventAutoIcon type={type} />
                     </Box>
 				</Stack>
 			</AlertTitle>
-            <Typography variant='body2'>Beskrivelse</Typography>
+            <Typography variant='body2'>{eventToDescription(props.event)}</Typography>
 		</Alert>
 	);
 }

@@ -1,4 +1,4 @@
-import { Person, PersonOff } from "@mui/icons-material";
+import { EditCalendar, EventBusy, Person, PersonOff, PriorityHigh, QuestionMark, RollerShades } from "@mui/icons-material";
 import { EventType } from "../../event";
 import { SxProps, Theme } from "@mui/material";
 
@@ -11,13 +11,22 @@ function EventAutoIcon(props: MetricAutoIconProps) {
 	const event = props.type;
 	const sxProps: SxProps<Theme> = props.color ? { color: props.color } : {};
 
-    return (
-        <>
-            {event == EventType.PRESENCE_LEFT && <PersonOff sx={sxProps} />}
-            {event == EventType.PRESENCE_NEW && <Person sx={sxProps} />}
-        </>
-    );
-	
+    switch (event) {
+        case EventType.PRESENCE_LEFT:
+            return <PersonOff sx={sxProps} />;
+        case EventType.PRESENCE_NEW:
+            return <Person sx={sxProps} />;
+        case EventType.CANCEL_BOOKING:
+            return <EventBusy sx={sxProps} />;
+        case EventType.OPEN_BOOKING:
+            return <EditCalendar sx={sxProps} />;
+        case EventType.CLOSE_WINDOW:
+            return <PriorityHigh sx={sxProps} />;
+        case EventType.OPEN_WINDOW:
+            return <RollerShades sx={sxProps} />;
+        default:
+            return <QuestionMark sx={sxProps} />;
+    }
 }
 
 export default EventAutoIcon;
