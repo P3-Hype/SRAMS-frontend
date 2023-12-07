@@ -160,6 +160,7 @@ function EditRoomContent(props: { readonly room: Room }) {
 		},
 		onSuccess: () => {
 			setIsloading(false);
+			queryClient.invalidateQueries(['room', room.id]);
 		},
 	});
 
@@ -174,7 +175,6 @@ function EditRoomContent(props: { readonly room: Room }) {
 			}),
 		{
 			onSuccess: () => {
-				console.log('Room deleted');
 				queryClient.invalidateQueries('allRooms');
 				navigate('/admin');
 			},
@@ -184,7 +184,7 @@ function EditRoomContent(props: { readonly room: Room }) {
 		deleteRoomMutation.mutate(room.id);
 	};
 
-	//set initatl room state
+	//set initial room state
 	useEffect(() => {
 		setMutatedRoom(room);
 	}, [room]);
@@ -215,6 +215,7 @@ function EditRoomContent(props: { readonly room: Room }) {
 				</Typography>
 				<Stack direction={'row'} alignItems={'center'} gap={2}>
 					<TextField
+						name='seatCount'
 						type='number'
 						defaultValue={room.seatCount}
 						label='Number of seats'
@@ -222,13 +223,15 @@ function EditRoomContent(props: { readonly room: Room }) {
 						onChange={(e) => {
 							const r = mutatedRoom;
 							r.seatCount = parseInt(e.target.value);
-							setMutatedRoom(r);
+							setMutatedRoom(r);							
 						}}
 					/>
 					<Box display={'flex'} flexDirection={'column'} alignItems={'left'}>
 						<Box display={'flex'} flexDirection={'row'} alignItems={'center'}>
 							<Checkbox
+								name='hasWindow'
 								defaultChecked={room.hasWindow}
+								value={mutatedRoom.hasWindow}
 								onChange={(e) => {
 									const r = mutatedRoom;
 									r.hasWindow = e.target.checked;
@@ -240,7 +243,9 @@ function EditRoomContent(props: { readonly room: Room }) {
 
 						<Box display={'flex'} flexDirection={'row'} alignItems={'center'}>
 							<Checkbox
+								name='isBookable'
 								defaultChecked={room.isBookable}
+								value={mutatedRoom.isBookable}
 								onChange={(e) => {
 									const r = mutatedRoom;
 									r.isBookable = e.target.checked;
