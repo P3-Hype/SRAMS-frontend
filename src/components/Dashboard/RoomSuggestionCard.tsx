@@ -19,7 +19,9 @@ function RoomSuggestionCard(props: { readonly roomSuggestion: RoomSuggestion }) 
                 <Stack direction={"row"} gap={2}>
                     <Stack direction={"column"}>
                         <Typography variant="h6" minWidth={"12rem"}>{room.name}</Typography>
-                        <Typography>{props.roomSuggestion.availabilityTime}m</Typography>
+                        {props.roomSuggestion.availabilityTime != -1 
+                            ? <Typography>{props.roomSuggestion.availabilityTime}m</Typography>
+                            : <Typography color={theme.palette.primary.light}>is available</Typography>}
                     </Stack>
                     <Box display={"flex"} flexDirection={"row"} justifyContent={"center"} alignItems={"flex-end"} >
                         <MiniGauge value={props.roomSuggestion.climateScore} color={climateColor}/>
