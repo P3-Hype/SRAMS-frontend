@@ -26,8 +26,8 @@ function BarContent() {
 							</Link>
 						</Box>
 						<Stack direction={'row'} alignItems={'center'} spacing={3}>
-							<ToggleView></ToggleView>
-							<BookButton></BookButton>
+							{location.pathname === '/dashboard' && <ToggleView />}
+							{location.pathname != '/dashboard' && <BookButton />}
 							<IconButton>
 								<HelpOutlineOutlinedIcon
 									sx={{
