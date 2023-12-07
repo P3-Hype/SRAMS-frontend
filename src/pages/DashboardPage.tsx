@@ -3,15 +3,16 @@ import BasePage from "../components/BasePage/BasePage";
 import axios from "axios";
 import useAlert from "../hooks/useAlert";
 import { RoomSuggestion } from "../room";
-import { Box, LinearProgress, Stack, Typography } from "@mui/material";
+import { Grow, Box, LinearProgress, Stack, Typography } from "@mui/material";
 import { TransitionGroup } from 'react-transition-group';
-import { Grow } from "@mui/material";
 import RoomSuggestionCard from "../components/Dashboard/RoomSuggestionCard";
 import DashboardAlerts from "../components/Dashboard/DashboardAlerts";
 import DashboardCalendar from "../components/Dashboard/DashboardCalendar";
 import theme from "../theme";
+import DashboardMap from "../components/Dashboard/DashboardMap";
+import { useSearchParams } from "react-router-dom";
 
-function Content() {
+function Content({ currentView }: { readonly currentView: string }) {
     const suggestedRooms = useQuery('suggestedRooms', {
         queryFn: async () => {
             const { data }: {data:RoomSuggestion[]} = await axios.get(`${import.meta.env.VITE_SRAMS_API_ADDRESS}room/suggestions`)
@@ -20,8 +21,6 @@ function Content() {
         },
         refetchInterval: 10000
     });
-
-
 
     if (suggestedRooms.isLoading === undefined) {
         return <LinearProgress />
@@ -39,9 +38,15 @@ function Content() {
                     </Stack>
                 </Box>
                 <Stack gap={2} display={"flex"} flexDirection={"row"} flexGrow={1} height={"0px"}>
-                    <Box flex={3}>
-                        <DashboardCalendar />
-                    </Box>
+                    {currentView === 'map' ? (
+                        <Box flex={3}>
+                            <DashboardMap />
+                        </Box>
+                    ) : currentView === 'grid' ? (
+                        <Box flex={3}>
+                            <DashboardCalendar />
+                        </Box>
+                    ) : null}
                     <Box flex={1}>
                         <DashboardAlerts />
                     </Box>
@@ -53,10 +58,11 @@ function Content() {
 
 function DashboardPage() {
     const alert = useAlert();
-
+    const [searchParams] = useSearchParams();
+    const currentView = searchParams.get('view');
     return (
     <BasePage alert={alert}>
-        <Content />
+        <Content currentView={currentView??'grid'} />
     </BasePage>
   );
 }
