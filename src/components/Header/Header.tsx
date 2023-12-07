@@ -9,8 +9,8 @@ import React, { useEffect, useState } from 'react';
 
 
 interface BarContentProps {
-  onViewChange: (newView: string) => void;
-  currentView: string | null;
+  readonly onViewChange: (newView: string) => void;
+  readonly currentView: string | null;
 }
 
 function BarContent(props: BarContentProps) {
