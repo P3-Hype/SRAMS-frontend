@@ -2,14 +2,13 @@ import { AppBar, Box, Container, IconButton, Stack, Toolbar } from '@mui/materia
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import Logo from '../Logo/Logo';
 import Link from '@mui/material/Link';
-import React from 'react';
 import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
 import ToggleView from '../ToggleView/ToggleView';
 import BookButton from '../BookButton/BookButton';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 
-function BarContent({ onViewChange, currentView }: { onViewChange: (newView: string) => void, currentView: string | null }) {
+function BarContent({ onViewChange, currentView }: { readonly onViewChange: (newView: string) => void, readonly currentView: string | null }) {
   const location = useLocation();
 
   return (

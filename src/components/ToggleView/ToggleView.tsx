@@ -10,7 +10,7 @@ interface ToggleViewProps {
   onViewChange: (newView: string) => void;
 }
 
-export default function ToggleView({ currentView, onViewChange }: ToggleViewProps) {
+export default function ToggleView({ currentView, onViewChange }: Readonly<ToggleViewProps>) {
 	const handleView = (_: React.MouseEvent<HTMLElement>, newView: string | null) => {
 	  if (newView !== null) {
 		onViewChange(newView);
