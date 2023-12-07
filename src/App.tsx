@@ -13,7 +13,6 @@ import EditRoomPage from './pages/EditRoomPage';
 import EventLogPage from './pages/EventLogPage';
 import { CreateBookingPage } from './pages/CreateBookingPage';
 import DashboardPage from './pages/DashboardPage';
-import DashboardPageMap from './pages/DashboardPageMap';
 import DataMockPage from './pages/DataMockPage';
 
 const queryClient = new QueryClient();
@@ -32,7 +31,6 @@ function App() {
 							<Route path='admin' element={<RoomAdministrationPage />} />
 							<Route path='overview' element={<RoomOverviewPage />} />	
 							<Route path='dashboard' element={<DashboardPage />} />
-							<Route path='dashboardMap' element={<DashboardPageMap />} />
 							<Route path='room/:id' element={<EditRoomPage />} />
 							<Route path='events' element={<EventLogPage />} />
 							<Route path='booking' element={<CreateBookingPage />} />

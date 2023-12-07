@@ -8,7 +8,12 @@ import BookButton from '../BookButton/BookButton';
 import React, { useEffect, useState } from 'react';
 
 
-function BarContent({ onViewChange, currentView }: { readonly onViewChange: (newView: string) => void, readonly currentView: string | null }) {
+interface BarContentProps {
+  onViewChange: (newView: string) => void;
+  currentView: string | null;
+}
+
+function BarContent(props: BarContentProps) {
   const location = useLocation();
 
   return (
@@ -29,10 +34,10 @@ function BarContent({ onViewChange, currentView }: { readonly onViewChange: (new
         </Link>
       </Box>
       <Stack direction={'row'} alignItems={'center'} spacing={3}>
-        {(location.pathname === '/dashboard' || location.pathname === '/dashboardMap') && (
-          <ToggleView currentView={currentView} onViewChange={onViewChange} />
+        {(location.pathname === '/dashboard') && (
+          <ToggleView currentView={props.currentView} onViewChange={props.onViewChange} />
         )}
-        {(location.pathname === '/dashboard' || location.pathname === '/dashboardMap') && <BookButton />}
+        <BookButton />
         <IconButton>
           <HelpOutlineOutlinedIcon
             sx={{
@@ -52,15 +57,13 @@ function Header() {
   const [currentView, setCurrentView] = React.useState<string | null>(''); // Set an initial value
 
   useEffect(() => {
-    setFullWidth(location.pathname === '/dashboard' || location.pathname === '/dashboardMap');
+    setFullWidth(location.pathname === '/dashboard');
   }, [location]);
 
   const handleViewChange = (newView: string) => {
     setCurrentView(newView);
-    if (newView === 'map') {
-      navigate('/dashboardMap');
-    } else if (newView === 'grid') {
-      navigate('/dashboard');
+    if (newView === 'map' || newView === 'grid') {
+      navigate(`/dashboard?view=${newView}`);
     }
   };
 
