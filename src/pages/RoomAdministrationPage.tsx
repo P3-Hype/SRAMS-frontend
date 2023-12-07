@@ -75,7 +75,9 @@ function Content() {
 							</Stack>
 						</AccordionSummary>
 						<AccordionDetails>
-							<Typography>Her skal vi vel have nogle forskelige information omkring rummet.</Typography>
+							<Stack direction={'row'} gap={2}>
+								<Typography variant='body2' color={theme.palette.primary.light}>Id: {r.id}</Typography>
+							</Stack>
 						</AccordionDetails>
 					</Accordion>
 				))}
