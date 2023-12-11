@@ -1,10 +1,10 @@
-import { AppBar, Box, Container, IconButton, Stack, Toolbar } from '@mui/material';
-import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
+import { AppBar, Box, Container, Stack, Toolbar } from '@mui/material';
 import Logo from '../Logo/Logo';
 import Link from '@mui/material/Link';
 import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
 import ToggleView from '../ToggleView/ToggleView';
 import BookButton from '../BookButton/BookButton';
+import InfoButton from '../InfoButton/InfoButton';
 import React, { useEffect, useState } from 'react';
 
 
@@ -38,13 +38,9 @@ function BarContent(props: BarContentProps) {
           <ToggleView currentView={props.currentView} onViewChange={props.onViewChange} />
         )}
         <BookButton />
-        <IconButton>
-          <HelpOutlineOutlinedIcon
-            sx={{
-              color: 'primary.contrastText',
-            }}
-          />
-        </IconButton>
+        {(location.pathname === '/dashboard') && (
+          <InfoButton />
+        )}
       </Stack>
     </Stack>
   );
