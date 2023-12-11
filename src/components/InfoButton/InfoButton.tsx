@@ -21,7 +21,7 @@ const infoText = [
 "0.75-1     = Worst"
 ];
 
-const testText = (
+const infoItems = (
 	<div style={{ whiteSpace: 'pre-wrap' }}>
 		{infoText.map((text, index) => (
 			<React.Fragment key={index}>
@@ -35,7 +35,7 @@ const testText = (
 function InfoButton() {
   return (
     <IconButton>
-      <CustomWidthTooltip title={testText}>
+      <CustomWidthTooltip title={infoItems}>
         <HelpOutlineOutlinedIcon
           sx={{
             color: 'primary.contrastText'
