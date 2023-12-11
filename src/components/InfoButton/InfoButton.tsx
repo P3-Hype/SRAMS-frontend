@@ -23,8 +23,8 @@ const infoText = [
 
 const infoItems = (
 	<div style={{ whiteSpace: 'pre-wrap' }}>
-		{infoText.map((text, index) => (
-			<React.Fragment key={index}>
+		{infoText.map((text) => (
+			<React.Fragment key={text}>
 				{text}
 				<br />
 			</React.Fragment>
