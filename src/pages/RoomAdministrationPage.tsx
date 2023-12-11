@@ -89,12 +89,12 @@ function Content() {
 			<Stack spacing={2}>
 				<Button size='large' variant='contained' color='primary' fullWidth onClick={handleAddRoom}>
 					<Typography textTransform={'none'} variant='h6'>
-					Add room
+					Add Room
 					</Typography>
 				</Button>
 				<Button size='large' variant='contained' color='primary' fullWidth onClick={handleAddSensor}>
 					<Typography textTransform={'none'} variant='h6'>
-					Sensor mock
+					Sensor Setup
 					</Typography>
 				</Button>
 			</Stack>
