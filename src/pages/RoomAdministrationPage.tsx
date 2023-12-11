@@ -42,6 +42,10 @@ function Content() {
 		return <Typography>No rooms found</Typography>;
 	}
 
+	const handleAddSensor = () => {
+		navigate('/datamock');
+	};
+
 	return (
 		<>
 			<Card sx={{ mb: 2 }}>
@@ -82,11 +86,18 @@ function Content() {
 					</Accordion>
 				))}
 			</Card>
-			<Button size='large' variant='contained' color='primary' fullWidth onClick={handleAddRoom}>
-				<Typography textTransform={'none'} variant='h6'>
+			<Stack spacing={2}>
+				<Button size='large' variant='contained' color='primary' fullWidth onClick={handleAddRoom}>
+					<Typography textTransform={'none'} variant='h6'>
 					Add room
-				</Typography>
-			</Button>
+					</Typography>
+				</Button>
+				<Button size='large' variant='contained' color='primary' fullWidth onClick={handleAddSensor}>
+					<Typography textTransform={'none'} variant='h6'>
+					Sensor mock
+					</Typography>
+				</Button>
+			</Stack>
 		</>
 	);
 }
