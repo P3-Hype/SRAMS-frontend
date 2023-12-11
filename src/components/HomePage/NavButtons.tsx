@@ -45,7 +45,6 @@ export default function NavButtons() {
 		setTimeout(()=>{
 			window.location.reload();
 		}, 1);
-		console.log('page to reload')
 	}
 
 	return (
@@ -88,7 +87,4 @@ export default function NavButtons() {
 		</>
 	);
 }
-//function useState(arg0: boolean): [any, any] {
-//	throw new Error('Function not implemented.');
-//}
 
