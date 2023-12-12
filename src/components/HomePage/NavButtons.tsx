@@ -36,10 +36,16 @@ export default function NavButtons() {
 		minHeight: '100vh',
 	};
 
+	function refreshPage() {
+		setTimeout(()=>{
+			window.location.reload();
+		}, 1);
+	}
+
 	return (
 		<Grid container spacing={20} style={GridStyle}>
 			<Grid item>
-				<Link component={RouterLink} to='/admin'>
+				<Link component={RouterLink} to='/admin' onClick={refreshPage}>
 					<Button sx={buttonStyle}>Admin</Button>
 				</Link>
 			</Grid>
@@ -56,3 +62,4 @@ export default function NavButtons() {
 		</Grid>
 	);
 }
+
