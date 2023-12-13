@@ -22,7 +22,7 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-      - name: Test Script
+      - name: Run script to add datamock
         uses: appleboy/ssh-action@v1.0.0
         with:
           host: ${{ secrets.BERTHA_HOST }}
