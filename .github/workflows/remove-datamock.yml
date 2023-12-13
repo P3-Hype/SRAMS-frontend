@@ -1,8 +1,6 @@
 name: Remove Data Mock
 
 on:
-  push:
-    branches: main
   workflow_dispatch:
     inputs:
       metric_label_name:
@@ -18,7 +16,7 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-      - name: Test Script
+      - name: Run script to remove datamock
         uses: appleboy/ssh-action@v1.0.0
         with:
           host: ${{ secrets.BERTHA_HOST }}
