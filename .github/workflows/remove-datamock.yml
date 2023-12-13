@@ -1,0 +1,28 @@
+name: Remove Data Mock
+
+on:
+  push:
+    branches: main
+  workflow_dispatch:
+    inputs:
+      metric_label_name:
+        description: 'Metric Label Name'
+        required: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write      
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+      - name: Test Script
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.BERTHA_HOST }}
+          username: ${{ secrets.BERTHA_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.BERTHA_SSH_PORT }}
+          script: bash ${HOME}/hype-scripts/sensor/remove-datamock.sh  ${{ github.event.inputs.metric_label_name }}
