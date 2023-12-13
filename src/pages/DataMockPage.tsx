@@ -108,7 +108,7 @@ function DataMockPage() {
       const { data, isLoading } = useQuery<QueryData>(['allLabels'], {
         queryFn: async () => {
           const response = await axios.get(
-            `http://130.225.39.44:9090/api/v1/label/instance/values`
+            `http://130.225.39.44:9090/api/v1/label/__name__/values`
           );
           return response.data;
         },
@@ -135,7 +135,7 @@ function DataMockPage() {
                         <Autocomplete
                             sx={{ flexGrow: 1 }}
                             PaperComponent={AutoCompleteDropdown}
-                            options={isLoading ? ['Loading...'] : (data && data.data ? data.data.filter(option => option.includes('localhost')) : [])}
+                            options={isLoading ? ['Loading...'] : (data && data.data ? data.data.filter(option => option.includes('co2_level') && !option.startsWith('a1e0')) : [])}
                             renderInput={(params) => <TextField {...params} label='Add metric sources' />}
                             autoHighlight
                             filterSelectedOptions
