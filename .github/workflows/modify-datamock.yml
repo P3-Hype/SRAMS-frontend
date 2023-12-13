@@ -1,0 +1,34 @@
+name: Modify Data Mock
+
+on:
+  push:
+    branches: main
+  workflow_dispatch:
+    inputs:
+      duration_seconds:
+        description: 'Duration in Seconds'
+        required: true
+      override_value:
+        description: 'Override Value'
+        required: true
+      metric_label_name:
+        description: 'Metric Label Name'
+        required: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write      
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+      - name: Run script to modify datamock
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.BERTHA_HOST }}
+          username: ${{ secrets.BERTHA_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.BERTHA_SSH_PORT }}
+          script: bash ${HOME}/hype-scripts/sensor/modify-datamock.sh  ${{ github.event.inputs.duration_seconds }} ${{ github.event.inputs.override_value }} ${{ github.event.inputs.metric_label_name }}
