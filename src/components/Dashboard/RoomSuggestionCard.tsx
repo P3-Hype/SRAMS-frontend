@@ -8,10 +8,26 @@ function RoomSuggestionCard(props: { readonly roomSuggestion: RoomSuggestion }) 
     const room = props.roomSuggestion.room;
     const theme = useTheme();
 
-    const climateColor = Math.min(props.roomSuggestion.climateScore, 1) <= 0.5
-    ? lerpColor(theme.palette.success.main, theme.palette.warning.main, props.roomSuggestion.climateScore)
-    : lerpColor(theme.palette.warning.main, theme.palette.error.main, props.roomSuggestion.climateScore);
-    const critical = props.roomSuggestion.climateScore >= 0.5;
+    let climateColor;
+    let critical;
+
+    if (Math.min(props.roomSuggestion.climateScore, 1) <= 0.25) {
+        climateColor = lerpColor(theme.palette.success.main, theme.palette.success.light, props.roomSuggestion.climateScore);
+    } else if (Math.min(props.roomSuggestion.climateScore, 1) <= 0.5) {
+        climateColor = lerpColor(theme.palette.success.light, theme.palette.warning.main, props.roomSuggestion.climateScore);
+    } else if (Math.min(props.roomSuggestion.climateScore, 1) <= 0.75) {
+        climateColor = lerpColor(theme.palette.warning.main, theme.palette.error.light, props.roomSuggestion.climateScore);
+    } else if (Math.min(props.roomSuggestion.climateScore, 1) <= 1){
+        climateColor = lerpColor(theme.palette.error.light, theme.palette.error.main, props.roomSuggestion.climateScore);
+    } else {
+        climateColor = theme.palette.error.dark;
+    }
+
+    if (props.roomSuggestion.climateScore >= 0.5) {
+        critical = true;
+    } else {
+        critical = false;
+    }
 
     const iconStyles = {
             color: climateColor,
@@ -38,7 +54,6 @@ function RoomSuggestionCard(props: { readonly roomSuggestion: RoomSuggestion }) 
                             : props.roomSuggestion.climateScore > 0.5
                             ? <WarningTwoTone sx={iconStyles} />
                             : <CloudTwoTone sx={iconStyles} />}
-                        
                     </Box>
                 </Stack>
             </Card>
