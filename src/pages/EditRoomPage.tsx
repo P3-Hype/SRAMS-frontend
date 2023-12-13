@@ -92,7 +92,7 @@ function LinkMetricToRoomInput(props: { readonly room: Room }) {
 				sx={{ flexGrow: 1 }}
 				PaperComponent={AutoCompleteDropdown}
 				multiple
-				options={isLoading ? ['Loading...'] : data ?? []}
+				options={isLoading ? ['Loading...'] : (data ? data.filter(option => option.includes('co2') || option.includes('temperature') || option.includes('humidity')) : [])}
 				renderInput={(params) => <TextField {...params} label='Add metric sources' />}
 				autoHighlight
 				filterSelectedOptions
