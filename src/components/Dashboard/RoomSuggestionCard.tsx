@@ -2,7 +2,13 @@ import { Box, Card, Grow, Stack, Typography, useTheme } from "@mui/material";
 import { lerpColor } from "../../utils/colorUtil";
 import { RoomSuggestion } from "../../room";
 import MiniGauge from "../MiniGauge/MiniGauge";
-import { CloudTwoTone, SentimentVeryDissatisfiedTwoTone, WarningTwoTone } from "@mui/icons-material";
+import { 
+    SentimentVerySatisfiedTwoTone, 
+    SentimentSatisfiedTwoTone, 
+    SentimentNeutralTwoTone, 
+    SentimentDissatisfiedTwoTone, 
+    WarningTwoTone 
+} from "@mui/icons-material";
 
 function RoomSuggestionCard(props: { readonly roomSuggestion: RoomSuggestion }) {
     const room = props.roomSuggestion.room;
@@ -49,11 +55,19 @@ function RoomSuggestionCard(props: { readonly roomSuggestion: RoomSuggestion }) 
                     </Stack>
                     <Box display={"flex"} flexDirection={"row"} justifyContent={"center"} alignItems={"flex-end"} >
                         <MiniGauge value={props.roomSuggestion.climateScore} color={climateColor}/>
-                        {props.roomSuggestion.climateScore > 7.5
-                            ? <SentimentVeryDissatisfiedTwoTone sx={iconStyles} />
-                            : props.roomSuggestion.climateScore > 0.5
-                            ? <WarningTwoTone sx={iconStyles} />
-                            : <CloudTwoTone sx={iconStyles} />}
+                        {(() => {
+                            if (props.roomSuggestion.climateScore < 0.25) {
+                                return <SentimentVerySatisfiedTwoTone sx={iconStyles} />;
+                            } else if (props.roomSuggestion.climateScore < 0.5) {
+                                return <SentimentSatisfiedTwoTone sx={iconStyles} />;
+                            } else if (props.roomSuggestion.climateScore < 0.75) {
+                                return <SentimentNeutralTwoTone sx={iconStyles} />;
+                            } else if (props.roomSuggestion.climateScore < 1) {
+                                return <SentimentDissatisfiedTwoTone sx={iconStyles} />;
+                            } else {
+                                return <WarningTwoTone sx={iconStyles} />;
+                            }
+                        })()}
                     </Box>
                 </Stack>
             </Card>
