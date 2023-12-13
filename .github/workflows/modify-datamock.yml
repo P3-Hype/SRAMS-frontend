@@ -1,8 +1,6 @@
 name: Modify Data Mock
 
 on:
-  push:
-    branches: main
   workflow_dispatch:
     inputs:
       duration_seconds:
@@ -24,7 +22,7 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-      - name: Run script to modify datamocks
+      - name: Run script to modify datamock
         uses: appleboy/ssh-action@v1.0.0
         with:
           host: ${{ secrets.BERTHA_HOST }}
