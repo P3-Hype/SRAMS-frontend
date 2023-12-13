@@ -56,13 +56,13 @@ function RoomSuggestionCard(props: { readonly roomSuggestion: RoomSuggestion }) 
                     <Box display={"flex"} flexDirection={"row"} justifyContent={"center"} alignItems={"flex-end"} >
                         <MiniGauge value={props.roomSuggestion.climateScore} color={climateColor}/>
                         {(() => {
-                            if (props.roomSuggestion.climateScore < 0.25) {
+                            if (props.roomSuggestion.climateScore <= 0.25) {
                                 return <SentimentVerySatisfiedTwoTone sx={iconStyles} />;
-                            } else if (props.roomSuggestion.climateScore < 0.5) {
+                            } else if (props.roomSuggestion.climateScore <= 0.5) {
                                 return <SentimentSatisfiedTwoTone sx={iconStyles} />;
-                            } else if (props.roomSuggestion.climateScore < 0.75) {
+                            } else if (props.roomSuggestion.climateScore <= 0.75) {
                                 return <SentimentNeutralTwoTone sx={iconStyles} />;
-                            } else if (props.roomSuggestion.climateScore < 1) {
+                            } else if (props.roomSuggestion.climateScore <= 1) {
                                 return <SentimentDissatisfiedTwoTone sx={iconStyles} />;
                             } else {
                                 return <WarningTwoTone sx={iconStyles} />;
