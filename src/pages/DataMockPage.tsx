@@ -19,7 +19,7 @@ function DataMockPage() {
         mutationFn: () => axios.post(`${import.meta.env.VITE_SRAMS_API_ADDRESS}admin/addDataMocker`, {
             containerName: containerName,
             idName: idName,
-            datas: dataNum,
+            data: dataNum,
         }),
         onSuccess: () => {
             console.log('success');
@@ -27,22 +27,22 @@ function DataMockPage() {
     })
 
     const handleAddSubmit = () => {
-        if ((dataNum === '1' || dataNum === '2') && idName.length === 4 && !/\s/.test(containerName)) {
+        if ((!/\s/.test(containerName)) && (idName.length === 4) && (dataNum === '1' || dataNum === '2')) {
           addServiceMutation.mutate();
-        } else {
-          if (dataNum !== '1' && dataNum !== '2') {
-            alert.setSeverity('error');
-            alert.setMessage('Data must be 1 or 2');
-          } else if (idName.length !== 4) {
-            alert.setSeverity('error');
-            alert.setMessage('ID Name must be 4 characters');
-          } else if (/\s/.test(containerName)) {
-            alert.setSeverity('error');
-            alert.setMessage('Container Name must not contain any whitespaces');
-          } else {
-            alert.setSeverity('error');
-            alert.setMessage('Something went wrong');
-          }
+        } else { 
+            if (/\s/.test(containerName)) {
+                alert.setSeverity('error');
+                alert.setMessage('Container Name must not contain any whitespaces');
+            } else if (idName.length !== 4) {
+                alert.setSeverity('error');
+                alert.setMessage('ID Name must be 4 characters');
+            } else if (dataNum !== '1' && dataNum !== '2') {
+                alert.setSeverity('error');
+                alert.setMessage('Data must be 1 or 2');
+            } else {
+                alert.setSeverity('error');
+                alert.setMessage('Something went wrong');
+            }
           alert.setIsOpen(true);
         }
       }
@@ -89,7 +89,28 @@ function DataMockPage() {
     })
 
     const handleModifySubmit = () => {
-        modifyServiceMutation.mutate();
+        if ( parseInt(duration) > 0 && parseInt(overrideValue) > 0) {
+            modifyServiceMutation.mutate();
+        } else {
+            if (parseInt(duration) <= 0) {
+                alert.setSeverity('error');
+                alert.setMessage('Duration must not be less than 1');
+            } else if (parseInt(overrideValue) <= 0) {
+                alert.setSeverity('error');
+                alert.setMessage('Override Value must not be less than 1');
+            } else if (duration && !Number.isInteger(parseInt(duration))) {
+                alert.setSeverity('error');
+                alert.setMessage('Duration must be an integer');
+            } else if (overrideValue && !Number.isInteger(parseInt(overrideValue))) {
+                alert.setSeverity('error');
+                alert.setMessage('Override Value must be an integer');
+            } else {
+                alert.setSeverity('error');
+                alert.setMessage('Something went wrong');
+            }
+            alert.setIsOpen(true);
+        }
+
     }
 
     return (
