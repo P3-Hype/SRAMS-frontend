@@ -1,6 +1,8 @@
-name: Test Scripts on Bertha
+name: Add Data Mock
 
 on:
+  push:
+    branches: main
   workflow_dispatch:
     inputs:
       container_name:
