@@ -45,7 +45,7 @@ function DataMockPage() {
             }
           alert.setIsOpen(true);
         }
-      }
+    }
 
 
     // Remove Data Mocker
@@ -110,7 +110,6 @@ function DataMockPage() {
             }
             alert.setIsOpen(true);
         }
-
     }
 
     return (
