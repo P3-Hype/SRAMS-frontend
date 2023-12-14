@@ -54,7 +54,7 @@ function AutocompleteDataMock(props: AutocompleteDataMockProps) {
     let options: string[];
     if (isLoading) {
         options = ['Loading...'];
-    } else if (data && data.data) {
+    } else if (data?.data) {
         options = data.data.filter(option => option.includes('co2_level') && !option.startsWith('a1e0'));
     } else {
         options = [];
