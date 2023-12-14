@@ -86,13 +86,22 @@ function LinkMetricToRoomInput(props: { readonly room: Room }) {
 		}
 	);
 
+	let options: string[];
+	if (isLoading) {
+		options = ['Loading...'];
+	} else if (data) {
+		options = data.filter(option => option.includes('co2') || option.includes('temperature') || option.includes('humidity'));
+	} else {
+		options = [];
+	}
+
 	return (
 		<Stack direction={'row'} gap={1}>
 			<Autocomplete
 				sx={{ flexGrow: 1 }}
 				PaperComponent={AutoCompleteDropdown}
 				multiple
-				options={isLoading ? ['Loading...'] : data ?? []}
+				options={options}
 				renderInput={(params) => <TextField {...params} label='Add metric sources' />}
 				autoHighlight
 				filterSelectedOptions
