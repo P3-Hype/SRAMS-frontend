@@ -33,7 +33,7 @@ function Content({ currentView }: { readonly currentView: string }) {
             <Stack margin={4} gap={4} height={"100%"}>
                 <Box>
                     <Typography color={theme.palette.primary.light} variant="subtitle1" mt={-2}>Suggestions</Typography>
-                    <Stack direction={"row"} gap={2} flexWrap={"nowrap"} component={TransitionGroup} overflow={"clip"} padding={"2px"}>
+                    <Stack direction={"row"} gap={2} flexWrap={"wrap"} component={TransitionGroup}>
                         {suggestedRooms.data.map((suggestedRoom) => <Grow key={suggestedRoom.room.id}><Box><RoomSuggestionCard roomSuggestion={suggestedRoom} /></Box></Grow>)}
                     </Stack>
                 </Box>
