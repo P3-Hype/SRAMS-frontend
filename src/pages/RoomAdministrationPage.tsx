@@ -42,10 +42,6 @@ function Content() {
 		return <Typography>No rooms found</Typography>;
 	}
 
-	const handleAddSensor = () => {
-		navigate('/datamock');
-	};
-
 	return (
 		<>
 			<Card sx={{ mb: 2 }}>
@@ -90,11 +86,6 @@ function Content() {
 				<Button size='large' variant='contained' color='primary' fullWidth onClick={handleAddRoom}>
 					<Typography textTransform={'none'} variant='h6'>
 					Add Room
-					</Typography>
-				</Button>
-				<Button size='large' variant='contained' color='primary' fullWidth onClick={handleAddSensor}>
-					<Typography textTransform={'none'} variant='h6'>
-					Sensor Setup
 					</Typography>
 				</Button>
 			</Stack>
