@@ -26,7 +26,7 @@ function AutoCompleteDropdown(props: { readonly children?: React.ReactNode }) {
 }
 
 interface AutocompleteDataMockProps {
-    onMetricLabelName: (name: string) => void;
+    readonly onMetricLabelName: (name: string) => void;
   }
 
 function AutocompleteDataMock(props: AutocompleteDataMockProps) {
@@ -51,15 +51,24 @@ function AutocompleteDataMock(props: AutocompleteDataMockProps) {
         },
     });
 
+    let options: string[];
+    if (isLoading) {
+        options = ['Loading...'];
+    } else if (data && data.data) {
+        options = data.data.filter(option => option.includes('co2_level') && !option.startsWith('a1e0'));
+    } else {
+        options = [];
+    }
+
     return (
         <Autocomplete
             sx={{ flexGrow: 1 }}
             PaperComponent={AutoCompleteDropdown}
-            options={isLoading ? ['Loading...'] : (data && data.data ? data.data.filter(option => option.includes('co2_level') && !option.startsWith('a1e0')) : [])}
+            options={options}
             renderInput={(params) => <TextField {...params} label='Metric Label Name' />}
             autoHighlight
             filterSelectedOptions
-            value={(data && data.data && data.data.includes(metricLabelName)) ? metricLabelName : null}
+            value={data?.data?.includes(metricLabelName) ? metricLabelName : null}
             onChange={(_, value) => {
                 setMetricLabelName(value ? String(value) : '');
             }}
