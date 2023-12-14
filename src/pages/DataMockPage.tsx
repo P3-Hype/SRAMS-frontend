@@ -79,7 +79,7 @@ function DataMockPage() {
 
     const modifyServiceMutation = useMutation({
         mutationFn: () => axios.post(`${import.meta.env.VITE_SRAMS_API_ADDRESS}admin/modifyDataMocker`, {
-            duration: duration,
+            durationSeconds: duration,
             overrideValue: overrideValue,
             modifyMetricLabelName: modifyMetricLabelName,
         }),
