@@ -15,10 +15,10 @@ const infoText = [
 "",
 "A lower climate score indicates good indoor climate conditions.",
 "",
-"0-0.25    = Best",
-"0.25-0.5 = Better",
-"0.5-0.75 = Worse",
-"0.75-1     = Worst"
+"0.00 - 0.25: Excellent",
+"0.25 - 0.50: Good",
+"0.50 - 0.75: Fair",
+"0.75 -  1.00: Poor"
 ];
 
 const infoItems = (
